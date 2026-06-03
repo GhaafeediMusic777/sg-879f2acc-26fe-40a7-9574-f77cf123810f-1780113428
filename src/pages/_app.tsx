@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from '@/components/ui/toaster'
 import { SophiaChatWidget } from '@/components/SophiaChatWidget'
 import '@/styles/globals.css'
@@ -46,7 +47,7 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-// App Component with Error Handling
+// App Component with Error Handling and Auth Provider
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
@@ -84,9 +85,11 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <ErrorBoundary>
-      <Component {...pageProps} />
-      <Toaster />
-      <SophiaChatWidget />
+      <AuthProvider>
+        <Component {...pageProps} />
+        <Toaster />
+        <SophiaChatWidget />
+      </AuthProvider>
     </ErrorBoundary>
   )
 }

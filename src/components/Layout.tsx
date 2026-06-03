@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -9,7 +10,12 @@ interface LayoutProps {
 
 export function Layout({ children, title, description }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <>
+      <Head>
+        {title && <title>{title}</title>}
+        {description && <meta name="description" content={description} />}
+      </Head>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Navigation */}
       <nav className="bg-black/50 backdrop-blur-md border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,5 +52,6 @@ export function Layout({ children, title, description }: LayoutProps) {
         </div>
       </footer>
     </div>
+    </>
   )
 }

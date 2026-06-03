@@ -2,8 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Export as static HTML for Netlify deployment
+  // Export as static HTML for GitHub Pages deployment
   output: 'export',
+  basePath: '',
+  assetPrefix: '',
   
   // Ignore ESLint warnings during build to prevent build failures
   eslint: {

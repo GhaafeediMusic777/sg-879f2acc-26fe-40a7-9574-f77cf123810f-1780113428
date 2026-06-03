@@ -28,7 +28,7 @@ export default function DodoCheckout({
 }: DodoCheckoutProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
+  const [success] = useState(false)
 
   // Calculate totals
   const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0)

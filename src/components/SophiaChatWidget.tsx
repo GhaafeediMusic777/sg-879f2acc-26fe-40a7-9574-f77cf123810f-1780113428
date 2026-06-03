@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, X, MessageCircle, Volume2, VolumeX, Minimize2, Maximize2 } from 'lucide-react'
 import { getSophiaAdvancedResponse } from '@/services/sophia-ai-advanced'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/context/AuthContext'
 
 interface Message {
   id: string

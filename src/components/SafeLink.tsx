@@ -24,7 +24,6 @@ export default function SafeLink({
   ...props
 }: SafeLinkProps) {
   const router = useRouter()
-  const [isValid, setIsValid] = React.useState(true)
 
   // Validate href
   const validHref = href && typeof href === 'string' && href.length > 0 ? href : fallback

@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, X, MessageCircle, Volume2, VolumeX, Minimize2, Maximize2 } from 'lucide-react'
-import { getSophiaAdvancedResponse } from '@/services/sophia-ai-advanced'
 import { useAuth } from '@/context/AuthContext'
 
 interface Message {
@@ -100,23 +99,36 @@ export function SophiaChatWidget() {
     setIsLoading(true)
 
     try {
-      // Get Sophia's advanced response
-      const response = await getSophiaAdvancedResponse(userMessage, newHistory)
+      // Call Netlify Function for Sophia's response
+      const response = await fetch('/.netlify/functions/sophia-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMessage,
+          conversationHistory: newHistory,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from Sophia')
+      }
+
+      const data = await response.json()
 
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        message: response.message,
-        avatarExpression: response.avatarExpression,
+        message: data.message,
+        avatarExpression: data.avatarExpression,
         timestamp: new Date(),
       }
 
       setMessages(prev => [...prev, assistantMsg])
-      setConversationHistory(prev => [...prev, { role: 'assistant', content: response.message }])
+      setConversationHistory(prev => [...prev, { role: 'assistant', content: data.message }])
 
       // Speak response if voice is enabled
       if (voiceEnabled) {
-        speakMessage(response.message)
+        speakMessage(data.message)
       }
     } catch (error) {
       console.error('Error getting Sophia response:', error)

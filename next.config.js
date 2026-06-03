@@ -2,8 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Export as static HTML for GitHub Pages deployment
+  // Export as static HTML for Netlify deployment
   output: 'export',
+  distDir: 'out',
   basePath: '',
   assetPrefix: '',
   
@@ -28,7 +29,7 @@ const nextConfig = {
   },
 
   // Note: Redirects, rewrites, and headers are not supported with static export
-  // Use Netlify's _redirects file instead (in public/ directory)
+  // Use Netlify's netlify.toml file for redirects and headers
 
   // Environment variables
   env: {

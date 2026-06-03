@@ -1,0 +1,30 @@
+# Netlify redirects for Next.js
+
+# Product redirects
+/product/:id /products/:id 301
+
+# Experience redirects
+/demo /watch-demo 301
+/video-demo /watch-demo 301
+
+# Dashboard redirects
+/dashboard /consumer/dashboard 302
+
+# Onboarding redirects
+/onboard /onboarding 301
+
+# Legal redirects
+/tos /terms 301
+/policy /privacy 301
+/refund-policy /refunds 301
+
+# Support redirects
+/help /support 301
+/contact /support 301
+
+# AI redirects
+/ai /ai-marketplace 301
+/artists /ai-artists 301
+
+# SPA fallback - serve index.html for all unmatched routes
+/* /index.html 200

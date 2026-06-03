@@ -1,16 +1,10 @@
-// Supabase client stub - configure with your Supabase URL and key
-// For now, this is a placeholder to prevent import errors
+import { createClient } from '@supabase/supabase-js'
 
-export const supabase = {
-  auth: {
-    signUp: async () => ({ error: null }),
-    signIn: async () => ({ error: null }),
-    signOut: async () => ({ error: null }),
-  },
-  from: () => ({
-    select: async () => ({ data: [], error: null }),
-    insert: async () => ({ data: null, error: null }),
-    update: async () => ({ data: null, error: null }),
-    delete: async () => ({ data: null, error: null }),
-  }),
-}
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key'
+
+// Create Supabase client with proper typing
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// Type definitions for better TypeScript support
+export type SupabaseClient = typeof supabase

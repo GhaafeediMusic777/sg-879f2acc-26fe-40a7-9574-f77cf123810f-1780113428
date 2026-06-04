@@ -10,9 +10,12 @@ import { LuxuryCard } from '@/components/LuxuryCard'
 import { PageTransition } from '@/components/PageTransition'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
+import { getAllProducts, getPopularProducts } from '@/config/products-14-v2'
 
 export default function HomePage() {
   const [selectedRole, setSelectedRole] = useState<'consumer' | 'label' | 'partner' | null>(null)
+  const allProducts = getAllProducts()
+  const popularProducts = getPopularProducts()
 
   return (
     <>
@@ -20,7 +23,7 @@ export default function HomePage() {
         <title>Ghaafeedi Music - Premium AI Music Platform</title>
         <meta
           name="description"
-          content="Experience premium AI music creation with cinematic animations, emotional storytelling, and luxury design."
+          content="Experience premium AI music creation with cinematic animations, emotional storytelling, and luxury design. Transform your stories into cinematic masterpieces."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -84,9 +87,9 @@ export default function HomePage() {
                   </Link>
                 </motion.div>
                 <motion.div variants={staggerItem}>
-                  <Link href="/products-v2">
+                  <Link href="/products-complete-v2">
                     <LuxuryButton variant="secondary" size="lg">
-                      Explore Products
+                      Explore All Products
                     </LuxuryButton>
                   </Link>
                 </motion.div>
@@ -94,7 +97,7 @@ export default function HomePage() {
 
               {/* Trust Indicators */}
               <motion.div
-                className="flex justify-center gap-8 text-sm text-luxury-gray-light"
+                className="flex justify-center gap-8 text-sm text-luxury-gray-light flex-wrap"
                 variants={staggerContainer}
               >
                 <motion.div variants={staggerItem} className="flex items-center gap-2">
@@ -109,6 +112,88 @@ export default function HomePage() {
               </motion.div>
             </div>
           </motion.section>
+
+          {/* All 14 Products Showcase */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.h2
+                className="text-5xl font-bold text-luxury-pearl text-center mb-4"
+                variants={luxuryFadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                All 14 Premium Products
+              </motion.h2>
+
+              <motion.p
+                className="text-xl text-luxury-gray-light text-center mb-16"
+                variants={staggerItem}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                Transform your emotional stories into cinematic masterpieces
+              </motion.p>
+
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {allProducts.map((product) => (
+                  <motion.div key={product.id} variants={staggerItem}>
+                    <Link href={`/products/${product.id}`}>
+                      <LuxuryCard variant="glass">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="text-4xl">{product.icon}</div>
+                          {product.popular && (
+                            <span className="px-2 py-1 bg-luxury-gold bg-opacity-20 text-luxury-gold text-xs font-bold rounded">
+                              Popular
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="text-lg font-bold text-luxury-pearl mb-2">
+                          {product.name}
+                        </h3>
+
+                        <p className="text-luxury-gray-light text-sm mb-3">
+                          {product.description}
+                        </p>
+
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-bold text-luxury-gold">
+                            ${product.price}{product.period ? `/${product.period}` : ''}
+                          </span>
+                          <span className="text-sm text-luxury-gray-light">
+                            ⭐ {product.rating}
+                          </span>
+                        </div>
+                      </LuxuryCard>
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* View All Button */}
+              <motion.div
+                className="flex justify-center mt-12"
+                variants={staggerItem}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <Link href="/products-complete-v2">
+                  <LuxuryButton variant="primary" size="lg">
+                    View All Products with Details
+                  </LuxuryButton>
+                </Link>
+              </motion.div>
+            </div>
+          </ScrollReveal>
 
           {/* Features Section */}
           <ScrollReveal className="relative z-10 px-4 py-20">
@@ -149,23 +234,25 @@ export default function HomePage() {
                   {
                     icon: '🎤',
                     title: 'Voice Cloning',
-                    description: 'Create voiceovers in your own voice with advanced AI',
+                    description: 'Hear your story narrated in your own voice',
                   },
                   {
                     icon: '🎬',
-                    title: 'Music Videos',
-                    description: 'Generate stunning 4K music videos with cinematic visuals',
+                    title: 'Video Creation',
+                    description: 'Professional cinematic videos with AI-generated soundtracks',
                   },
                   {
-                    icon: '📻',
-                    title: 'Podcast Producer',
-                    description: 'Generate, edit, and distribute podcast episodes automatically',
+                    icon: '🔐',
+                    title: 'Enterprise Security',
+                    description: 'SSL encrypted, PCI compliant, and fully secure',
                   },
-                ].map((feature, i) => (
-                  <motion.div key={i} variants={staggerItem}>
-                    <LuxuryCard variant="glass">
+                ].map((feature, index) => (
+                  <motion.div key={index} variants={staggerItem}>
+                    <LuxuryCard variant="default">
                       <div className="text-5xl mb-4">{feature.icon}</div>
-                      <h3 className="text-2xl font-bold text-luxury-pearl mb-3">{feature.title}</h3>
+                      <h3 className="text-2xl font-bold text-luxury-pearl mb-3">
+                        {feature.title}
+                      </h3>
                       <p className="text-luxury-gray-light">{feature.description}</p>
                     </LuxuryCard>
                   </motion.div>
@@ -174,7 +261,7 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
 
-          {/* Products Section */}
+          {/* Role Selection Section */}
           <ScrollReveal className="relative z-10 px-4 py-20">
             <div className="max-w-6xl mx-auto">
               <motion.h2
@@ -184,129 +271,7 @@ export default function HomePage() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                Our Products
-              </motion.h2>
-
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                {[
-                  {
-                    name: 'AI Voice Clone',
-                    price: '$29.99',
-                    description: 'Create unlimited voiceovers in your own voice',
-                    color: 'rgba(255, 215, 0, 1)',
-                  },
-                  {
-                    name: 'AI Music Producer',
-                    price: '$39.99',
-                    description: 'Generate unlimited original music in any genre',
-                    color: 'rgba(147, 112, 219, 1)',
-                  },
-                  {
-                    name: 'AI Music Video',
-                    price: '$49.99',
-                    description: 'Create stunning 4K music videos with cinematic visuals',
-                    color: 'rgba(255, 107, 107, 1)',
-                  },
-                  {
-                    name: 'AI Podcast Producer',
-                    price: '$34.99',
-                    description: 'Generate, edit, and distribute podcast episodes',
-                    color: 'rgba(0, 255, 200, 1)',
-                  },
-                ].map((product, i) => (
-                  <motion.div key={i} variants={staggerItem}>
-                    <LuxuryCard variant="elevated">
-                      <div className="flex justify-between items-start mb-4">
-                        <h3 className="text-2xl font-bold text-luxury-pearl">{product.name}</h3>
-                        <span
-                          className="text-xl font-bold text-luxury-gold"
-                        >
-                          {product.price}
-                        </span>
-                      </div>
-                      <p className="text-luxury-gray-light mb-6">{product.description}</p>
-                      <Link href="/products-v2">
-                        <LuxuryButton variant="primary" size="sm">
-                          Learn More
-                        </LuxuryButton>
-                      </Link>
-                    </LuxuryCard>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              <motion.div
-                className="text-center"
-                variants={staggerItem}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                <Link href="/products-v2">
-                  <LuxuryButton variant="secondary" size="lg">
-                    View All Products
-                  </LuxuryButton>
-                </Link>
-              </motion.div>
-            </div>
-          </ScrollReveal>
-
-          {/* AI Artists Section */}
-          <ScrollReveal className="relative z-10 px-4 py-20">
-            <div className="max-w-6xl mx-auto">
-              <motion.h2
-                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
-                variants={luxuryFadeInUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                AI Artist Marketplace
-              </motion.h2>
-
-              <motion.p
-                className="text-lg text-luxury-gray-light text-center mb-12 max-w-2xl mx-auto"
-                variants={staggerItem}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                Discover 6 unique AI artists, each with their own immersive world and creative style. Collaborate, create, and share.
-              </motion.p>
-
-              <motion.div
-                className="text-center"
-                variants={staggerItem}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                <Link href="/marketplace/ai-artists-v2">
-                  <LuxuryButton variant="primary" size="lg">
-                    Explore Artists
-                  </LuxuryButton>
-                </Link>
-              </motion.div>
-            </div>
-          </ScrollReveal>
-
-          {/* Role Selection */}
-          <ScrollReveal className="relative z-10 px-4 py-20">
-            <div className="max-w-6xl mx-auto">
-              <motion.h2
-                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
-                variants={luxuryFadeInUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                Choose Your Role
+                Choose Your Path
               </motion.h2>
 
               <motion.div
@@ -320,80 +285,77 @@ export default function HomePage() {
                   {
                     icon: '♥',
                     title: 'Consumer',
-                    description: 'Discover, stream and enjoy exclusive music experiences',
-                    path: '/auth/signup?role=consumer',
+                    description: 'Discover, stream and enjoy exclusive music experiences.',
+                    href: '/auth/signup?role=consumer',
                   },
                   {
                     icon: '👑',
-                    title: 'Music Label',
+                    title: 'Music Label/Artist',
                     description: 'Manage your music, artists and releases. Grow your audience.',
-                    path: '/auth/signup?role=label',
+                    href: '/auth/signup?role=label',
                   },
                   {
                     icon: '✨',
-                    title: 'AI Partner',
-                    description: 'Collaborate with Ghaafeedi and shape the future of music',
-                    path: '/auth/signup?role=partner',
+                    title: 'AI Artist Partner',
+                    description: 'Collaborate with Ghaafeedi\'s AI ecosystem and shape the future of music.',
+                    href: '/auth/signup?role=partner',
                   },
-                ].map((role, i) => (
-                  <Link key={i} href={role.path}>
-                    <motion.div variants={staggerItem}>
-                      <LuxuryCard variant="glass">
+                ].map((role, index) => (
+                  <motion.div key={index} variants={staggerItem}>
+                    <Link href={role.href}>
+                      <LuxuryCard variant="elevated">
                         <div className="text-6xl mb-4 text-center">{role.icon}</div>
                         <h3 className="text-2xl font-bold text-luxury-pearl text-center mb-3">
                           {role.title}
                         </h3>
-                        <p className="text-luxury-gray-light text-center mb-6">{role.description}</p>
-                        <div className="text-center">
+                        <p className="text-luxury-gray-light text-center mb-6">
+                          {role.description}
+                        </p>
+                        <div className="flex justify-center">
                           <LuxuryButton variant="primary" size="sm">
                             Get Started
                           </LuxuryButton>
                         </div>
                       </LuxuryCard>
-                    </motion.div>
-                  </Link>
+                    </Link>
+                  </motion.div>
                 ))}
               </motion.div>
             </div>
           </ScrollReveal>
 
-          {/* CTA Section */}
-          <motion.section
-            className="relative z-10 px-4 py-20"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <div
-              className="max-w-4xl mx-auto rounded-2xl p-12 text-center border border-luxury-gold border-opacity-20"
-              style={{
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(147, 112, 219, 0.1))',
-              }}
-            >
-              <motion.h2
-                className="text-4xl font-bold text-luxury-pearl mb-4"
-                variants={staggerItem}
+          {/* Stats Section */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
               >
-                Ready to Create?
-              </motion.h2>
+                <motion.div variants={staggerItem}>
+                  <div className="text-5xl font-bold text-luxury-gold mb-2">14</div>
+                  <p className="text-luxury-gray-light">Premium Products</p>
+                </motion.div>
 
-              <motion.p
-                className="text-lg text-luxury-gray-light mb-8"
-                variants={staggerItem}
-              >
-                Join thousands of creators using Ghaafeedi Music to bring their musical vision to life.
-              </motion.p>
+                <motion.div variants={staggerItem}>
+                  <div className="text-5xl font-bold text-luxury-gold mb-2">4.8</div>
+                  <p className="text-luxury-gray-light">Average Rating</p>
+                </motion.div>
 
-              <motion.div variants={staggerItem}>
-                <Link href="/auth/signup">
-                  <LuxuryButton variant="primary" size="lg">
-                    Start Your Journey
-                  </LuxuryButton>
-                </Link>
+                <motion.div variants={staggerItem}>
+                  <div className="text-5xl font-bold text-luxury-gold mb-2">10K+</div>
+                  <p className="text-luxury-gray-light">Happy Customers</p>
+                </motion.div>
+
+                <motion.div variants={staggerItem}>
+                  <div className="text-5xl font-bold text-luxury-gold mb-2">24/7</div>
+                  <p className="text-luxury-gray-light">Support Available</p>
+                </motion.div>
               </motion.div>
             </div>
-          </motion.section>
+          </ScrollReveal>
 
           <LuxuryFooter />
         </div>

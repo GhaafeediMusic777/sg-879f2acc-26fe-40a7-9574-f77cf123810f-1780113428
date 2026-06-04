@@ -1,5 +1,16 @@
-import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { motion } from 'framer-motion'
+import { LuxuryHeader } from '@/components/LuxuryHeader'
+import { LuxuryFooter } from '@/components/LuxuryFooter'
+import { LuxuryButton } from '@/components/LuxuryButton'
+import { LuxuryCard } from '@/components/LuxuryCard'
+import { PageTransition } from '@/components/PageTransition'
+import { ScrollReveal } from '@/components/ScrollReveal'
+import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
+import { getProductById, getAllProducts } from '@/config/products-14-v2'
 import { Star, Check, ArrowLeft, ShoppingCart } from 'lucide-react'
 
 const PRODUCT_DATA: Record<string, any> = {

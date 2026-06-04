@@ -1,399 +1,340 @@
 import { useState } from 'react'
-import Link from 'next/link'
-import { Search, Filter, Star, Users, Music, TrendingUp, Play, Heart } from 'lucide-react'
+import { useRouter } from 'next/router'
+import { ChevronLeft, ChevronRight, Music, Users, Sparkles } from 'lucide-react'
 
 const AI_ARTISTS = [
   {
-    id: 'sophia-ai',
-    name: 'Sophia AI',
-    emoji: '🤖',
-    genre: 'Emotional Intelligence',
-    totalSongs: 1247,
-    monthlyListeners: 542000,
-    rating: 4.9,
-    reviews: 3421,
-    bio: 'Sophia is an emotionally intelligent AI artist who creates deeply personal cinematic soundtracks. Her music analyzes emotional patterns and transforms them into therapeutic compositions.',
-    specialties: ['Emotional Analysis', 'Healing Music', 'Cinematic Soundtracks'],
-    featured: true,
-    image: '🎵'
+    id: 'luna-echo',
+    name: 'Luna Echo',
+    genre: 'Pop',
+    style: 'Dreamy, Ethereal',
+    songs: 128,
+    listeners: '245K',
+    color: 'from-purple-500 to-pink-600',
+    glowColor: 'rgba(168, 85, 247, 0.6)',
+    featured: false
   },
   {
-    id: 'luna-dreams',
-    name: 'Luna Dreams',
-    emoji: '🌙',
-    genre: 'Ambient & Ethereal',
-    totalSongs: 892,
-    monthlyListeners: 387000,
-    rating: 4.8,
-    reviews: 2156,
-    bio: 'Luna specializes in dreamy, ethereal soundscapes that transport listeners to otherworldly realms. Perfect for meditation and introspection.',
-    specialties: ['Ambient Music', 'Dream Sequences', 'Meditation'],
-    featured: true,
-    image: '🌙'
+    id: 'nova-ray',
+    name: 'Nova Ray',
+    genre: 'Electronic',
+    style: 'Futuristic, Energetic',
+    songs: 156,
+    listeners: '312K',
+    color: 'from-yellow-400 to-orange-600',
+    glowColor: 'rgba(251, 191, 36, 0.6)',
+    featured: true
   },
   {
-    id: 'phoenix-rise',
-    name: 'Phoenix Rise',
-    emoji: '🔥',
-    genre: 'Empowerment & Transformation',
-    totalSongs: 756,
-    monthlyListeners: 421000,
-    rating: 4.7,
-    reviews: 1987,
-    bio: 'Phoenix creates powerful, transformative music for those rising from challenges. Her compositions inspire strength, resilience, and personal growth.',
-    specialties: ['Empowerment', 'Transformation', 'Motivational'],
-    featured: true,
-    image: '🔥'
+    id: 'solace-drift',
+    name: 'Solace Drift',
+    genre: 'Lo-fi',
+    style: 'Chill, Melodic',
+    songs: 103,
+    listeners: '187K',
+    color: 'from-purple-600 to-pink-500',
+    glowColor: 'rgba(168, 85, 247, 0.6)',
+    featured: false
+  }
+]
+
+const BENEFITS = [
+  {
+    icon: '∞',
+    title: 'Unlimited Creativity',
+    description: 'AI generates unique music 24/7'
   },
   {
-    id: 'echo-memories',
-    name: 'Echo Memories',
-    emoji: '🎬',
-    genre: 'Nostalgic & Cinematic',
-    totalSongs: 634,
-    monthlyListeners: 298000,
-    rating: 4.8,
-    reviews: 1654,
-    bio: 'Echo specializes in nostalgic, memory-driven compositions that evoke powerful emotions and preserve precious moments in time.',
-    specialties: ['Nostalgia', 'Memory Preservation', 'Cinematic'],
-    featured: false,
-    image: '🎬'
+    icon: '💰',
+    title: 'Affordable Access',
+    description: 'Premium music at accessible prices'
   },
   {
-    id: 'harmony-soul',
-    name: 'Harmony Soul',
-    emoji: '💫',
-    genre: 'Healing & Wellness',
-    totalSongs: 521,
-    monthlyListeners: 267000,
-    rating: 4.9,
-    reviews: 1432,
-    bio: 'Harmony creates therapeutic music designed to heal emotional wounds and promote inner peace. Her work is used by therapists worldwide.',
-    specialties: ['Healing', 'Wellness', 'Therapy'],
-    featured: false,
-    image: '💫'
-  },
-  {
-    id: 'cosmic-vision',
-    name: 'Cosmic Vision',
-    emoji: '🌌',
-    genre: 'Futuristic & Experimental',
-    totalSongs: 445,
-    monthlyListeners: 189000,
-    rating: 4.6,
-    reviews: 987,
-    bio: 'Cosmic pushes boundaries with experimental, futuristic soundscapes. Her music explores the intersection of technology and emotion.',
-    specialties: ['Experimental', 'Futuristic', 'Electronic'],
-    featured: false,
-    image: '🌌'
-  },
-  {
-    id: 'love-eternal',
-    name: 'Love Eternal',
-    emoji: '❤️',
-    genre: 'Romance & Connection',
-    totalSongs: 678,
-    monthlyListeners: 356000,
-    rating: 4.8,
-    reviews: 1876,
-    bio: 'Love Eternal specializes in romantic, connection-focused music that celebrates relationships and deep emotional bonds.',
-    specialties: ['Romance', 'Connection', 'Relationships'],
-    featured: false,
-    image: '❤️'
-  },
-  {
-    id: 'legacy-keeper',
-    name: 'Legacy Keeper',
-    emoji: '🕯️',
-    genre: 'Memorial & Tribute',
-    totalSongs: 412,
-    monthlyListeners: 156000,
-    rating: 4.9,
-    reviews: 1203,
-    bio: 'Legacy Keeper creates beautiful memorial and tribute music that honors the lives of those we cherish and preserves their memory.',
-    specialties: ['Memorial', 'Tribute', 'Legacy'],
-    featured: false,
-    image: '🕯️'
+    icon: '👑',
+    title: 'Exclusive Content',
+    description: 'Early access to new releases'
   }
 ]
 
 export default function AIMarketplacePage() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedGenre, setSelectedGenre] = useState('All')
-  const [sortBy, setSortBy] = useState('featured')
-  const [selectedArtist, setSelectedArtist] = useState<string | null>(null)
+  const router = useRouter()
+  const [currentArtistIndex, setCurrentArtistIndex] = useState(1)
+  const [selectedArtists, setSelectedArtists] = useState<string[]>([])
 
-  const genres = ['All', ...new Set(AI_ARTISTS.map(a => a.genre))]
-
-  const filteredArtists = AI_ARTISTS.filter(artist => {
-    const matchesSearch = artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         artist.bio.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesGenre = selectedGenre === 'All' || artist.genre === selectedGenre
-    return matchesSearch && matchesGenre
-  })
-
-  if (sortBy === 'listeners') {
-    filteredArtists.sort((a, b) => b.monthlyListeners - a.monthlyListeners)
-  } else if (sortBy === 'rating') {
-    filteredArtists.sort((a, b) => (b.rating || 0) - (a.rating || 0))
-  } else if (sortBy === 'featured') {
-    filteredArtists.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+  const handlePrevArtist = () => {
+    setCurrentArtistIndex(Math.max(0, currentArtistIndex - 1))
   }
 
-  const selectedArtistData = selectedArtist ? AI_ARTISTS.find(a => a.id === selectedArtist) : null
+  const handleNextArtist = () => {
+    setCurrentArtistIndex(Math.min(AI_ARTISTS.length - 1, currentArtistIndex + 1))
+  }
+
+  const toggleArtist = (artistId: string) => {
+    setSelectedArtists(prev =>
+      prev.includes(artistId)
+        ? prev.filter(id => id !== artistId)
+        : [...prev, artistId]
+    )
+  }
+
+  const handleContinue = () => {
+    router.push('/checkout/success')
+  }
+
+  const handleSkip = () => {
+    router.push('/consumer/dashboard')
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-950 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-gold to-purple-400 bg-clip-text text-transparent mb-4">
-            Ghaafeedi Music AI Artists
-          </h1>
-          <p className="text-xl text-gray-300">
-            Discover and collaborate with world-class AI artists creating emotionally intelligent music
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-black text-white overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+      </div>
 
-        {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative">
-            <Search className="absolute left-4 top-3 w-5 h-5 text-gold" />
-            <input
-              type="text"
-              placeholder="Search AI artists..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-black-800 border border-gold/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gold"
-            />
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="flex items-center justify-between px-8 py-6 border-b border-gold/20">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-purple-500 flex items-center justify-center">
+              <span className="text-lg font-bold text-black">G</span>
+            </div>
+            <div>
+              <p className="text-gold text-sm font-bold">GHAAFEEDI</p>
+              <p className="text-gray-400 text-xs">MUSIC</p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {genres.map(genre => (
-              <button
-                key={genre}
-                onClick={() => setSelectedGenre(genre)}
-                className={`px-4 py-2 rounded-lg transition-all ${
-                  selectedGenre === genre
-                    ? 'bg-gold text-black font-semibold'
-                    : 'bg-black-800 text-gray-300 border border-gold/30 hover:border-gold'
-                }`}
-              >
-                {genre}
-              </button>
+          {/* Step Indicator */}
+          <div className="flex items-center gap-8">
+            {[1, 2, 3].map(step => (
+              <div key={step} className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
+                  step === 2
+                    ? 'border-gold bg-gold/20 text-gold'
+                    : step < 2
+                    ? 'border-gold/50 text-gold/50'
+                    : 'border-purple-500/50 text-purple-400'
+                }`}>
+                  {step}
+                </div>
+                <div className="text-sm">
+                  <p className={step === 2 ? 'text-gold font-semibold' : 'text-gray-400'}>
+                    Step {step}/3
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {step === 1 && 'Product Selection'}
+                    {step === 2 && 'AI Artists Discovery'}
+                    {step === 3 && 'Checkout'}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
-
-          <div className="flex items-center gap-2">
-            <Filter className="w-5 h-5 text-gold" />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 bg-black-800 border border-gold/30 rounded-lg text-white focus:outline-none focus:border-gold"
-            >
-              <option value="featured">Featured First</option>
-              <option value="listeners">Most Popular</option>
-              <option value="rating">Highest Rated</option>
-            </select>
-          </div>
         </div>
 
-        {/* Artists Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {filteredArtists.map(artist => (
-            <div
-              key={artist.id}
-              onClick={() => setSelectedArtist(artist.id)}
-              className="group bg-black-800 border border-gold/30 rounded-xl overflow-hidden hover:border-gold/60 transition-all hover:shadow-lg hover:shadow-gold/20 cursor-pointer"
-            >
-              <div className="p-6">
-                {/* Artist Avatar */}
-                <div className="text-6xl mb-4 text-center">{artist.emoji}</div>
+        {/* Main Content */}
+        <div className="px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            {/* Title */}
+            <h1 className="text-5xl font-bold mb-12 text-center">
+              <span className="text-white">Discover Ghaafeedi Music</span>
+              <span className="text-gold"> AI Artists</span>
+              <span className="text-gold ml-2">✨</span>
+            </h1>
 
-                {/* Featured Badge */}
-                {artist.featured && (
-                  <div className="mb-4 flex justify-center">
-                    <span className="px-3 py-1 bg-gold/20 text-gold text-xs font-semibold rounded-full">
-                      Featured Artist
-                    </span>
-                  </div>
-                )}
+            {/* Content Grid */}
+            <div className="grid grid-cols-3 gap-8">
+              {/* Artists Carousel */}
+              <div className="col-span-2">
+                <div className="relative">
+                  {/* Carousel Container */}
+                  <div className="relative h-96 flex items-center justify-center">
+                    {/* Left Arrow */}
+                    <button
+                      onClick={handlePrevArtist}
+                      disabled={currentArtistIndex === 0}
+                      className="absolute left-0 z-20 p-3 bg-black/50 border border-gold/30 rounded-full text-gold hover:border-gold hover:bg-black/70 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
 
-                {/* Artist Name */}
-                <h3 className="text-xl font-semibold text-gold mb-1 text-center group-hover:text-purple-400 transition-colors">
-                  {artist.name}
-                </h3>
+                    {/* Artists Display */}
+                    <div className="flex items-center justify-center gap-6 px-20 w-full">
+                      {AI_ARTISTS.map((artist, idx) => {
+                        const isCenter = idx === currentArtistIndex
+                        const isLeft = idx === currentArtistIndex - 1
+                        const isRight = idx === currentArtistIndex + 1
 
-                {/* Genre */}
-                <p className="text-sm text-gray-400 text-center mb-4">{artist.genre}</p>
+                        return (
+                          <div
+                            key={artist.id}
+                            className={`transition-all duration-300 transform ${
+                              isCenter ? 'scale-100 opacity-100 z-10' : 'scale-75 opacity-40'
+                            }`}
+                          >
+                            <div
+                              className={`bg-gradient-to-br ${artist.color} rounded-2xl p-6 border-2 ${
+                                isCenter ? 'border-gold' : 'border-gold/30'
+                              } w-64 h-80 flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer hover:border-gold transition-all`}
+                            >
+                              {/* Glowing Halo */}
+                              <div
+                                className="absolute inset-0 rounded-2xl"
+                                style={{
+                                  boxShadow: `0 0 60px ${artist.glowColor}, inset 0 0 60px ${artist.glowColor}`
+                                }}
+                              />
 
-                {/* Stats */}
-                <div className="space-y-2 mb-4 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Total Songs</span>
-                    <span className="text-gold font-semibold">{artist.totalSongs.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Monthly Listeners</span>
-                    <span className="text-gold font-semibold">{(artist.monthlyListeners / 1000).toFixed(0)}K</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Rating</span>
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-gold text-gold" />
-                      <span className="text-gold font-semibold">{artist.rating}</span>
+                              {/* Character Portrait */}
+                              <div className="relative z-10 text-center flex flex-col items-center justify-center h-full">
+                                <div className="text-8xl mb-4">👩‍🎤</div>
+
+                                {/* Featured Badge */}
+                                {artist.featured && (
+                                  <div className="absolute top-4 right-4 bg-gold text-black px-3 py-1 rounded-full text-xs font-bold">
+                                    FEATURED
+                                  </div>
+                                )}
+
+                                {/* Artist Info */}
+                                <h3 className="text-2xl font-bold text-white mb-2">{artist.name}</h3>
+                                <p className="text-sm text-white/80 mb-1">Genre: <span className="text-gold">{artist.genre}</span></p>
+                                <p className="text-sm text-white/80 mb-4">Style: <span className="text-gold">{artist.style}</span></p>
+
+                                {/* Stats */}
+                                <div className="flex justify-center gap-6 mb-4 text-sm">
+                                  <div className="flex items-center gap-1">
+                                    <Music className="w-4 h-4 text-gold" />
+                                    <span className="text-gold font-semibold">{artist.songs}</span>
+                                    <span className="text-white/60">Songs</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Users className="w-4 h-4 text-gold" />
+                                    <span className="text-gold font-semibold">{artist.listeners}</span>
+                                    <span className="text-white/60">Monthly Listeners</span>
+                                  </div>
+                                </div>
+
+                                {/* Buttons - Only show for center artist */}
+                                {isCenter && (
+                                  <div className="flex gap-3 mt-auto">
+                                    <button className="px-4 py-2 border border-gold/50 text-gold rounded-lg hover:border-gold hover:bg-gold/10 transition-all flex items-center gap-2 text-sm font-semibold">
+                                      ▶ Preview
+                                    </button>
+                                    <button
+                                      onClick={() => toggleArtist(artist.id)}
+                                      className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold ${
+                                        selectedArtists.includes(artist.id)
+                                          ? 'bg-purple-600 text-white border border-purple-500'
+                                          : 'bg-gold text-black border border-gold hover:shadow-lg hover:shadow-gold/50'
+                                      }`}
+                                    >
+                                      🛒 {selectedArtists.includes(artist.id) ? 'Added' : 'Add to Cart'}
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
+
+                    {/* Right Arrow */}
+                    <button
+                      onClick={handleNextArtist}
+                      disabled={currentArtistIndex === AI_ARTISTS.length - 1}
+                      className="absolute right-0 z-20 p-3 bg-black/50 border border-gold/30 rounded-full text-gold hover:border-gold hover:bg-black/70 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
                   </div>
-                </div>
 
-                {/* Explore Button */}
-                <button className="w-full px-4 py-2 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all group-hover:scale-105">
-                  Explore
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Artist Detail Modal */}
-        {selectedArtistData && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-black-800 border border-gold/30 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-8">
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedArtist(null)}
-                  className="float-right text-gray-400 hover:text-gold transition-colors"
-                >
-                  ✕
-                </button>
-
-                {/* Artist Header */}
-                <div className="text-center mb-8">
-                  <div className="text-8xl mb-4">{selectedArtistData.emoji}</div>
-                  <h2 className="text-4xl font-bold text-gold mb-2">{selectedArtistData.name}</h2>
-                  <p className="text-lg text-gray-300 mb-4">{selectedArtistData.genre}</p>
-                  {selectedArtistData.featured && (
-                    <span className="inline-block px-4 py-2 bg-gold/20 text-gold font-semibold rounded-full mb-4">
-                      ⭐ Featured Artist
-                    </span>
-                  )}
-                </div>
-
-                {/* Bio */}
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold text-gold mb-3">About</h3>
-                  <p className="text-gray-300 leading-relaxed">{selectedArtistData.bio}</p>
-                </div>
-
-                {/* Specialties */}
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold text-gold mb-3">Specialties</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedArtistData.specialties.map((specialty, idx) => (
-                      <span
+                  {/* Carousel Dots */}
+                  <div className="flex justify-center gap-3 mt-8">
+                    {AI_ARTISTS.map((_, idx) => (
+                      <button
                         key={idx}
-                        className="px-3 py-1 bg-black-900 border border-gold/20 text-gold rounded-full text-sm"
-                      >
-                        {specialty}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  <div className="bg-black-900 border border-gold/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-gold mb-1">
-                      {selectedArtistData.totalSongs.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-gray-400">Total Songs</div>
-                  </div>
-                  <div className="bg-black-900 border border-gold/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-gold mb-1">
-                      {(selectedArtistData.monthlyListeners / 1000).toFixed(0)}K
-                    </div>
-                    <div className="text-sm text-gray-400">Monthly Listeners</div>
-                  </div>
-                  <div className="bg-black-900 border border-gold/20 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-gold mb-1 flex items-center justify-center gap-1">
-                      <Star className="w-5 h-5 fill-gold" />
-                      {selectedArtistData.rating}
-                    </div>
-                    <div className="text-sm text-gray-400">Rating</div>
-                  </div>
-                </div>
-
-                {/* Reviews */}
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold text-gold mb-3 flex items-center gap-2">
-                    <Users className="w-5 h-5" />
-                    {selectedArtistData.reviews.toLocaleString()} Reviews
-                  </h3>
-                  <div className="flex items-center gap-2 text-gold">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-5 h-5 ${
-                          i < Math.floor(selectedArtistData.rating)
-                            ? 'fill-gold'
-                            : 'text-gray-600'
+                        onClick={() => setCurrentArtistIndex(idx)}
+                        className={`w-3 h-3 rounded-full transition-all ${
+                          idx === currentArtistIndex
+                            ? 'bg-gold w-8'
+                            : idx === currentArtistIndex - 1 || idx === currentArtistIndex + 1
+                            ? 'bg-gold/50'
+                            : 'bg-gray-600'
                         }`}
                       />
                     ))}
                   </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-4">
-                  <button className="flex items-center justify-center gap-2 px-6 py-3 bg-black-900 border border-gold/30 text-gold font-semibold rounded-lg hover:bg-gold/10 transition-all">
-                    <Heart className="w-5 h-5" />
-                    Add to Favorites
-                  </button>
-                  <button className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all">
-                    <Music className="w-5 h-5" />
-                    Collaborate
-                  </button>
+                  {/* Tagline */}
+                  <p className="text-center text-gold text-lg font-semibold mt-8">
+                    ✨ Explore, Listen, Love. Your next favorite artist is here.
+                  </p>
                 </div>
+              </div>
 
-                {/* Listen Now */}
-                <button className="w-full mt-4 flex items-center justify-center gap-2 px-6 py-3 bg-black-900 border border-gold/30 text-gold font-semibold rounded-lg hover:bg-gold/10 transition-all">
-                  <Play className="w-5 h-5" />
-                  Listen to Latest Creations
-                </button>
+              {/* Right Sidebar - Why AI Artists */}
+              <div className="col-span-1">
+                <div className="bg-gradient-to-br from-black/50 to-purple-900/30 border border-gold/30 rounded-2xl p-6 sticky top-8">
+                  <h3 className="text-2xl font-bold text-gold mb-6 flex items-center gap-2">
+                    <Sparkles className="w-6 h-6" />
+                    Why AI Artists?
+                  </h3>
+
+                  <div className="space-y-6">
+                    {BENEFITS.map((benefit, idx) => (
+                      <div key={idx} className="flex gap-4">
+                        <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0 bg-black/50">
+                          <span className="text-xl text-gold font-bold">{benefit.icon}</span>
+                        </div>
+                        <div>
+                          <h4 className="text-gold font-bold mb-1">{benefit.title}</h4>
+                          <p className="text-sm text-gray-400">{benefit.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Visualizer */}
+                  <div className="mt-8 p-4 bg-black/50 rounded-lg border border-gold/20">
+                    <div className="flex items-end justify-center gap-1 h-16">
+                      {[...Array(12)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 bg-gradient-to-t from-gold to-purple-500 rounded-t opacity-70 animate-pulse"
+                          style={{
+                            height: `${20 + Math.random() * 60}%`,
+                            animationDelay: `${i * 0.05}s`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Empty State */}
-        {filteredArtists.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-400 text-lg mb-4">No AI artists found matching your search.</p>
-            <button
-              onClick={() => {
-                setSearchTerm('')
-                setSelectedGenre('All')
-              }}
-              className="px-6 py-2 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
+            {/* Bottom Actions */}
+            <div className="flex items-center justify-between mt-12">
+              <button
+                onClick={handleSkip}
+                className="px-6 py-3 border border-gold/30 text-gold rounded-lg hover:border-gold hover:bg-gold/10 transition-all flex items-center gap-2 font-semibold"
+              >
+                Skip <ChevronRight className="w-5 h-5" />
+              </button>
 
-        {/* CTA Section */}
-        <div className="mt-16 bg-gradient-to-r from-gold/10 to-purple-500/10 border border-gold/30 rounded-2xl p-12 text-center">
-          <h2 className="text-4xl font-bold text-gold mb-4">Become an AI Artist Partner</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Are you an AI researcher or developer? Join our ecosystem and monetize your AI models.
-          </p>
-          <Link
-            href="/onboarding/ai-partner"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all"
-          >
-            Apply as AI Partner
-          </Link>
+              <button
+                onClick={handleContinue}
+                className="px-8 py-3 bg-gradient-to-r from-gold to-orange-500 text-black rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all font-bold text-lg flex items-center gap-2"
+              >
+                Continue <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

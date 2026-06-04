@@ -1,268 +1,348 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { ChevronLeft, ChevronRight, Music, Zap, Crown, Sparkles } from 'lucide-react'
 
-interface OnboardingStep {
-  id: string
-  title: string
-  description: string
-  icon: string
-}
-
-const CONSUMER_STEPS: OnboardingStep[] = [
+const AI_ARTISTS = [
   {
-    id: 'preferences',
-    title: 'Music Preferences',
-    description: 'Tell us what kind of music experiences you love',
-    icon: '🎵'
+    id: 'luna-echo',
+    name: 'Luna Echo',
+    genre: 'Pop',
+    style: 'Dreamy, Ethereal',
+    songs: 128,
+    listeners: '245K',
+    color: 'from-purple-500 to-pink-600',
+    glowColor: 'rgba(168, 85, 247, 0.6)',
+    featured: false
   },
   {
-    id: 'discovery',
-    title: 'Discover Products',
-    description: 'Explore all 14 premium cinematic music products',
-    icon: '🎬'
+    id: 'nova-ray',
+    name: 'Nova Ray',
+    genre: 'Electronic',
+    style: 'Futuristic, Energetic',
+    songs: 156,
+    listeners: '312K',
+    color: 'from-yellow-400 to-orange-600',
+    glowColor: 'rgba(251, 191, 36, 0.6)',
+    featured: true
   },
   {
-    id: 'account',
-    title: 'Complete Profile',
-    description: 'Set up your account and payment method',
-    icon: '👤'
-  },
-  {
-    id: 'welcome',
-    title: 'Welcome!',
-    description: 'Ready to transform your stories into cinema',
-    icon: '✨'
+    id: 'solace-drift',
+    name: 'Solace Drift',
+    genre: 'Lo-fi',
+    style: 'Chill, Melodic',
+    songs: 103,
+    listeners: '187K',
+    color: 'from-purple-600 to-pink-500',
+    glowColor: 'rgba(168, 85, 247, 0.6)',
+    featured: false
   }
 ]
 
-const ALL_PRODUCTS = [
-  { id: 'future-self', name: 'Future Self Vision', price: 125, emoji: '✨', category: 'Vision' },
-  { id: 'emotional-soundtrack', name: 'Emotional Soundtrack', price: 49, emoji: '🎵', category: 'Music' },
-  { id: 'cinematic-story', name: 'Cinematic Story Film', price: 149, emoji: '🎬', category: 'Video' },
-  { id: 'dream-visualization', name: 'Dream AI Visualization', price: 79, emoji: '🌙', category: 'Vision' },
-  { id: 'relationship-healing', name: 'Relationship Healing', price: 119, emoji: '💔', category: 'Healing' },
-  { id: 'memorial-legacy', name: 'Memorial Legacy Film', price: 299, emoji: '🕯️', category: 'Legacy' },
-  { id: 'cinematic-life-story', name: 'Cinematic Life Story', price: 249, emoji: '🎥', category: 'Biography' },
-  { id: 'couples-journey', name: 'Couples Journey Film', price: 199, emoji: '❤️', category: 'Relationships' },
-  { id: 'signature-masterpiece', name: 'Signature Masterpiece', price: 499, emoji: '👑', category: 'Premium' },
-  { id: 'sophia-ai', name: 'Sophia AI Membership', price: 19, emoji: '🤖', category: 'AI Companion' },
-  { id: 'voice-cloning', name: 'Voice Cloning Studio', price: 99, emoji: '🎙️', category: 'Audio' },
-  { id: 'social-ready', name: 'Social-Ready Clips', price: 39, emoji: '📱', category: 'Social' },
-  { id: 'family-vault', name: 'Family Vault', price: 149, emoji: '👨‍👩‍👧‍👦', category: 'Family' },
-  { id: 'nft-collection', name: 'NFT Collection', price: 199, emoji: '🖼️', category: 'Web3' }
+const BENEFITS = [
+  {
+    icon: '∞',
+    title: 'Unlimited Creativity',
+    description: 'AI generates unique music 24/7'
+  },
+  {
+    icon: '💰',
+    title: 'Affordable Access',
+    description: 'Premium music at accessible prices'
+  },
+  {
+    icon: '👑',
+    title: 'Exclusive Content',
+    description: 'Early access to new releases'
+  }
 ]
 
 export default function ConsumerOnboarding() {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(0)
-  const [preferences, setPreferences] = useState<string[]>([])
-  const [savedProducts, setSavedProducts] = useState<string[]>([])
-  const [profileData, setProfileData] = useState({
-    firstName: '',
-    lastName: '',
-    birthDate: '',
-    bio: ''
-  })
+  const [currentStep, setCurrentStep] = useState(1)
+  const [currentArtistIndex, setCurrentArtistIndex] = useState(1)
+  const [selectedArtists, setSelectedArtists] = useState<string[]>([])
 
-  const handlePreferenceToggle = (pref: string) => {
-    setPreferences(prev =>
-      prev.includes(pref) ? prev.filter(p => p !== pref) : [...prev, pref]
+  const handlePrevArtist = () => {
+    setCurrentArtistIndex(Math.max(0, currentArtistIndex - 1))
+  }
+
+  const handleNextArtist = () => {
+    setCurrentArtistIndex(Math.min(AI_ARTISTS.length - 1, currentArtistIndex + 1))
+  }
+
+  const toggleArtist = (artistId: string) => {
+    setSelectedArtists(prev =>
+      prev.includes(artistId)
+        ? prev.filter(id => id !== artistId)
+        : [...prev, artistId]
     )
   }
 
-  const handleProductToggle = (productId: string) => {
-    setSavedProducts(prev =>
-      prev.includes(productId) ? prev.filter(p => p !== productId) : [...prev, productId]
-    )
-  }
-
-  const handleProfileChange = (field: string, value: string) => {
-    setProfileData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleNext = () => {
-    if (currentStep < CONSUMER_STEPS.length - 1) {
-      setCurrentStep(currentStep + 1)
+  const handleContinue = () => {
+    if (currentStep === 1) {
+      setCurrentStep(2)
+    } else if (currentStep === 2) {
+      setCurrentStep(3)
     } else {
-      // Complete onboarding
       router.push('/consumer/dashboard')
     }
   }
 
   const handleSkip = () => {
-    router.push('/consumer/dashboard')
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1)
+    } else {
+      router.push('/consumer/dashboard')
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-950 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Progress Bar */}
-        <div className="mb-12">
-          <div className="flex justify-between mb-4">
-            {CONSUMER_STEPS.map((step, idx) => (
-              <div
-                key={step.id}
-                className={`flex-1 h-1 mx-1 rounded-full transition-all ${
-                  idx <= currentStep ? 'bg-gold' : 'bg-gold/20'
-                }`}
-              />
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-black text-white overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="flex items-center justify-between px-8 py-6 border-b border-gold/20">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-purple-500 flex items-center justify-center">
+              <span className="text-lg font-bold text-black">G</span>
+            </div>
+            <div>
+              <p className="text-gold text-sm font-bold">GHAAFEEDI</p>
+              <p className="text-gray-400 text-xs">MUSIC</p>
+            </div>
+          </div>
+
+          {/* Step Indicator */}
+          <div className="flex items-center gap-8">
+            {[1, 2, 3].map(step => (
+              <div key={step} className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${
+                  step === currentStep
+                    ? 'border-gold bg-gold/20 text-gold'
+                    : step < currentStep
+                    ? 'border-gold/50 text-gold/50'
+                    : 'border-purple-500/50 text-purple-400'
+                }`}>
+                  {step}
+                </div>
+                <div className="text-sm">
+                  <p className={step === currentStep ? 'text-gold font-semibold' : 'text-gray-400'}>
+                    Step {step}/3
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {step === 1 && 'Product Selection'}
+                    {step === 2 && 'AI Artists Discovery'}
+                    {step === 3 && 'Checkout'}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
-          <p className="text-center text-gold text-sm">
-            Step {currentStep + 1} of {CONSUMER_STEPS.length}
-          </p>
         </div>
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="text-5xl mb-4">{CONSUMER_STEPS[currentStep].icon}</div>
-          <h1 className="text-4xl font-serif font-bold text-white mb-2">
-            {CONSUMER_STEPS[currentStep].title}
-          </h1>
-          <p className="text-gray-400">{CONSUMER_STEPS[currentStep].description}</p>
-        </div>
+        {/* Main Content */}
+        <div className="px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            {/* Title */}
+            <h1 className="text-5xl font-bold mb-12 text-center">
+              <span className="text-white">Discover Ghaafeedi Music</span>
+              <span className="text-gold"> AI Artists</span>
+              <span className="text-gold ml-2">✨</span>
+            </h1>
 
-        {/* Step Content */}
-        <div className="glass p-8 rounded-lg mb-8">
-          {/* Step 1: Preferences */}
-          {currentStep === 0 && (
-            <div className="space-y-6">
-              <p className="text-gray-300 mb-6">What kind of music experiences interest you?</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {['Cinematic', 'Emotional', 'Healing', 'Storytelling', 'AI-Generated', 'Voice Cloning', 'Social Media', 'Premium', 'Legacy'].map(pref => (
-                  <button
-                    key={pref}
-                    onClick={() => handlePreferenceToggle(pref)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      preferences.includes(pref)
-                        ? 'border-gold bg-gold/10 text-gold'
-                        : 'border-gold/30 bg-transparent text-gray-300 hover:border-gold'
-                    }`}
-                  >
-                    {pref}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+            {/* Content Grid */}
+            <div className="grid grid-cols-3 gap-8">
+              {/* Artists Carousel */}
+              <div className="col-span-2">
+                <div className="relative">
+                  {/* Carousel Container */}
+                  <div className="relative h-96 flex items-center justify-center">
+                    {/* Left Arrow */}
+                    <button
+                      onClick={handlePrevArtist}
+                      className="absolute left-0 z-20 p-3 bg-black/50 border border-gold/30 rounded-full text-gold hover:border-gold hover:bg-black/70 transition-all"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
 
-          {/* Step 2: Product Discovery */}
-          {currentStep === 1 && (
-            <div className="space-y-6">
-              <p className="text-gray-300 mb-6">Explore all 14 premium products. Save your favorites!</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
-                {ALL_PRODUCTS.map(product => (
-                  <button
-                    key={product.id}
-                    onClick={() => handleProductToggle(product.id)}
-                    className={`p-4 rounded-lg border-2 text-left transition-all ${
-                      savedProducts.includes(product.id)
-                        ? 'border-gold bg-gold/10'
-                        : 'border-gold/30 bg-transparent hover:border-gold'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="text-2xl mb-2">{product.emoji}</div>
-                        <h3 className="font-semibold text-white">{product.name}</h3>
-                        <p className="text-xs text-gray-400">{product.category}</p>
-                      </div>
-                      <div className="text-gold font-bold">${product.price}</div>
+                    {/* Artists Display */}
+                    <div className="flex items-center justify-center gap-6 px-20">
+                      {AI_ARTISTS.map((artist, idx) => {
+                        const isCenter = idx === currentArtistIndex
+                        const isLeft = idx === currentArtistIndex - 1
+                        const isRight = idx === currentArtistIndex + 1
+
+                        return (
+                          <div
+                            key={artist.id}
+                            className={`transition-all duration-300 transform ${
+                              isCenter ? 'scale-100 opacity-100 z-10' : 'scale-75 opacity-40'
+                            }`}
+                          >
+                            <div
+                              className={`bg-gradient-to-br ${artist.color} rounded-2xl p-6 border-2 ${
+                                isCenter ? 'border-gold' : 'border-gold/30'
+                              } w-64 h-80 flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer hover:border-gold transition-all`}
+                              onClick={() => isCenter && toggleArtist(artist.id)}
+                            >
+                              {/* Glowing Halo */}
+                              <div
+                                className="absolute inset-0 rounded-2xl"
+                                style={{
+                                  boxShadow: `0 0 60px ${artist.glowColor}, inset 0 0 60px ${artist.glowColor}`
+                                }}
+                              />
+
+                              {/* Character Portrait */}
+                              <div className="relative z-10 text-center">
+                                <div className="text-8xl mb-4">👩‍🎤</div>
+
+                                {/* Featured Badge */}
+                                {artist.featured && (
+                                  <div className="absolute top-4 right-4 bg-gold text-black px-3 py-1 rounded-full text-xs font-bold">
+                                    FEATURED
+                                  </div>
+                                )}
+
+                                {/* Artist Info */}
+                                <h3 className="text-2xl font-bold text-white mb-2">{artist.name}</h3>
+                                <p className="text-sm text-white/80 mb-1">Genre: <span className="text-gold">{artist.genre}</span></p>
+                                <p className="text-sm text-white/80 mb-4">Style: <span className="text-gold">{artist.style}</span></p>
+
+                                {/* Stats */}
+                                <div className="flex justify-center gap-6 mb-4 text-sm">
+                                  <div className="flex items-center gap-1">
+                                    <Music className="w-4 h-4 text-gold" />
+                                    <span className="text-gold font-semibold">{artist.songs}</span>
+                                    <span className="text-white/60">Songs</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-gold font-semibold">{artist.listeners}</span>
+                                    <span className="text-white/60">Monthly Listeners</span>
+                                  </div>
+                                </div>
+
+                                {/* Buttons - Only show for center artist */}
+                                {isCenter && (
+                                  <div className="flex gap-3 mt-6">
+                                    <button className="px-4 py-2 border border-gold/50 text-gold rounded-lg hover:border-gold hover:bg-gold/10 transition-all flex items-center gap-2 text-sm">
+                                      ▶ Preview
+                                    </button>
+                                    <button
+                                      onClick={() => toggleArtist(artist.id)}
+                                      className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold ${
+                                        selectedArtists.includes(artist.id)
+                                          ? 'bg-purple-600 text-white border border-purple-500'
+                                          : 'bg-gold text-black border border-gold hover:shadow-lg hover:shadow-gold/50'
+                                      }`}
+                                    >
+                                      🛒 {selectedArtists.includes(artist.id) ? 'Added' : 'Add to Cart'}
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
-                  </button>
-                ))}
-              </div>
-              <p className="text-gold text-sm">Saved: {savedProducts.length} products</p>
-            </div>
-          )}
 
-          {/* Step 3: Account Setup */}
-          {currentStep === 2 && (
-            <div className="space-y-6">
-              <p className="text-gray-300 mb-6">Complete your profile to get started</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gold mb-2">First Name</label>
-                  <input
-                    type="text"
-                    value={profileData.firstName}
-                    onChange={(e) => handleProfileChange('firstName', e.target.value)}
-                    placeholder="Your first name"
-                    className="input-gold w-full"
-                  />
+                    {/* Right Arrow */}
+                    <button
+                      onClick={handleNextArtist}
+                      className="absolute right-0 z-20 p-3 bg-black/50 border border-gold/30 rounded-full text-gold hover:border-gold hover:bg-black/70 transition-all"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  {/* Carousel Dots */}
+                  <div className="flex justify-center gap-3 mt-8">
+                    {AI_ARTISTS.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentArtistIndex(idx)}
+                        className={`w-3 h-3 rounded-full transition-all ${
+                          idx === currentArtistIndex
+                            ? 'bg-gold w-8'
+                            : idx === currentArtistIndex - 1 || idx === currentArtistIndex + 1
+                            ? 'bg-gold/50'
+                            : 'bg-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Tagline */}
+                  <p className="text-center text-gold text-lg font-semibold mt-8">
+                    ✨ Explore, Listen, Love. Your next favorite artist is here.
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gold mb-2">Last Name</label>
-                  <input
-                    type="text"
-                    value={profileData.lastName}
-                    onChange={(e) => handleProfileChange('lastName', e.target.value)}
-                    placeholder="Your last name"
-                    className="input-gold w-full"
-                  />
+              </div>
+
+              {/* Right Sidebar - Why AI Artists */}
+              <div className="col-span-1">
+                <div className="bg-gradient-to-br from-black/50 to-purple-900/30 border border-gold/30 rounded-2xl p-6 sticky top-8">
+                  <h3 className="text-2xl font-bold text-gold mb-6 flex items-center gap-2">
+                    <Sparkles className="w-6 h-6" />
+                    Why AI Artists?
+                  </h3>
+
+                  <div className="space-y-6">
+                    {BENEFITS.map((benefit, idx) => (
+                      <div key={idx} className="flex gap-4">
+                        <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center flex-shrink-0">
+                          <span className="text-xl text-gold">{benefit.icon}</span>
+                        </div>
+                        <div>
+                          <h4 className="text-gold font-bold mb-1">{benefit.title}</h4>
+                          <p className="text-sm text-gray-400">{benefit.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Visualizer */}
+                  <div className="mt-8 p-4 bg-black/50 rounded-lg border border-gold/20">
+                    <div className="flex items-end justify-center gap-1 h-16">
+                      {[...Array(12)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 bg-gradient-to-t from-gold to-purple-500 rounded-t opacity-70 animate-pulse"
+                          style={{
+                            height: `${20 + Math.random() * 60}%`,
+                            animationDelay: `${i * 0.05}s`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gold mb-2">Birth Date</label>
-                <input
-                  type="date"
-                  value={profileData.birthDate}
-                  onChange={(e) => handleProfileChange('birthDate', e.target.value)}
-                  className="input-gold w-full"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gold mb-2">Bio</label>
-                <textarea
-                  value={profileData.bio}
-                  onChange={(e) => handleProfileChange('bio', e.target.value)}
-                  placeholder="Tell us about yourself..."
-                  className="input-gold w-full h-24"
-                />
-              </div>
-              <div className="bg-gold/10 border border-gold/30 p-4 rounded-lg">
-                <p className="text-sm text-gold">💳 Payment Method</p>
-                <p className="text-xs text-gray-400 mt-2">You'll add your payment method at checkout</p>
-              </div>
             </div>
-          )}
 
-          {/* Step 4: Welcome */}
-          {currentStep === 3 && (
-            <div className="space-y-6 text-center">
-              <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-2xl font-serif font-bold text-white">Welcome to Ghaafeedi!</h2>
-              <p className="text-gray-300">
-                Your account is ready. You can now explore products, create cinematic experiences, and join our community.
-              </p>
-              <div className="bg-gold/10 border border-gold/30 p-6 rounded-lg mt-8">
-                <h3 className="font-semibold text-gold mb-3">What's Next?</h3>
-                <ul className="text-left space-y-2 text-sm text-gray-300">
-                  <li>✅ Browse all {ALL_PRODUCTS.length} premium products</li>
-                  <li>✅ Start your first cinematic experience</li>
-                  <li>✅ Connect with other creators</li>
-                  <li>✅ Access exclusive community features</li>
-                </ul>
-              </div>
+            {/* Bottom Actions */}
+            <div className="flex items-center justify-between mt-12">
+              <button
+                onClick={handleSkip}
+                className="px-6 py-3 border border-gold/30 text-gold rounded-lg hover:border-gold hover:bg-gold/10 transition-all flex items-center gap-2 font-semibold"
+              >
+                Skip <ChevronRight className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={handleContinue}
+                className="px-8 py-3 bg-gradient-to-r from-gold to-orange-500 text-black rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all font-bold text-lg flex items-center gap-2"
+              >
+                Continue <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
-          )}
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-between items-center">
-          <button
-            onClick={handleSkip}
-            className="text-gold hover:text-gold/80 text-sm font-medium"
-          >
-            Skip for now
-          </button>
-          <button
-            onClick={handleNext}
-            className="btn-luxury-primary px-8"
-          >
-            {currentStep === CONSUMER_STEPS.length - 1 ? 'Get Started' : 'Next'}
-          </button>
+          </div>
         </div>
       </div>
     </div>

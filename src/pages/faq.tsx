@@ -26,6 +26,16 @@ const faqItems: FAQItem[] = [
   },
   {
     category: 'Pricing & Payments',
+    question: 'What are your video pricing options?',
+    answer: 'We offer flexible video durations with transparent pricing:\n\n📹 2-Minute Video: $19.99\n- Perfect for short clips and social media\n- Processing time: 3-5 minutes\n\n📹 5-Minute Video: $39.99\n- Great for music videos and short stories\n- Processing time: 8-12 minutes\n\n📹 10-Minute Video: $79.99\n- Ideal for documentaries and full stories\n- Processing time: 15-25 minutes\n\n📹 20-Minute Video: $149.99\n- Perfect for full-length content and series\n- Processing time: 30-50 minutes\n\nAll videos include AI generation, professional post-processing, and lifetime access.'
+  },
+  {
+    category: 'Pricing & Payments',
+    question: 'Can I choose different AI models?',
+    answer: 'Yes! We offer 5 premium AI models, each with unique strengths:\n\n🎬 CogVideoX - High-quality cinematic videos\n⚡ LTX Video - Fast and efficient (BEST VALUE)\n✨ Wan Video - Ultra-high quality premium option\n🌏 Hunyuan Video - Unique style with creative flair\n🎨 Stable Video Diffusion - Fast generation from images\n\nEach model is available for all video durations. Prices vary slightly by model.'
+  },
+  {
+    category: 'Pricing & Payments',
     question: 'What payment methods do you accept?',
     answer: 'We accept:\n- Credit/Debit cards (Visa, Mastercard, American Express)\n- PayPal\n- Apple Pay\n- Google Pay\n- Cryptocurrency (Bitcoin, Ethereum via Coinbase Commerce)\n- Buy Now Pay Later (via Affirm)'
   },

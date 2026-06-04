@@ -86,6 +86,29 @@ export default function TermsOfServicePage() {
 
             <div className="space-y-4">
               <div>
+                <h3 className="text-lg font-semibold text-white mb-2">Video Duration & Pricing</h3>
+                <p className="text-gray-300 mb-4">Ghaafeedi Music offers flexible video durations with transparent pricing:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-3">
+                    <div className="font-semibold text-yellow-400 text-sm">2-Minute Video</div>
+                    <div className="text-gray-300 text-xs">$19.99 • 3-5 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-3">
+                    <div className="font-semibold text-yellow-400 text-sm">5-Minute Video</div>
+                    <div className="text-gray-300 text-xs">$39.99 • 8-12 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-3">
+                    <div className="font-semibold text-yellow-400 text-sm">10-Minute Video</div>
+                    <div className="text-gray-300 text-xs">$79.99 • 15-25 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-3">
+                    <div className="font-semibold text-yellow-400 text-sm">20-Minute Video</div>
+                    <div className="text-gray-300 text-xs">$149.99 • 30-50 min processing</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
                 <h3 className="text-lg font-semibold text-white mb-2">Pricing</h3>
                 <ul className="space-y-2 text-gray-300">
                   <li>• <strong>One-Time Purchases:</strong> Pay once, receive one video</li>

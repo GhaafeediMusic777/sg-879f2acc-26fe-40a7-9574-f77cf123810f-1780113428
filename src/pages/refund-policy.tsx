@@ -33,6 +33,29 @@ export default function RefundPolicyPage() {
 
             <div className="space-y-6">
               <div>
+                <h3 className="text-xl font-semibold text-yellow-400 mb-3">Video Pricing & Duration</h3>
+                <p className="text-gray-300 mb-4">Our refund policy applies to all video durations and AI models:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
+                    <div className="font-semibold text-yellow-400">2-Minute Video</div>
+                    <div className="text-gray-300 text-sm">$19.99 • 3-5 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
+                    <div className="font-semibold text-yellow-400">5-Minute Video</div>
+                    <div className="text-gray-300 text-sm">$39.99 • 8-12 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
+                    <div className="font-semibold text-yellow-400">10-Minute Video</div>
+                    <div className="text-gray-300 text-sm">$79.99 • 15-25 min processing</div>
+                  </div>
+                  <div className="bg-yellow-900/20 border border-yellow-600 rounded-lg p-4">
+                    <div className="font-semibold text-yellow-400">20-Minute Video</div>
+                    <div className="text-gray-300 text-sm">$149.99 • 30-50 min processing</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
                 <h3 className="text-xl font-semibold text-yellow-400 mb-3">Eligibility</h3>
                 <p className="text-gray-300 mb-4">You are eligible for a full refund if:</p>
                 <ul className="space-y-2 text-gray-300">

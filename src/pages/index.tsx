@@ -1,322 +1,403 @@
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
-import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google'
-import { Play, LogOut, User } from 'lucide-react'
-
-interface GoogleUser {
-  id: string
-  name: string
-  email: string
-  picture: string
-}
+import { motion } from 'framer-motion'
+import { CinematicBackground } from '@/components/CinematicBackground'
+import { LuxuryHeader } from '@/components/LuxuryHeader'
+import { LuxuryFooter } from '@/components/LuxuryFooter'
+import { LuxuryButton } from '@/components/LuxuryButton'
+import { LuxuryCard } from '@/components/LuxuryCard'
+import { PageTransition } from '@/components/PageTransition'
+import { ScrollReveal } from '@/components/ScrollReveal'
+import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
 
 export default function HomePage() {
-  const router = useRouter()
   const [selectedRole, setSelectedRole] = useState<'consumer' | 'label' | 'partner' | null>(null)
-  const [user, setUser] = useState<GoogleUser | null>(null)
-  const [showDemoModal, setShowDemoModal] = useState(false)
-
-  // Load user from localStorage on mount
-  useEffect(() => {
-    const savedUser = localStorage.getItem('googleUser')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-    }
-  }, [])
-
-  const handleRoleSelect = (role: 'consumer' | 'label' | 'partner') => {
-    setSelectedRole(role)
-    if (role === 'consumer') {
-      router.push('/onboarding/consumer')
-    } else if (role === 'label') {
-      router.push('/onboarding/label')
-    } else if (role === 'partner') {
-      router.push('/onboarding/ai-partner')
-    }
-  }
-
-  const handleGoogleSuccess = (credentialResponse: any) => {
-    try {
-      const credential = credentialResponse.credential
-      // Decode JWT token to get user info
-      const base64Url = credential.split('.')[1]
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
-      )
-      const decodedToken = JSON.parse(jsonPayload)
-
-      const userData: GoogleUser = {
-        id: decodedToken.sub,
-        name: decodedToken.name,
-        email: decodedToken.email,
-        picture: decodedToken.picture
-      }
-
-      setUser(userData)
-      localStorage.setItem('googleUser', JSON.stringify(userData))
-      localStorage.setItem('googleToken', credential)
-    } catch (error) {
-      console.error('Failed to decode token:', error)
-    }
-  }
-
-  const handleLogout = () => {
-    setUser(null)
-    localStorage.removeItem('googleUser')
-    localStorage.removeItem('googleToken')
-  }
-
-  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''
 
   return (
-    <GoogleOAuthProvider clientId={googleClientId}>
-      <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-black text-white overflow-hidden">
-        {/* Background Effects */}
-        <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-        </div>
+    <>
+      <Head>
+        <title>Ghaafeedi Music - Premium AI Music Platform</title>
+        <meta
+          name="description"
+          content="Experience premium AI music creation with cinematic animations, emotional storytelling, and luxury design."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
 
-        <div className="relative z-10">
-          {/* Header with Auth */}
-          <div className="flex items-center justify-between px-8 py-6 border-b border-gold/20">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-purple-500 flex items-center justify-center">
-                <span className="text-lg font-bold text-black">G</span>
-              </div>
-              <div>
-                <p className="text-gold text-sm font-bold">GHAAFEEDI</p>
-                <p className="text-gray-400 text-xs">MUSIC</p>
-              </div>
-            </div>
+      <PageTransition>
+        <div className="min-h-screen bg-luxury-dark relative overflow-hidden">
+          {/* Cinematic Background */}
+          <CinematicBackground />
 
-            {/* Auth Section */}
-            <div className="flex items-center gap-4">
-              {user ? (
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={user.picture}
-                      alt={user.name}
-                      className="w-8 h-8 rounded-full border border-gold"
-                    />
-                    <div className="text-sm">
-                      <p className="text-gold font-semibold">{user.name}</p>
-                      <p className="text-gray-400 text-xs">{user.email}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-2 bg-red-600/20 border border-red-500 text-red-400 rounded-lg hover:bg-red-600/40 transition-all"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={() => console.log('Login Failed')}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+          <LuxuryHeader />
 
-          {/* Main Content */}
-          <div className="px-8 py-12">
-            <div className="max-w-6xl mx-auto">
-              {/* Hero Section */}
-              <div className="text-center mb-16">
-                <h1 className="text-6xl md:text-7xl font-serif font-bold mb-4">
-                  <span className="text-gold">GHAAFEEDI</span>
-                </h1>
-                <p className="text-purple-400 text-xl md:text-2xl mb-2">MUSIC</p>
-                <p className="text-gray-400 text-lg tracking-widest">MUSIC. INNOVATION. LEGACY.</p>
-              </div>
+          {/* Hero Section */}
+          <motion.section
+            className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              {/* Main Headline */}
+              <motion.h1
+                className="text-7xl md:text-8xl font-bold text-luxury-pearl mb-6"
+                variants={staggerItem}
+                style={{
+                  background: 'linear-gradient(135deg, rgb(212, 175, 55), rgb(245, 242, 235))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textShadow: '0 0 30px rgba(212, 175, 55, 0.3)',
+                }}
+              >
+                Ghaafeedi Music
+              </motion.h1>
 
-              {/* Watch Demo Section */}
-              <div className="mb-16 bg-gradient-to-br from-black/50 to-purple-900/30 border border-gold/30 rounded-2xl p-8 overflow-hidden">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  {/* Demo Video Preview */}
-                  <div className="relative group">
-                    <div className="relative bg-black rounded-xl overflow-hidden border border-gold/30">
-                      <video
-                        src="/vidu-video-3304923238573597.mp4"
-                        className="w-full h-auto max-h-80 object-cover"
-                        poster="/vidu-video-3304923238573597.mp4"
-                      />
-                      {/* Play Button Overlay */}
-                      <button
-                        onClick={() => setShowDemoModal(true)}
-                        className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-all"
-                      >
-                        <div className="w-20 h-20 bg-gold/20 border-2 border-gold rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <Play className="w-10 h-10 text-gold fill-gold" />
-                        </div>
-                      </button>
-                    </div>
-                  </div>
+              {/* Tagline */}
+              <motion.p
+                className="text-2xl md:text-3xl text-luxury-gold mb-8 font-light tracking-widest"
+                variants={staggerItem}
+              >
+                Premium AI Music Creation Platform
+              </motion.p>
 
-                  {/* Demo Info */}
-                  <div>
-                    <h2 className="text-4xl font-bold mb-4">
-                      <span className="text-white">Experience </span>
-                      <span className="text-gold">Cinematic</span>
-                      <span className="text-white"> Music</span>
-                    </h2>
-                    <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                      Watch our exclusive demo reel showcasing the power of AI-generated cinematic music. From heartbreak to redemption, experience stories told through stunning visuals and emotionally resonant soundscapes.
-                    </p>
+              {/* Description */}
+              <motion.p
+                className="text-lg md:text-xl text-luxury-gray-light mb-12 max-w-2xl mx-auto leading-relaxed"
+                variants={staggerItem}
+              >
+                Experience the future of music creation with cinematic animations, emotional storytelling, and luxury design. Create, collaborate, and share your musical legacy.
+              </motion.p>
 
-                    <div className="space-y-3 mb-8">
-                      <div className="flex items-center gap-3">
-                        <span className="text-gold font-bold">✨</span>
-                        <span className="text-gray-300">7 Cinematic Scenes</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-gold font-bold">🎬</span>
-                        <span className="text-gray-300">Professional Production Quality</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-gold font-bold">🎵</span>
-                        <span className="text-gray-300">AI-Generated Soundtracks</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4">
-                      <button
-                        onClick={() => setShowDemoModal(true)}
-                        className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold to-orange-500 text-black rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all font-bold"
-                      >
-                        <Play className="w-5 h-5" />
-                        Watch Full Demo
-                      </button>
-                      <Link
-                        href="/cinematic-demo"
-                        className="px-6 py-3 border border-gold text-gold rounded-lg hover:bg-gold/10 transition-all font-bold"
-                      >
-                        View All Scenes
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Role Selection */}
-              <div className="mb-12">
-                <h2 className="text-3xl font-serif font-bold text-white text-center mb-12">
-                  Choose your account type
-                </h2>
-
-                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                  {/* Consumer Card */}
-                  <button
-                    onClick={() => handleRoleSelect('consumer')}
-                    className="group p-8 rounded-lg border-2 border-gold/50 bg-black/50 hover:border-gold hover:bg-black/80 transition-all duration-300"
-                  >
-                    <div className="text-5xl mb-4 text-center">♥</div>
-                    <h3 className="text-2xl font-serif font-bold text-white mb-3 text-center">
-                      Consumer
-                    </h3>
-                    <p className="text-gray-300 text-center">
-                      Discover, stream and enjoy exclusive music experiences.
-                    </p>
-                  </button>
-
-                  {/* Label Card */}
-                  <button
-                    onClick={() => handleRoleSelect('label')}
-                    className="group p-8 rounded-lg border-2 border-gold/50 bg-black/50 hover:border-gold hover:bg-black/80 transition-all duration-300"
-                  >
-                    <div className="text-5xl mb-4 text-center">👑</div>
-                    <h3 className="text-2xl font-serif font-bold text-white mb-3 text-center">
-                      Music Label/Artist
-                    </h3>
-                    <p className="text-gray-300 text-center">
-                      Manage your music, artists and releases. Grow your audience.
-                    </p>
-                  </button>
-
-                  {/* AI Partner Card */}
-                  <button
-                    onClick={() => handleRoleSelect('partner')}
-                    className="group p-8 rounded-lg border-2 border-gold/50 bg-black/50 hover:border-gold hover:bg-black/80 transition-all duration-300"
-                  >
-                    <div className="text-5xl mb-4 text-center">✨</div>
-                    <h3 className="text-2xl font-serif font-bold text-white mb-3 text-center">
-                      AI Artist Partner
-                    </h3>
-                    <p className="text-gray-300 text-center">
-                      Collaborate with Ghaafeedi's AI ecosystem and shape the future of music.
-                    </p>
-                  </button>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="text-center text-gray-500 text-sm mt-12">
-                <p>
-                  By continuing, you agree to our{' '}
-                  <a href="/terms-of-service" className="text-gold hover:text-gold/80">
-                    Terms of Service
-                  </a>{' '}
-                  and{' '}
-                  <a href="/privacy-policy" className="text-gold hover:text-gold/80">
-                    Privacy Policy
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Demo Modal */}
-        {showDemoModal && (
-          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-            <div className="bg-black border border-gold/30 rounded-2xl max-w-4xl w-full">
-              {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gold/20">
-                <h3 className="text-2xl font-bold text-gold">Cinematic Demo Reel</h3>
-                <button
-                  onClick={() => setShowDemoModal(false)}
-                  className="text-gray-400 hover:text-gold transition-all text-2xl"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Modal Content */}
-              <div className="p-6">
-                <video
-                  src="/vidu-video-3304923238573597.mp4"
-                  controls
-                  autoPlay
-                  className="w-full h-auto rounded-lg"
-                />
-                <div className="mt-4 text-center">
-                  <p className="text-gold font-semibold mb-2">Scene 1: Heartbreak</p>
-                  <p className="text-gray-300">
-                    An emotional journey through loss and reflection. This cinematic piece captures the raw vulnerability of heartbreak.
-                  </p>
-                  <Link
-                    href="/cinematic-demo"
-                    className="inline-block mt-4 px-6 py-2 bg-gold text-black rounded-lg font-bold hover:shadow-lg hover:shadow-gold/50 transition-all"
-                  >
-                    View All 7 Scenes
+              {/* CTA Buttons */}
+              <motion.div
+                className="flex gap-6 justify-center flex-wrap mb-16"
+                variants={staggerContainer}
+              >
+                <motion.div variants={staggerItem}>
+                  <Link href="/auth/signup">
+                    <LuxuryButton variant="primary" size="lg">
+                      Get Started
+                    </LuxuryButton>
                   </Link>
-                </div>
-              </div>
+                </motion.div>
+                <motion.div variants={staggerItem}>
+                  <Link href="/products-v2">
+                    <LuxuryButton variant="secondary" size="lg">
+                      Explore Products
+                    </LuxuryButton>
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Trust Indicators */}
+              <motion.div
+                className="flex justify-center gap-8 text-sm text-luxury-gray-light"
+                variants={staggerContainer}
+              >
+                <motion.div variants={staggerItem} className="flex items-center gap-2">
+                  <span className="text-luxury-gold">✓</span> SSL Encrypted
+                </motion.div>
+                <motion.div variants={staggerItem} className="flex items-center gap-2">
+                  <span className="text-luxury-gold">✓</span> PCI Compliant
+                </motion.div>
+                <motion.div variants={staggerItem} className="flex items-center gap-2">
+                  <span className="text-luxury-gold">✓</span> Money-Back Guarantee
+                </motion.div>
+              </motion.div>
             </div>
-          </div>
-        )}
-      </div>
-    </GoogleOAuthProvider>
+          </motion.section>
+
+          {/* Features Section */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.h2
+                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
+                variants={luxuryFadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                Premium Features
+              </motion.h2>
+
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {[
+                  {
+                    icon: '🎨',
+                    title: 'Cinematic Design',
+                    description: 'Luxury animations and visual effects at every touchpoint',
+                  },
+                  {
+                    icon: '🎵',
+                    title: 'AI Music Creation',
+                    description: 'Generate unlimited original music in any genre or style',
+                  },
+                  {
+                    icon: '🌟',
+                    title: 'Artist Worlds',
+                    description: 'Explore 6 unique AI artist universes with immersive experiences',
+                  },
+                  {
+                    icon: '🎤',
+                    title: 'Voice Cloning',
+                    description: 'Create voiceovers in your own voice with advanced AI',
+                  },
+                  {
+                    icon: '🎬',
+                    title: 'Music Videos',
+                    description: 'Generate stunning 4K music videos with cinematic visuals',
+                  },
+                  {
+                    icon: '📻',
+                    title: 'Podcast Producer',
+                    description: 'Generate, edit, and distribute podcast episodes automatically',
+                  },
+                ].map((feature, i) => (
+                  <motion.div key={i} variants={staggerItem}>
+                    <LuxuryCard variant="glass">
+                      <div className="text-5xl mb-4">{feature.icon}</div>
+                      <h3 className="text-2xl font-bold text-luxury-pearl mb-3">{feature.title}</h3>
+                      <p className="text-luxury-gray-light">{feature.description}</p>
+                    </LuxuryCard>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </ScrollReveal>
+
+          {/* Products Section */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.h2
+                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
+                variants={luxuryFadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                Our Products
+              </motion.h2>
+
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {[
+                  {
+                    name: 'AI Voice Clone',
+                    price: '$29.99',
+                    description: 'Create unlimited voiceovers in your own voice',
+                    color: 'rgba(255, 215, 0, 1)',
+                  },
+                  {
+                    name: 'AI Music Producer',
+                    price: '$39.99',
+                    description: 'Generate unlimited original music in any genre',
+                    color: 'rgba(147, 112, 219, 1)',
+                  },
+                  {
+                    name: 'AI Music Video',
+                    price: '$49.99',
+                    description: 'Create stunning 4K music videos with cinematic visuals',
+                    color: 'rgba(255, 107, 107, 1)',
+                  },
+                  {
+                    name: 'AI Podcast Producer',
+                    price: '$34.99',
+                    description: 'Generate, edit, and distribute podcast episodes',
+                    color: 'rgba(0, 255, 200, 1)',
+                  },
+                ].map((product, i) => (
+                  <motion.div key={i} variants={staggerItem}>
+                    <LuxuryCard variant="elevated">
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-2xl font-bold text-luxury-pearl">{product.name}</h3>
+                        <span
+                          className="text-xl font-bold text-luxury-gold"
+                        >
+                          {product.price}
+                        </span>
+                      </div>
+                      <p className="text-luxury-gray-light mb-6">{product.description}</p>
+                      <Link href="/products-v2">
+                        <LuxuryButton variant="primary" size="sm">
+                          Learn More
+                        </LuxuryButton>
+                      </Link>
+                    </LuxuryCard>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                className="text-center"
+                variants={staggerItem}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <Link href="/products-v2">
+                  <LuxuryButton variant="secondary" size="lg">
+                    View All Products
+                  </LuxuryButton>
+                </Link>
+              </motion.div>
+            </div>
+          </ScrollReveal>
+
+          {/* AI Artists Section */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.h2
+                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
+                variants={luxuryFadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                AI Artist Marketplace
+              </motion.h2>
+
+              <motion.p
+                className="text-lg text-luxury-gray-light text-center mb-12 max-w-2xl mx-auto"
+                variants={staggerItem}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                Discover 6 unique AI artists, each with their own immersive world and creative style. Collaborate, create, and share.
+              </motion.p>
+
+              <motion.div
+                className="text-center"
+                variants={staggerItem}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <Link href="/marketplace/ai-artists-v2">
+                  <LuxuryButton variant="primary" size="lg">
+                    Explore Artists
+                  </LuxuryButton>
+                </Link>
+              </motion.div>
+            </div>
+          </ScrollReveal>
+
+          {/* Role Selection */}
+          <ScrollReveal className="relative z-10 px-4 py-20">
+            <div className="max-w-6xl mx-auto">
+              <motion.h2
+                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
+                variants={luxuryFadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                Choose Your Role
+              </motion.h2>
+
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {[
+                  {
+                    icon: '♥',
+                    title: 'Consumer',
+                    description: 'Discover, stream and enjoy exclusive music experiences',
+                    path: '/auth/signup?role=consumer',
+                  },
+                  {
+                    icon: '👑',
+                    title: 'Music Label',
+                    description: 'Manage your music, artists and releases. Grow your audience.',
+                    path: '/auth/signup?role=label',
+                  },
+                  {
+                    icon: '✨',
+                    title: 'AI Partner',
+                    description: 'Collaborate with Ghaafeedi and shape the future of music',
+                    path: '/auth/signup?role=partner',
+                  },
+                ].map((role, i) => (
+                  <Link key={i} href={role.path}>
+                    <motion.div variants={staggerItem}>
+                      <LuxuryCard variant="glass">
+                        <div className="text-6xl mb-4 text-center">{role.icon}</div>
+                        <h3 className="text-2xl font-bold text-luxury-pearl text-center mb-3">
+                          {role.title}
+                        </h3>
+                        <p className="text-luxury-gray-light text-center mb-6">{role.description}</p>
+                        <div className="text-center">
+                          <LuxuryButton variant="primary" size="sm">
+                            Get Started
+                          </LuxuryButton>
+                        </div>
+                      </LuxuryCard>
+                    </motion.div>
+                  </Link>
+                ))}
+              </motion.div>
+            </div>
+          </ScrollReveal>
+
+          {/* CTA Section */}
+          <motion.section
+            className="relative z-10 px-4 py-20"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <div
+              className="max-w-4xl mx-auto rounded-2xl p-12 text-center border border-luxury-gold border-opacity-20"
+              style={{
+                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(147, 112, 219, 0.1))',
+              }}
+            >
+              <motion.h2
+                className="text-4xl font-bold text-luxury-pearl mb-4"
+                variants={staggerItem}
+              >
+                Ready to Create?
+              </motion.h2>
+
+              <motion.p
+                className="text-lg text-luxury-gray-light mb-8"
+                variants={staggerItem}
+              >
+                Join thousands of creators using Ghaafeedi Music to bring their musical vision to life.
+              </motion.p>
+
+              <motion.div variants={staggerItem}>
+                <Link href="/auth/signup">
+                  <LuxuryButton variant="primary" size="lg">
+                    Start Your Journey
+                  </LuxuryButton>
+                </Link>
+              </motion.div>
+            </div>
+          </motion.section>
+
+          <LuxuryFooter />
+        </div>
+      </PageTransition>
+    </>
   )
 }

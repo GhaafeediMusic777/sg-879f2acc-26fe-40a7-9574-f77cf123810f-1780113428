@@ -84,11 +84,11 @@ export default function AuthPage() {
         <div className="text-center text-gray-500 text-sm mt-12">
           <p>
             By continuing, you agree to our{' '}
-            <a href="/terms" className="text-gold hover:text-gold/80">
+            <a href="/terms-of-service" className="text-gold hover:text-gold/80">
               Terms of Service
             </a>{' '}
             and{' '}
-            <a href="/privacy" className="text-gold hover:text-gold/80">
+            <a href="/privacy-policy" className="text-gold hover:text-gold/80">
               Privacy Policy
             </a>
           </p>

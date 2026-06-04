@@ -56,18 +56,18 @@ export function Layout({ children, title, description }: LayoutProps) {
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Support</h3>
+              <h3 className="text-gold font-semibold mb-4">Support</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="mailto:support@ghaafeedimusic.com" className="hover:text-yellow-400 transition-colors">Email Support</a></li>
-                <li><Link href="/faq" className="hover:text-yellow-400 transition-colors">FAQ</Link></li>
-                <li><Link href="/refund-policy" className="hover:text-yellow-400 transition-colors">Refund Policy</Link></li>
+                <li><a href="mailto:support@ghaafeedimusic.com" className="hover:text-gold transition-colors">Email Support</a></li>
+                <li><Link href="/faq" className="hover:text-gold transition-colors">FAQ</Link></li>
+                <li><Link href="/refund-policy" className="hover:text-gold transition-colors">Refund Policy</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <h3 className="text-gold font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/privacy-policy" className="hover:text-yellow-400 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms-of-service" className="hover:text-yellow-400 transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy-policy" className="hover:text-gold transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms-of-service" className="hover:text-gold transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>

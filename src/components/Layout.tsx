@@ -45,8 +45,33 @@ export function Layout({ children, title, description }: LayoutProps) {
 
       {/* Footer */}
       <footer className="bg-black/50 backdrop-blur-md border-t border-purple-500/20 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-white font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/about" className="hover:text-yellow-400 transition-colors">About Us</Link></li>
+                <li><Link href="/ai-marketplace" className="hover:text-yellow-400 transition-colors">AI Marketplace</Link></li>
+                <li><Link href="/watch-demo" className="hover:text-yellow-400 transition-colors">Watch Demo</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Support</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="mailto:support@ghaafeedimusic.com" className="hover:text-yellow-400 transition-colors">Email Support</a></li>
+                <li><Link href="/faq" className="hover:text-yellow-400 transition-colors">FAQ</Link></li>
+                <li><Link href="/refund-policy" className="hover:text-yellow-400 transition-colors">Refund Policy</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/privacy-policy" className="hover:text-yellow-400 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms-of-service" className="hover:text-yellow-400 transition-colors">Terms of Service</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-purple-500/20 pt-8 text-center text-gray-400">
             <p>&copy; 2024 Ghaafeedi Music. All rights reserved.</p>
           </div>
         </div>

@@ -502,3 +502,9 @@ export default function ProductsPage() {
     </div>
   )
 }
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
+}

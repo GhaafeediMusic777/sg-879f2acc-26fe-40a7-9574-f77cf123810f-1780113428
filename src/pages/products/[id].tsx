@@ -1,203 +1,236 @@
-import React, { useState } from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
+import React from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
 import { LuxuryButton } from '@/components/LuxuryButton'
-import { LuxuryCard } from '@/components/LuxuryCard'
-import { PageTransition } from '@/components/PageTransition'
-import { ScrollReveal } from '@/components/ScrollReveal'
-import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
-import { getProductById, getAllProducts } from '@/config/products-14-v2'
-import { Star, Check, ArrowLeft, ShoppingCart } from 'lucide-react'
 
-const PRODUCT_DATA: Record<string, any> = {
+const PRODUCTS: Record<string, any> = {
   'emotional-soundtrack': {
     name: 'Emotional Soundtrack',
-    emoji: '🎵',
-    price: 49,
-    rating: 4.8,
-    reviews: 342,
-    category: 'Music',
     description: 'Your story as original cinematic music',
-    longDescription: 'Transform your emotional journey into a personalized cinematic soundtrack. Our AI analyzes your story\'s emotional arc and generates original music with emotionally intelligent lyrics performed by AI vocalists.',
-    whoItsFor: [
-      'People with powerful emotional stories to share',
-      'Content creators seeking unique music',
-      'Anyone wanting to preserve their journey in audio form',
-      'Creators looking for royalty-free cinematic music'
-    ],
-    whatToExpect: [
-      '3-5 minute personalized soundtrack',
-      'AI-generated cinematic vocals',
-      'Emotionally intelligent lyrics',
-      'Professional mastering',
-      '320kbps MP3 delivery',
-      'Lifetime access to your creation'
-    ],
+    price: '$49',
+    rating: 4.8,
+    image: '/products/emotional-soundtrack.jpg',
     features: [
-      'Emotional AI Analysis',
-      'Original Lyric Generation',
-      'Professional Mastering',
-      'Multiple Genre Options',
-      'Instant Delivery',
-      'Commercial Use License'
+      'Original cinematic music',
+      'Emotional storytelling',
+      'Professional production',
+      'Royalty-free',
+      'Download included',
     ],
-    tiers: [
-      { name: 'Basic', price: 49, features: ['Standard Soundtrack', 'MP3 Delivery', 'Email Access'] },
-      { name: 'Premium', price: 79, features: ['Extended Soundtrack', 'Multiple Formats', 'Priority Support'] }
-    ]
+    longDescription:
+      'Transform your emotional story into an original cinematic soundtrack. Our AI analyzes your narrative and creates a unique musical composition that perfectly captures the essence of your story.',
   },
-  'cinematic-story': {
+  'cinematic-story-film': {
     name: 'Cinematic Story Film',
-    emoji: '🎬',
-    price: 149,
-    rating: 4.9,
-    reviews: 521,
-    category: 'Video',
     description: 'Song + music video experience',
-    longDescription: 'Experience your story as a Netflix-quality cinematic film. Combines personalized music with AI-generated cinematic visuals, character consistency, and professional editing.',
-    whoItsFor: [
-      'People with transformative life stories',
-      'Content creators wanting premium visuals',
-      'Social media influencers',
-      'Anyone wanting a professional music video'
-    ],
-    whatToExpect: [
-      '4-6 minute personalized soundtrack',
-      '3-5 Netflix-inspired cinematic scenes',
-      'AI emotional analysis',
-      'HD video delivery (1080p)',
-      'Downloadable MP4 file',
-      'Dashboard viewing access'
-    ],
+    price: '$149',
+    rating: 4.9,
+    image: '/products/cinematic-story-film.jpg',
     features: [
-      'Emotional Intelligence AI',
-      'Cinematic Visuals',
-      'Character Consistency',
-      'Professional Editing',
-      'HD Quality',
-      'Social-Ready Clips'
+      'Music + video',
+      '4K resolution',
+      'Professional editing',
+      'Cinematic effects',
+      'Full HD download',
     ],
-    tiers: [
-      { name: 'Standard', price: 149, features: ['HD Video', 'Cinematic Scenes', 'Email Delivery'] },
-      { name: 'Premium', price: 199, features: ['4K Video', 'Extended Scenes', 'Priority Support'] }
-    ]
+    longDescription:
+      'Get both the original soundtrack AND a professional music video. Perfect for sharing your story with the world.',
   },
-  'memorial-legacy': {
+  'memorial-legacy-film': {
     name: 'Memorial Legacy Film',
-    emoji: '🕯️',
-    price: 299,
-    rating: 5.0,
-    reviews: 287,
-    category: 'Legacy',
     description: 'Preserve forever',
-    longDescription: 'Honor and preserve the memory of loved ones through cinematic AI storytelling. Create a lasting tribute that celebrates their life and impact.',
-    whoItsFor: [
-      'Families wanting to preserve memories',
-      'People grieving and healing',
-      'Anyone wanting to honor a loved one',
-      'Families seeking meaningful tributes'
-    ],
-    whatToExpect: [
-      '6-8 minute memorial soundtrack',
-      '10-15 minute family tribute film',
-      'HD cinematic video delivery',
-      'Personalized emotional narration',
-      'Legacy preservation for future generations',
-      'Priority support included'
-    ],
+    price: '$299',
+    rating: 5,
+    image: '/products/memorial-legacy-film.jpg',
     features: [
-      'Emotional Tribute',
-      'Family Collaboration',
-      'Lifetime Cloud Storage',
-      'Multiple Sharing Options',
-      'Professional Quality',
-      'Legacy Preservation'
+      'Lifetime preservation',
+      'High resolution',
+      'Professional production',
+      'Family sharing',
+      'Legacy archive',
     ],
-    tiers: [
-      { name: 'Basic Tribute', price: 249, features: ['Standard Film', 'HD Delivery', 'Family Sharing'] },
-      { name: 'Premium Legacy', price: 599, features: ['Extended Film', '4K Delivery', 'VIP Support'] },
-      { name: 'Luxury Documentary', price: 1499, features: ['Full Documentary', '4K HDR', 'Dedicated Coordinator'] }
-    ]
+    longDescription:
+      'Create a permanent, high-quality memorial that preserves your loved ones\' stories for generations to come.',
   },
   'signature-masterpiece': {
     name: 'Signature Masterpiece',
-    emoji: '👑',
-    price: 499,
-    rating: 5.0,
-    reviews: 198,
-    category: 'Premium',
     description: 'Ultimate cinematic experience',
-    longDescription: 'The ultimate premium cinematic storytelling experience. Full production with 4K HDR delivery, VIP support, and all premium features included.',
-    whoItsFor: [
-      'Celebrities and influencers',
-      'People wanting the absolute best',
-      'Content creators seeking premium quality',
-      'Anyone wanting a masterpiece creation'
-    ],
-    whatToExpect: [
-      '8-12 minute full cinematic soundtrack',
-      '15-20 minute personalized cinematic film',
-      'Premium 4K HDR delivery',
-      'Priority generation queue',
-      'VIP support with dedicated coordinator',
-      'Multiple format exports',
-      'Social media teaser clips',
-      'Lifetime cloud storage access'
-    ],
+    price: '$499',
+    rating: 5,
+    image: '/products/signature-masterpiece.jpg',
     features: [
-      '4K HDR Quality',
-      'VIP Coordinator',
-      'Priority Processing',
-      'Multiple Formats',
-      'Social Media Clips',
-      'Lifetime Storage',
-      'Commercial License',
-      'Unlimited Revisions'
+      'Premium production',
+      '8K resolution',
+      'Custom editing',
+      'Professional team',
+      'Unlimited revisions',
     ],
-    tiers: [
-      { name: 'Masterpiece', price: 499, features: ['Full 4K HDR', 'VIP Support', 'All Premium Features'] }
-    ]
+    longDescription:
+      'Our most premium offering. Get white-glove service with our professional team creating your ultimate cinematic masterpiece.',
   },
-  'future-self': {
+  'future-self-vision': {
     name: 'Future Self Vision',
-    emoji: '✨',
-    price: 125,
+    description: 'Visualize yourself, successful, happy, peaceful',
+    price: '$125',
     rating: 4.7,
-    reviews: 156,
-    category: 'Vision',
-    description: 'Visualize yourself successful, happy, peaceful',
-    longDescription: 'Visualize your ideal future self through AI-generated cinematic storytelling. See yourself successful, happy, and at peace in a personalized vision film.',
-    whoItsFor: [
-      'People seeking personal growth',
-      'Entrepreneurs with big dreams',
-      'Anyone wanting motivation and clarity',
-      'People exploring their potential'
-    ],
-    whatToExpect: [
-      'Personalized vision questionnaire',
-      'AI-generated future self visualization',
-      'Cinematic film of your ideal future',
-      'Motivational soundtrack',
-      'HD video delivery',
-      'Personal vision guide'
-    ],
+    image: '/products/future-self-vision.jpg',
     features: [
-      'Future Self Visualization',
-      'Personalized Vision',
-      'Motivational Content',
-      'HD Quality',
-      'Instant Delivery',
-      'Vision Guide Included'
+      'AI visualization',
+      'Personal transformation',
+      'Motivational content',
+      'Visual representation',
+      'Download included',
     ],
-    tiers: [
-      { name: 'Basic Vision', price: 79, features: ['Standard Vision', 'HD Delivery'] },
-      { name: 'Premium Cinematic', price: 149, features: ['Extended Vision', '4K Delivery', 'Personal Coach'] }
-    ]
-  }
+    longDescription:
+      'Visualize your best future self through AI-generated cinematic content. Perfect for motivation and goal-setting.',
+  },
+  'dream-ai-visualization': {
+    name: 'Dream AI Visualization',
+    description: 'Subconscious cinema',
+    price: '$79',
+    rating: 4.6,
+    image: '/products/dream-ai-visualization.jpg',
+    features: [
+      'Dream analysis',
+      'AI interpretation',
+      'Visual representation',
+      'Subconscious insights',
+      'HD quality',
+    ],
+    longDescription:
+      'Transform your dreams into visual art. Our AI analyzes your dream descriptions and creates surreal, beautiful visualizations.',
+  },
+  'relationship-healing': {
+    name: 'Relationship Healing',
+    description: 'Transform pain to purpose',
+    price: '$119',
+    rating: 4.7,
+    image: '/products/relationship-healing.jpg',
+    features: [
+      'Emotional healing',
+      'Therapeutic content',
+      'Professional guidance',
+      'Personal growth',
+      'Support resources',
+    ],
+    longDescription:
+      'Process relationship experiences through creative expression. Create meaningful content that transforms pain into purpose.',
+  },
+  'cinematic-life-story': {
+    name: 'Cinematic Life Story',
+    description: 'Biography as cinema',
+    price: '$249',
+    rating: 4.8,
+    image: '/products/cinematic-life-story.jpg',
+    features: [
+      'Full biography',
+      'Cinematic treatment',
+      '4K quality',
+      'Professional editing',
+      'Family edition',
+    ],
+    longDescription:
+      'Turn your entire life story into a cinematic biography. Perfect for preserving your legacy and sharing with family.',
+  },
+  'couples-journey-film': {
+    name: 'Couples Journey Film',
+    description: 'Your love story',
+    price: '$199',
+    rating: 4.9,
+    image: '/products/couples-journey-film.jpg',
+    features: [
+      'Love story cinema',
+      'Romantic music',
+      'Professional production',
+      '4K quality',
+      'Shareable format',
+    ],
+    longDescription:
+      'Celebrate your relationship journey with a professionally produced cinematic film of your love story.',
+  },
+  'sophia-ai-membership': {
+    name: 'Sophia AI Membership',
+    description: '24/7 emotional support & wellness companion',
+    price: '$19/month',
+    rating: 4.8,
+    image: '/products/sophia-ai-membership.jpg',
+    features: [
+      '24/7 availability',
+      'Emotional support',
+      'Wellness guidance',
+      'Personal insights',
+      'Monthly updates',
+    ],
+    longDescription:
+      'Get ongoing emotional support and wellness guidance from our AI companion. Available whenever you need to talk.',
+  },
+  'voice-cloning-studio': {
+    name: 'Voice Cloning Studio',
+    description: 'Hear your story in your own voice',
+    price: '$99',
+    rating: 4.7,
+    image: '/products/voice-cloning-studio.jpg',
+    features: [
+      'Voice cloning',
+      'Professional narration',
+      'Multiple formats',
+      'High quality audio',
+      'Download included',
+    ],
+    longDescription:
+      'Clone your voice and hear your story narrated in your own voice. Perfect for audiobooks and personal projects.',
+  },
+  'social-ready-clips': {
+    name: 'Social-Ready Clips',
+    description: 'Auto-generated clips for TikTok & Instagram',
+    price: '$39',
+    rating: 4.6,
+    image: '/products/social-ready-clips.jpg',
+    features: [
+      'Auto-generated clips',
+      'TikTok optimized',
+      'Instagram ready',
+      'Multiple formats',
+      'Trending music',
+    ],
+    longDescription:
+      'Get ready-to-share clips optimized for social media. Perfect for going viral with your story.',
+  },
+  'family-vault': {
+    name: 'Family Vault',
+    description: 'Precious memories preserved',
+    price: '$149',
+    rating: 4.8,
+    image: '/products/family-vault.jpg',
+    features: [
+      'Family storage',
+      'Secure backup',
+      'Multi-user access',
+      'Lifetime storage',
+      'Privacy protected',
+    ],
+    longDescription:
+      'Create a secure family archive. Store and share precious memories with family members safely and securely.',
+  },
+  'nft-collection': {
+    name: 'NFT Collection',
+    description: 'Your story as blockchain legacy',
+    price: '$199',
+    rating: 4.7,
+    image: '/products/nft-collection.jpg',
+    features: [
+      'NFT minting',
+      'Blockchain storage',
+      'Ownership verified',
+      'Resale capability',
+      'Digital legacy',
+    ],
+    longDescription:
+      'Mint your story as an NFT. Create a permanent, verifiable digital asset on the blockchain.',
+  },
 }
 
 export default function ProductPage() {
@@ -205,143 +238,105 @@ export default function ProductPage() {
   const { id } = router.query
 
   if (!id || typeof id !== 'string') {
-    return <div>Loading...</div>
+    return null
   }
 
-  const product = PRODUCT_DATA[id] || {
-    name: 'Product',
-    emoji: '🎵',
-    price: 0,
-    rating: 4.5,
-    reviews: 0,
-    category: 'Category',
-    description: 'Product description',
-    longDescription: 'Detailed product description',
-    whoItsFor: [],
-    whatToExpect: [],
-    features: [],
-    tiers: []
+  const product = PRODUCTS[id]
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-luxury-dark text-luxury-pearl flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
+          <Link href="/">
+            <LuxuryButton variant="primary">Back to Home</LuxuryButton>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-950 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Back Button */}
-        <Link
-          href="/products"
-          className="flex items-center gap-2 text-gold hover:text-gold/80 mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back to Products
-        </Link>
+    <div className="min-h-screen bg-luxury-dark text-luxury-pearl">
+      <LuxuryHeader />
 
-        {/* Product Header */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-          <div>
-            <div className="text-7xl mb-6">{product.emoji}</div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-gold to-purple-400 bg-clip-text text-transparent mb-4">
+      {/* Hero Section */}
+      <motion.section
+        className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Image */}
+          <motion.div
+            className="rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-auto rounded-2xl"
+            />
+          </motion.div>
+
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl font-bold mb-4 text-luxury-pearl">
               {product.name}
             </h1>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex items-center gap-1">
-                <Star className="w-5 h-5 fill-gold text-gold" />
-                <span className="text-gold font-semibold">{product.rating}</span>
-                <span className="text-gray-400">({product.reviews} reviews)</span>
+            <p className="text-xl text-luxury-gray-light mb-6">
+              {product.longDescription}
+            </p>
+
+            {/* Price and Rating */}
+            <div className="flex items-center gap-8 mb-8 pb-8 border-b border-luxury-gold border-opacity-20">
+              <div>
+                <p className="text-sm text-luxury-gray-light mb-2">Price</p>
+                <p className="text-4xl font-bold text-luxury-gold">
+                  {product.price}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-luxury-gray-light mb-2">Rating</p>
+                <p className="text-3xl font-bold text-luxury-pearl">
+                  {product.rating} / 5
+                </p>
               </div>
             </div>
-            <p className="text-xl text-gray-300 mb-8">{product.longDescription}</p>
-          </div>
 
-          <div className="bg-black-800 border border-gold/30 rounded-2xl p-8 h-fit">
-            <div className="text-5xl font-bold text-gold mb-2">${product.price}</div>
-            <p className="text-gray-400 mb-8">One-time purchase</p>
-            <button className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all mb-4">
-              <ShoppingCart className="w-5 h-5" />
-              Get Started Now
-            </button>
-            <button className="w-full px-6 py-3 border border-gold/30 text-gold font-semibold rounded-lg hover:bg-gold/10 transition-all">
-              Learn More
-            </button>
-          </div>
-        </div>
-
-        {/* Who It's For */}
-        <div className="bg-black-800 border border-gold/30 rounded-2xl p-8 mb-8">
-          <h2 className="text-3xl font-bold text-gold mb-6">Who This Is For</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {product.whoItsFor.map((item: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-gold flex-shrink-0 mt-1" />
-                <span className="text-gray-300">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* What To Expect */}
-        <div className="bg-black-800 border border-gold/30 rounded-2xl p-8 mb-8">
-          <h2 className="text-3xl font-bold text-gold mb-6">What You'll Get</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {product.whatToExpect.map((item: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-gold flex-shrink-0 mt-1" />
-                <span className="text-gray-300">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="bg-black-800 border border-gold/30 rounded-2xl p-8 mb-8">
-          <h2 className="text-3xl font-bold text-gold mb-6">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {product.features.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-center gap-3 p-4 bg-black-900 rounded-lg border border-gold/20">
-                <Check className="w-5 h-5 text-gold flex-shrink-0" />
-                <span className="text-gray-300">{feature}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Pricing Tiers */}
-        {product.tiers.length > 1 && (
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gold mb-6">Pricing Tiers</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {product.tiers.map((tier: any, idx: number) => (
-                <div key={idx} className="bg-black-800 border border-gold/30 rounded-2xl p-8">
-                  <h3 className="text-2xl font-bold text-gold mb-2">{tier.name}</h3>
-                  <div className="text-4xl font-bold text-gold mb-6">${tier.price}</div>
-                  <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature: string, fidx: number) => (
-                      <li key={fidx} className="flex items-start gap-2">
-                        <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button className="w-full px-6 py-3 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all">
-                    Choose {tier.name}
-                  </button>
-                </div>
-              ))}
+            {/* Features */}
+            <div className="mb-8">
+              <h3 className="text-xl font-bold mb-4 text-luxury-pearl">
+                Features
+              </h3>
+              <ul className="space-y-3">
+                {product.features.map((feature: string, i: number) => (
+                  <li key={i} className="flex items-center gap-3 text-luxury-gray-light">
+                    <span className="text-luxury-gold font-bold">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        )}
 
-        {/* CTA */}
-        <div className="bg-gradient-to-r from-gold/10 to-purple-500/10 border border-gold/30 rounded-2xl p-12 text-center">
-          <h2 className="text-4xl font-bold text-gold mb-4">Ready to Transform Your Story?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Join thousands of people creating cinematic masterpieces with Ghaafeedi Music
-          </p>
-          <button className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gold to-purple-500 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all">
-            <ShoppingCart className="w-5 h-5" />
-            Get Started Now
-          </button>
+            {/* CTA */}
+            <Link href="/auth/signup">
+              <LuxuryButton variant="primary" size="lg">
+                Get Started Now
+              </LuxuryButton>
+            </Link>
+          </motion.div>
         </div>
-      </div>
+      </motion.section>
+
+      <LuxuryFooter />
     </div>
   )
 }

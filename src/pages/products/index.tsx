@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
 import { CinematicParticles } from '@/components/CinematicParticles'
 import { AuroraGlow } from '@/components/AuroraGlow'
 import { CinematicLoader } from '@/components/CinematicLoader'
+import { CinematicAudioToggle } from '@/components/CinematicAudioToggle'
 
 export default function ProductsPage() {
   const [isMobile, setIsMobile] = useState(false)
@@ -32,6 +33,9 @@ export default function ProductsPage() {
 
       {/* Aurora Glow Effects */}
       <AuroraGlow />
+
+      {/* Optional Cinematic Audio */}
+      <CinematicAudioToggle />
 
       {/* Fixed Background Gradient */}
       <div

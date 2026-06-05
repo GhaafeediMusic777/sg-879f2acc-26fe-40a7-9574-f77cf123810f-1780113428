@@ -10,6 +10,15 @@ export interface ProductData {
   badgeText: string
   collection: 'storytelling' | 'legacy' | 'transformation' | 'creator'
   
+  // Cinematic metadata
+  genre: string
+  deliveryTime: string
+  experienceLevel: 'Essential' | 'Premium' | 'Elite'
+  format: string
+  
+  // Outcome-focused description
+  outcomeDescription: string
+  
   // Storytelling sections
   whatThisExperienceIs: string
   whoItIsFor: string[]
@@ -44,6 +53,13 @@ export const PRODUCTS: ProductData[] = [
     badgeStyle: 'bg-yellow-900 bg-opacity-80 text-yellow-100',
     badgeText: 'GOLD FIRE',
     collection: 'storytelling',
+    
+    genre: 'Musical Storytelling',
+    deliveryTime: '48 Hours',
+    experienceLevel: 'Essential',
+    format: 'Audio',
+    
+    outcomeDescription: 'Transform your memories into a cinematic score that sounds like it was composed for the movie of your life.',
     
     whatThisExperienceIs: 'Transform your memories, milestones, personal journey, or life story into an original cinematic soundtrack crafted exclusively for you. Our AI-assisted creative process analyzes your narrative and creates music designed to capture the emotions, meaning, and atmosphere behind your story.',
     
@@ -114,6 +130,13 @@ export const PRODUCTS: ProductData[] = [
     badgeStyle: 'bg-purple-900 bg-opacity-80 text-purple-100',
     badgeText: 'CINEMATIC',
     collection: 'storytelling',
+    
+    genre: 'Cinematic Production',
+    deliveryTime: '7–10 Days',
+    experienceLevel: 'Premium',
+    format: 'Film + Soundtrack',
+    
+    outcomeDescription: 'Turn your life into a feature film. Original music paired with stunning visuals that tell your story like a Hollywood production.',
     
     whatThisExperienceIs: 'Receive both an original cinematic soundtrack AND a professional music video that brings your story to life. This is the complete creative package—music composed from your narrative, paired with stunning visual storytelling.',
     
@@ -187,6 +210,13 @@ export const PRODUCTS: ProductData[] = [
     badgeText: 'AURORA BLUE',
     collection: 'transformation',
     
+    genre: 'Visual Exploration',
+    deliveryTime: '24–48 Hours',
+    experienceLevel: 'Essential',
+    format: 'Visual Art + Video',
+    
+    outcomeDescription: 'See the hidden landscapes of your mind brought to life through stunning cinematic visuals. A visual journey into your subconscious.',
+    
     whatThisExperienceIs: 'Visualize the hidden landscapes of your subconscious mind. Our AI analyzes your dreams, desires, and inner world to create stunning cinematic visualizations that represent your deepest self.',
     
     whoItIsFor: [
@@ -256,6 +286,13 @@ export const PRODUCTS: ProductData[] = [
     badgeStyle: 'bg-amber-900 bg-opacity-80 text-amber-100',
     badgeText: 'WARM AMBER',
     collection: 'legacy',
+    
+    genre: 'Legacy Preservation',
+    deliveryTime: '10–14 Days',
+    experienceLevel: 'Premium',
+    format: 'Film + Archive',
+    
+    outcomeDescription: 'Honor a life lived with a beautiful, lasting tribute. A professional memorial that celebrates memory and brings family together.',
     
     whatThisExperienceIs: 'Create a permanent, high-quality memorial that honors and preserves the memory of a loved one. This is a cinematic tribute combining storytelling, original music, and visual artistry into a lasting legacy.',
     
@@ -328,6 +365,13 @@ export const PRODUCTS: ProductData[] = [
     badgeStyle: 'bg-violet-900 bg-opacity-80 text-violet-100',
     badgeText: 'ROYAL PURPLE',
     collection: 'storytelling',
+    
+    genre: 'Luxury Cinema',
+    deliveryTime: '14–21 Days',
+    experienceLevel: 'Elite',
+    format: 'Film + Soundtrack + Archive',
+    
+    outcomeDescription: 'The ultimate creative experience. A comprehensive cinematic masterpiece worthy of film festivals, combining your complete story, original orchestral soundtrack, and premium production.',
     
     whatThisExperienceIs: 'The ultimate creative experience. A comprehensive cinematic production combining your complete story, original soundtrack, professional videography, and premium editing. This is the masterpiece tier—no compromises.',
     
@@ -406,60 +450,67 @@ export const PRODUCTS: ProductData[] = [
     badgeText: 'ROSE GOLD',
     collection: 'transformation',
     
+    genre: 'Aspirational Visualization',
+    deliveryTime: '3–5 Days',
+    experienceLevel: 'Premium',
+    format: 'Visual + Video',
+    
+    outcomeDescription: 'See yourself thriving. A powerful visualization of your ideal future self—successful, happy, and at peace. Perfect for motivation and goal-setting.',
+    
     whatThisExperienceIs: 'Visualize your ideal future self through cinematic AI-generated content. See yourself successful, happy, and at peace. A powerful tool for motivation, goal-setting, and personal transformation.',
     
     whoItIsFor: [
       'Goal-oriented individuals',
       'Personal development seekers',
-      'Entrepreneurs and leaders',
-      'Meditation practitioners',
-      'Vision board creators'
+      'Athletes and performers',
+      'Career builders',
+      'Transformation enthusiasts'
     ],
     
-    whatWeCreate: 'A series of cinematic visualizations of your ideal future self in various life scenarios. Stunning imagery designed for daily inspiration and motivation.',
+    whatWeCreate: 'A series of cinematic visualizations depicting your ideal future self in various contexts. Stunning imagery designed to inspire and motivate.',
     
     deliverables: [
       'Series of future self visualizations',
-      'Cinematic video montage',
-      'Meditation-ready version',
-      'Wallpaper collection',
-      'Vision board assets',
+      'Motivational video version',
+      'High-resolution imagery',
+      'Desktop and mobile wallpapers',
+      'Meditation-ready audio',
       'Digital delivery package'
     ],
     
-    emotionalOutcome: 'Gain clarity on your ideal future. Experience daily inspiration through cinematic visualizations of your best self.',
+    emotionalOutcome: 'Feel inspired and motivated. See yourself achieving your goals and living your ideal life through powerful visual imagery.',
     
     productionTimeline: '3–5 business days',
     
-    pricingExplanation: 'Professional vision coaching and visualization services cost $200–$500+. Our AI-assisted creation delivers personalized visualizations at an accessible price.',
+    pricingExplanation: 'Professional visualization coaching and imagery typically costs $500–$2,000+. Our AI-assisted creation delivers transformational content at an accessible price.',
     
     premiumFeatures: [
-      'Multiple scenario visualizations',
-      'Meditation-ready audio',
-      'Vision board asset pack',
-      'Lifetime access and updates'
+      'Motivational audio included',
+      'Multiple visualization scenarios',
+      'Wallpaper pack for all devices',
+      'Lifetime access'
     ],
     
     deliveryPackage: [
-      'Series of 12–20 cinematic visualizations (8K)',
-      'Cinematic video montage (4K)',
-      'Meditation version with ambient audio',
-      'Vision board asset pack',
-      'Desktop and mobile wallpapers'
+      'Series of 8–12 high-resolution visualizations (8K)',
+      'Motivational video version (4K)',
+      'Desktop wallpapers (multiple resolutions)',
+      'Mobile wallpapers (all sizes)',
+      'Motivational audio track'
     ],
     
     faqs: [
       {
         question: 'How many visualizations will I receive?',
-        answer: 'Typically 12–20 unique cinematic visualizations of your ideal future.'
+        answer: 'Typically 8–12 unique future self visualizations.'
       },
       {
         question: 'Can I use these for meditation?',
-        answer: 'Yes, we include a meditation-ready version with calming audio.'
+        answer: 'Yes, we include motivational audio to accompany your visualizations.'
       },
       {
-        question: 'Can I customize the scenarios?',
-        answer: 'Yes, you can specify scenarios and outcomes for your visualizations.'
+        question: 'How often should I view these?',
+        answer: 'Daily viewing is recommended for maximum motivational impact.'
       }
     ]
   },
@@ -476,60 +527,68 @@ export const PRODUCTS: ProductData[] = [
     badgeText: 'EMERALD GROWTH',
     collection: 'transformation',
     
-    whatThisExperienceIs: 'Transform relationship experiences—past, present, or aspirational—into a healing cinematic journey. Process emotions, find closure, or celebrate growth through storytelling and visual art.',
+    genre: 'Healing Expression',
+    deliveryTime: '5–7 Days',
+    experienceLevel: 'Premium',
+    format: 'Film + Soundtrack',
+    
+    outcomeDescription: 'Transform relationship experiences into meaningful creative expression. Process emotions and find healing through cinematic storytelling.',
+    
+    whatThisExperienceIs: 'Process relationship experiences through creative expression. Create meaningful content that transforms pain into purpose. A therapeutic journey of healing and growth.',
     
     whoItIsFor: [
-      'Individuals processing relationships',
-      'Healing and closure seekers',
+      'Those navigating relationship transitions',
+      'Healing seekers',
       'Personal growth enthusiasts',
-      'Therapy and wellness practitioners',
-      'Transformation documenters'
+      'Storytellers and artists',
+      'Transformation seekers'
     ],
     
-    whatWeCreate: 'A cinematic healing journey that transforms relationship experiences into art. Visual storytelling designed for emotional processing and growth.',
+    whatWeCreate: 'A healing-focused cinematic piece combining your story with therapeutic music and visual storytelling. Designed for processing and growth.',
     
     deliverables: [
-      'Cinematic healing journey (4K)',
-      'Emotional soundtrack',
-      'Healing meditation version',
-      'Reflection journal prompts',
-      'Personal usage license',
-      'Digital delivery package'
+      'Healing-focused cinematic film',
+      'Therapeutic original soundtrack',
+      'Guided reflection content',
+      'Journaling prompts and resources',
+      'Multiple format delivery',
+      'Support resources'
     ],
     
-    emotionalOutcome: 'Experience transformation and healing. Process emotions through cinematic storytelling and emerge with clarity and peace.',
+    emotionalOutcome: 'Experience emotional release and healing. Transform pain into purpose through creative expression and cinematic storytelling.',
     
     productionTimeline: '5–7 business days',
     
-    pricingExplanation: 'Therapeutic art and healing services cost $150–$400+. Our AI-assisted creation combines therapeutic principles with cinematic art at an accessible price.',
+    pricingExplanation: 'Therapeutic creative coaching typically costs $300–$1,500+. Our integrated approach delivers healing support at an accessible price.',
     
     premiumFeatures: [
-      'Therapeutic guidance included',
-      'Meditation-ready version',
-      'Reflection journal prompts',
+      'Therapeutic music included',
+      'Guided reflection content',
+      'Support resources and journaling prompts',
       'Lifetime access'
     ],
     
     deliveryPackage: [
-      'Cinematic healing journey (4K)',
-      'Emotional soundtrack',
-      'Meditation version with healing audio',
-      'Reflection journal (PDF)',
-      'Healing affirmations pack'
+      'Healing-focused cinematic film (4K)',
+      '1080p shareable version',
+      'Therapeutic soundtrack',
+      'Guided reflection content',
+      'Journaling prompts and resources',
+      'Support resource guide'
     ],
     
     faqs: [
       {
-        question: 'Is this therapeutic?',
-        answer: 'This is designed for emotional processing and self-reflection, not as a substitute for therapy.'
+        question: 'Is this a substitute for therapy?',
+        answer: 'No, this is a creative healing tool. We recommend professional therapy for ongoing support.'
       },
       {
-        question: 'How long is the healing journey?',
-        answer: 'Typically 5–10 minutes, designed for contemplation and reflection.'
+        question: 'How long is the healing film?',
+        answer: 'Typically 5–8 minutes, customizable based on your story.'
       },
       {
-        question: 'Can I share this?',
-        answer: 'Personal sharing is included. Commercial licensing available as upgrade.'
+        question: 'Can I share this with others?',
+        answer: 'Yes, sharing is encouraged as part of the healing process.'
       }
     ]
   },
@@ -542,66 +601,73 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.8,
     image: '/products/cinematic-life-story.jpg',
     accentColor: '#F59E0B',
-    badgeStyle: 'bg-amber-800 bg-opacity-80 text-amber-50',
+    badgeStyle: 'bg-amber-800 bg-opacity-80 text-amber-100',
     badgeText: 'GOLDEN NARRATIVE',
-    collection: 'storytelling',
+    collection: 'legacy',
     
-    whatThisExperienceIs: 'Transform your complete life story into a cinematic biography. From childhood to present, tell your complete narrative through professional storytelling, original music, and stunning visuals.',
+    genre: 'Biography Cinema',
+    deliveryTime: '10–14 Days',
+    experienceLevel: 'Premium',
+    format: 'Film + Archive',
+    
+    outcomeDescription: 'Your entire life story told like a feature film. A comprehensive cinematic biography that preserves your legacy for generations.',
+    
+    whatThisExperienceIs: 'Turn your entire life story into a cinematic biography. From childhood to present, your journey becomes a professional film. Perfect for preserving your legacy and sharing with family.',
     
     whoItIsFor: [
-      'Individuals documenting their life',
+      'Legacy builders',
       'Family historians',
-      'Legacy creators',
-      'Autobiography enthusiasts',
-      'Personal brand builders'
+      'Individuals with rich life stories',
+      'Grandparents sharing wisdom',
+      'Autobiography creators'
     ],
     
-    whatWeCreate: 'A comprehensive cinematic biography covering your complete life story. Professional production with original music, visual storytelling, and cinematic editing.',
+    whatWeCreate: 'A comprehensive cinematic biography covering your entire life journey. Professional production with storytelling, music, and visual artistry.',
     
     deliverables: [
-      'Complete cinematic biography (4K)',
+      'Complete life story film (4K)',
       'Original biographical soundtrack',
+      'Chapter-based structure',
       'Professional editing and color grading',
-      'Photo restoration and enhancement',
-      'Multiple format delivery',
-      'Archival storage'
+      'Family edition with sharing portal',
+      'Multiple format delivery'
     ],
     
-    emotionalOutcome: 'See your entire life story transformed into a professional cinematic production. A comprehensive biography worthy of preservation and sharing.',
+    emotionalOutcome: 'Leave a lasting legacy. Your complete life story preserved as a professional film for family and future generations.',
     
-    productionTimeline: '12–16 business days',
+    productionTimeline: '10–14 business days',
     
-    pricingExplanation: 'Professional biography production costs $2,000–$8,000+. Our integrated process delivers comprehensive life story production at a fraction of traditional costs.',
+    pricingExplanation: 'Professional biography production typically costs $2,000–$8,000+. Our integrated approach delivers comprehensive legacy preservation at an accessible price.',
     
     premiumFeatures: [
       'Complete life story coverage',
-      'Photo restoration included',
+      'Chapter-based structure',
       'Original biographical music',
-      'Professional color grading',
-      'Archival storage and backup'
+      'Family sharing portal',
+      'Archival storage'
     ],
     
     deliveryPackage: [
-      '4K master biography file',
-      '1080p shareable version',
+      '4K master biography film',
+      '1080p family-friendly version',
       'Original biographical soundtrack',
-      'Restored and enhanced photos',
-      'Behind-the-scenes content',
+      'Chapter-based structure with timestamps',
+      'Family sharing portal access',
       'Archival backup storage'
     ],
     
     faqs: [
       {
         question: 'How long is the complete biography?',
-        answer: 'Typically 15–30 minutes, covering your complete life story.'
+        answer: 'Typically 30–60 minutes, covering your entire life story.'
       },
       {
         question: 'Can I share this with family?',
-        answer: 'Yes, full family sharing rights are included.'
+        answer: 'Yes, we provide a family sharing portal for easy access.'
       },
       {
-        question: 'Will my photos be restored?',
-        answer: 'Yes, photo restoration and enhancement are included.'
+        question: 'Can I include family members in the story?',
+        answer: 'Absolutely, family stories and perspectives are encouraged.'
       }
     ]
   },
@@ -614,66 +680,73 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.9,
     image: '/products/couples-journey-film.jpg',
     accentColor: '#EC4899',
-    badgeStyle: 'bg-rose-900 bg-opacity-80 text-rose-100',
+    badgeStyle: 'bg-pink-900 bg-opacity-80 text-pink-100',
     badgeText: 'ROMANTIC ROSE',
     collection: 'storytelling',
     
-    whatThisExperienceIs: 'Celebrate your love story through cinematic storytelling. From first meeting to present day, transform your relationship journey into a beautiful film with original music and professional production.',
+    genre: 'Romantic Cinema',
+    deliveryTime: '7–10 Days',
+    experienceLevel: 'Premium',
+    format: 'Film + Soundtrack',
+    
+    outcomeDescription: 'Celebrate your relationship journey with a professionally produced cinematic film. Your love story told like a romantic feature film.',
+    
+    whatThisExperienceIs: 'Celebrate your relationship journey with a professionally produced cinematic film of your love story. From first meeting to present day, your romance becomes a beautiful film.',
     
     whoItIsFor: [
-      'Couples celebrating relationships',
-      'Wedding anniversaries',
-      'Engagement celebrations',
-      'Relationship milestones',
-      'Couples seeking creative expression'
+      'Couples celebrating milestones',
+      'Anniversary commemorations',
+      'Wedding alternatives',
+      'Long-term relationship celebrations',
+      'Love story preservers'
     ],
     
-    whatWeCreate: 'A cinematic love story film featuring your journey together. Original music, professional editing, and beautiful visual storytelling.',
+    whatWeCreate: 'A romantic cinematic film featuring your relationship journey. Original romantic music, professional cinematography, and beautiful storytelling.',
     
     deliverables: [
-      'Cinematic love story film (4K)',
+      'Romantic cinematic film (4K)',
       'Original romantic soundtrack',
-      'Professional editing and color grading',
-      'Photo restoration and enhancement',
-      'Multiple format delivery',
-      'Commercial usage rights'
+      'Professional cinematography',
+      'Romantic color grading',
+      'Social media clips',
+      'Multiple format delivery'
     ],
     
-    emotionalOutcome: 'Experience your love story transformed into a beautiful cinematic production. A timeless film celebrating your relationship.',
+    emotionalOutcome: 'Celebrate your love. Experience your relationship journey transformed into a beautiful, professional film worthy of sharing with the world.',
     
-    productionTimeline: '8–12 business days',
+    productionTimeline: '7–10 business days',
     
-    pricingExplanation: 'Professional wedding/couples video production costs $1,500–$5,000+. Our integrated process delivers premium couples films at a fraction of traditional costs.',
+    pricingExplanation: 'Professional couple film production typically costs $1,500–$5,000+. Our integrated approach delivers romantic cinema at an accessible price.',
     
     premiumFeatures: [
-      'Original romantic soundtrack',
-      'Photo restoration included',
-      'Professional color grading',
-      'Multiple format delivery',
-      'Lifetime access'
+      'Original romantic music',
+      'Professional cinematography',
+      'Romantic color grading',
+      'Social media optimization',
+      'Commercial licensing'
     ],
     
     deliveryPackage: [
-      '4K master couples film',
+      '4K master romantic film',
       '1080p shareable version',
       'Original romantic soundtrack',
-      'Restored and enhanced photos',
-      'Social media clips',
-      'Behind-the-scenes content'
+      'Social media clips (Instagram, TikTok)',
+      'Behind-the-scenes content',
+      'Usage rights documentation'
     ],
     
     faqs: [
-      {
-        question: 'How long is the couples film?',
-        answer: 'Typically 5–10 minutes, covering your relationship journey.'
-      },
       {
         question: 'Can we share this on social media?',
         answer: 'Yes, full social media rights are included with optimized clips.'
       },
       {
-        question: 'Can we use this for our wedding?',
-        answer: 'Yes, this is perfect for weddings, anniversaries, or any celebration.'
+        question: 'How long is the film?',
+        answer: 'Typically 5–10 minutes, customizable based on your story.'
+      },
+      {
+        question: 'Can we use this for a wedding?',
+        answer: 'Yes, perfect for anniversaries, weddings, or any celebration.'
       }
     ]
   },
@@ -686,66 +759,73 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.8,
     image: '/products/sophia-ai-membership.jpg',
     accentColor: '#06B6D4',
-    badgeStyle: 'bg-cyan-800 bg-opacity-80 text-cyan-50',
+    badgeStyle: 'bg-cyan-900 bg-opacity-80 text-cyan-100',
     badgeText: 'ONGOING SUPPORT',
     collection: 'creator',
     
-    whatThisExperienceIs: 'Access 24/7 emotional support and wellness guidance through Sophia, your personal AI companion. Daily check-ins, emotional processing, goal tracking, and personalized wellness recommendations.',
+    genre: 'Wellness Companion',
+    deliveryTime: 'Immediate',
+    experienceLevel: 'Essential',
+    format: 'Digital Service',
+    
+    outcomeDescription: 'Your personal AI wellness companion. Available 24/7 for emotional support, guidance, and meaningful conversation whenever you need it.',
+    
+    whatThisExperienceIs: 'Get ongoing emotional support and wellness guidance from our AI companion. Available whenever you need to talk, reflect, or explore your thoughts and feelings.',
     
     whoItIsFor: [
-      'Wellness enthusiasts',
-      'Daily support seekers',
-      'Goal-oriented individuals',
-      'Emotional wellness practitioners',
-      'Personal development followers'
+      'Wellness seekers',
+      'Those seeking ongoing support',
+      'Reflection enthusiasts',
+      'Personal growth practitioners',
+      'Anyone needing a listening ear'
     ],
     
-    whatWeCreate: 'A personalized AI wellness companion providing daily support, emotional guidance, and wellness recommendations tailored to your needs.',
+    whatWeCreate: 'A personalized AI wellness companion that learns your needs and provides tailored emotional support and guidance.',
     
     deliverables: [
-      'Daily AI check-ins',
+      '24/7 AI companion access',
+      'Personalized wellness guidance',
       'Emotional support conversations',
-      'Goal tracking and progress',
-      'Personalized wellness recommendations',
-      'Meditation and reflection prompts',
-      'Monthly wellness reports'
+      'Reflection prompts and journaling',
+      'Monthly wellness insights',
+      'Community access'
     ],
     
-    emotionalOutcome: 'Experience consistent emotional support and wellness guidance. Feel supported, understood, and guided toward your wellness goals.',
+    emotionalOutcome: 'Feel supported and understood. Access compassionate guidance whenever you need it, 24/7.',
     
-    productionTimeline: 'Immediate access',
+    productionTimeline: 'Immediate Access',
     
-    pricingExplanation: 'Personal wellness coaching costs $100–$300+ per session. Sophia provides daily support at a fraction of traditional coaching costs.',
+    pricingExplanation: 'Ongoing therapy or coaching typically costs $100–$300+ per session. Our AI companion provides continuous support at a fraction of traditional costs.',
     
     premiumFeatures: [
       '24/7 availability',
-      'Personalized recommendations',
-      'Goal tracking',
-      'Monthly wellness reports',
-      'Unlimited conversations'
+      'Personalized learning',
+      'Unlimited conversations',
+      'Monthly wellness insights',
+      'Community access'
     ],
     
     deliveryPackage: [
-      'Sophia AI app access',
-      'Daily check-in prompts',
-      'Emotional support conversations',
-      'Goal tracking dashboard',
-      'Monthly wellness report',
-      'Meditation library access'
+      'Immediate account activation',
+      '24/7 AI companion access',
+      'Personalized wellness guidance',
+      'Monthly wellness reports',
+      'Community features',
+      'Lifetime membership'
     ],
     
     faqs: [
       {
         question: 'Is this a substitute for therapy?',
-        answer: 'No, this is wellness support, not therapy. For mental health concerns, consult a professional.'
+        answer: 'No, this is a wellness companion. Professional therapy is recommended for clinical needs.'
+      },
+      {
+        question: 'How does the AI learn about me?',
+        answer: 'The AI learns from your conversations to provide increasingly personalized support.'
       },
       {
         question: 'Can I cancel anytime?',
         answer: 'Yes, cancel anytime with no penalties.'
-      },
-      {
-        question: 'How personalized is the support?',
-        answer: 'Sophia learns your preferences and provides increasingly personalized recommendations.'
       }
     ]
   },
@@ -762,61 +842,68 @@ export const PRODUCTS: ProductData[] = [
     badgeText: 'SILVER TECH',
     collection: 'creator',
     
-    whatThisExperienceIs: 'Clone your voice and hear your story narrated in your own voice. Perfect for audiobooks, documentaries, or personal projects. Professional voice cloning technology with your unique vocal signature.',
+    genre: 'Voice Technology',
+    deliveryTime: '3–5 Days',
+    experienceLevel: 'Premium',
+    format: 'Audio + Digital',
+    
+    outcomeDescription: 'Clone your voice and hear your story narrated in your own voice. Perfect for audiobooks, personal projects, and preserving your voice for the future.',
+    
+    whatThisExperienceIs: 'Clone your voice and hear your story narrated in your own voice. Perfect for audiobooks, personal projects, and preserving your voice for the future.',
     
     whoItIsFor: [
       'Authors and storytellers',
       'Content creators',
-      'Documentary makers',
-      'Personal archivists',
-      'Accessibility advocates'
+      'Voice preservation seekers',
+      'Audiobook creators',
+      'Personal archivists'
     ],
     
-    whatWeCreate: 'A voice-cloned narration of your story using advanced AI voice technology. Your unique voice delivering your narrative.',
+    whatWeCreate: 'A professional voice clone of your voice, ready to narrate any text. Your voice, perfectly preserved.',
     
     deliverables: [
-      'Voice clone creation',
-      'Narrated story recording',
-      'Professional audio mastering',
-      'Multiple format delivery',
-      'Usage rights documentation',
+      'Professional voice clone',
+      'Narrated story in your voice',
+      'Multiple audio formats',
+      'Commercial usage rights',
+      'Voice archive backup',
       'Digital delivery package'
     ],
     
-    emotionalOutcome: 'Hear your story in your own voice. Experience the power of your narrative delivered with your unique vocal signature.',
+    emotionalOutcome: 'Hear your story in your own voice. Preserve your voice for the future and share your narrative in the most personal way possible.',
     
     productionTimeline: '3–5 business days',
     
-    pricingExplanation: 'Professional voice cloning and narration typically costs $300–$1,000+. Our integrated process delivers professional voice cloning at an accessible price.',
+    pricingExplanation: 'Professional voice cloning typically costs $500–$2,000+. Our technology delivers high-quality voice cloning at an accessible price.',
     
     premiumFeatures: [
-      'Advanced voice cloning',
-      'Professional audio mastering',
-      'Multiple format delivery',
-      'Unlimited revisions',
-      'Commercial licensing available'
+      'Professional voice quality',
+      'Multiple audio formats',
+      'Commercial usage rights',
+      'Voice archive backup',
+      'Lifetime access'
     ],
     
     deliveryPackage: [
-      'Voice clone creation',
-      'Narrated story (WAV + MP3)',
-      'Professional audio mastering',
+      'Professional voice clone (multiple formats)',
+      'Narrated story in your voice (MP3 + WAV)',
+      'Voice archive backup',
       'Usage rights documentation',
-      'Backup storage'
+      'Lifetime access to voice clone'
     ],
     
     faqs: [
       {
         question: 'How accurate is the voice clone?',
-        answer: 'Our technology captures your unique vocal characteristics with high accuracy.'
+        answer: 'Very accurate. We use advanced AI to capture your unique voice characteristics.'
       },
       {
         question: 'Can I use this commercially?',
-        answer: 'Personal use is included. Commercial licensing available as upgrade.'
+        answer: 'Yes, commercial usage rights are included.'
       },
       {
-        question: 'How long can the narration be?',
-        answer: 'No length limit. We can narrate anything from short stories to full audiobooks.'
+        question: 'Can I narrate any text?',
+        answer: 'Yes, once your voice is cloned, you can narrate any text.'
       }
     ]
   },
@@ -829,66 +916,73 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.6,
     image: '/products/social-ready-clips.jpg',
     accentColor: '#FF1493',
-    badgeStyle: 'bg-pink-800 bg-opacity-80 text-pink-50',
+    badgeStyle: 'bg-pink-800 bg-opacity-80 text-pink-100',
     badgeText: 'VIRAL READY',
     collection: 'creator',
     
-    whatThisExperienceIs: 'Transform your story into optimized social media clips. Auto-generated, formatted, and ready to post on TikTok, Instagram Reels, YouTube Shorts, and more.',
+    genre: 'Social Content',
+    deliveryTime: '24–48 Hours',
+    experienceLevel: 'Essential',
+    format: 'Digital Video Clips',
+    
+    outcomeDescription: 'Get ready-to-share clips optimized for TikTok and Instagram. Perfect for going viral with your story.',
+    
+    whatThisExperienceIs: 'Get ready-to-share clips optimized for social media. Perfect for going viral with your story on TikTok, Instagram, and other platforms.',
     
     whoItIsFor: [
       'Social media creators',
       'Content marketers',
-      'Personal brand builders',
       'Influencers',
-      'Content repurposers'
+      'Brand builders',
+      'Viral seekers'
     ],
     
-    whatWeCreate: 'A collection of optimized social media clips in all formats. Ready to post immediately with captions, trending audio, and viral optimization.',
+    whatWeCreate: 'A series of optimized social media clips ready to post. Trending music, perfect timing, and platform-specific formatting.',
     
     deliverables: [
-      'TikTok-optimized clips',
-      'Instagram Reels',
-      'YouTube Shorts',
+      'TikTok-optimized clips (9:16)',
+      'Instagram Reels (9:16)',
+      'Instagram Stories (9:16)',
+      'Trending audio included',
       'Captions and hashtags',
-      'Trending audio integration',
-      'Multi-format delivery'
+      'Multiple clip variations'
     ],
     
-    emotionalOutcome: 'Maximize your social media presence with professionally optimized clips. Share your story across all platforms effortlessly.',
+    emotionalOutcome: 'Share your story with confidence. Get professional-quality clips optimized for maximum engagement and virality.',
     
-    productionTimeline: '1–2 business days',
+    productionTimeline: '24–48 business hours',
     
-    pricingExplanation: 'Social media content creation services cost $200–$500+ per project. Our automated process delivers optimized clips at an accessible price.',
+    pricingExplanation: 'Professional social media editing typically costs $200–$500+ per project. Our automated process delivers optimized clips at an accessible price.',
     
     premiumFeatures: [
-      'Multi-platform optimization',
-      'Trending audio integration',
-      'Automatic caption generation',
-      'Hashtag research included',
-      'Viral optimization'
+      'Trending audio included',
+      'Platform-specific optimization',
+      'Captions and hashtags',
+      'Multiple clip variations',
+      'Commercial usage rights'
     ],
     
     deliveryPackage: [
-      'TikTok clips (15–60 seconds)',
-      'Instagram Reels (15–90 seconds)',
-      'YouTube Shorts (15–60 seconds)',
-      'Captions and subtitles',
-      'Hashtag recommendations',
-      'Trending audio suggestions'
+      'TikTok-optimized clips (multiple variations)',
+      'Instagram Reels (multiple variations)',
+      'Instagram Stories (multiple variations)',
+      'Trending audio tracks',
+      'Captions and hashtag suggestions',
+      'Usage rights documentation'
     ],
     
     faqs: [
       {
         question: 'How many clips will I get?',
-        answer: 'Typically 8–12 optimized clips across all platforms.'
+        answer: 'Typically 10–15 unique clip variations optimized for different platforms.'
       },
       {
-        question: 'Can I edit the clips?',
-        answer: 'Yes, all clips are provided in editable formats.'
+        question: 'Can I use trending audio?',
+        answer: 'Yes, trending audio is included and optimized for each platform.'
       },
       {
-        question: 'Are captions included?',
-        answer: 'Yes, automatic captions and hashtag recommendations are included.'
+        question: 'Are these ready to post?',
+        answer: 'Yes, completely ready. Just upload and post.'
       }
     ]
   },
@@ -901,66 +995,73 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.8,
     image: '/products/family-vault.jpg',
     accentColor: '#8B4513',
-    badgeStyle: 'bg-amber-900 bg-opacity-80 text-amber-50',
+    badgeStyle: 'bg-amber-950 bg-opacity-80 text-amber-50',
     badgeText: 'FAMILY LEGACY',
     collection: 'legacy',
     
-    whatThisExperienceIs: 'Create a secure, organized family archive. Preserve precious memories, family stories, and heirlooms in a beautiful, accessible digital vault for generations.',
+    genre: 'Memory Archive',
+    deliveryTime: 'Immediate',
+    experienceLevel: 'Premium',
+    format: 'Digital Archive',
+    
+    outcomeDescription: 'Create a secure family archive. Store and share precious memories with family members safely and securely for generations.',
+    
+    whatThisExperienceIs: 'Create a secure family archive. Store and share precious memories with family members safely and securely. Perfect for preserving family history.',
     
     whoItIsFor: [
       'Family historians',
-      'Legacy preservers',
+      'Memory preservers',
       'Multi-generational families',
-      'Memory keepers',
+      'Legacy builders',
       'Family archivists'
     ],
     
-    whatWeCreate: 'A comprehensive family archive featuring organized memories, stories, photos, and heirlooms. Beautifully presented and securely stored.',
+    whatWeCreate: 'A secure digital vault for family memories. Photos, videos, stories, and documents organized and accessible to family members.',
     
     deliverables: [
-      'Family vault platform access',
-      'Photo restoration and organization',
-      'Family story documentation',
-      'Secure archival storage',
-      'Family sharing portal',
-      'Lifetime preservation'
+      'Secure family vault access',
+      'Unlimited storage capacity',
+      'Multi-user access control',
+      'Lifetime preservation',
+      'Privacy protection',
+      'Family sharing portal'
     ],
     
-    emotionalOutcome: 'Preserve your family legacy for generations. Create a beautiful, organized archive of your family\'s precious memories and stories.',
+    emotionalOutcome: 'Keep family memories safe and accessible. Create a lasting digital archive that preserves your family history for generations.',
     
-    productionTimeline: '7–10 business days',
+    productionTimeline: 'Immediate Access',
     
-    pricingExplanation: 'Professional family archiving services cost $500–$2,000+. Our integrated platform provides comprehensive family preservation at an accessible price.',
+    pricingExplanation: 'Professional family archiving services typically cost $300–$1,000+. Our secure vault provides comprehensive preservation at an accessible price.',
     
     premiumFeatures: [
-      'Photo restoration included',
-      'Secure family sharing',
+      'Unlimited storage',
+      'Multi-user access',
       'Lifetime preservation',
-      'Multi-generational access',
-      'Archival-quality storage'
+      'Privacy protection',
+      'Family sharing portal'
     ],
     
     deliveryPackage: [
-      'Family vault platform access',
-      'Restored and organized photos',
-      'Family story documentation',
-      'Secure archival storage',
+      'Immediate vault activation',
+      'Unlimited cloud storage',
+      'Multi-user access management',
+      'Lifetime preservation guarantee',
       'Family sharing portal',
-      'Lifetime backup'
+      'Privacy and security features'
     ],
     
     faqs: [
       {
-        question: 'How secure is the vault?',
-        answer: 'Military-grade encryption and multi-generational access controls ensure security.'
+        question: 'How much storage do I get?',
+        answer: 'Unlimited storage for all your family memories.'
       },
       {
-        question: 'Can multiple family members access it?',
-        answer: 'Yes, invite family members with customizable access levels.'
+        question: 'How many family members can access?',
+        answer: 'Unlimited family members with customizable access controls.'
       },
       {
-        question: 'How much storage is included?',
-        answer: 'Unlimited storage for your family archive.'
+        question: 'Is my data secure?',
+        answer: 'Yes, military-grade encryption and multiple backups ensure security.'
       }
     ]
   },
@@ -973,90 +1074,105 @@ export const PRODUCTS: ProductData[] = [
     rating: 4.7,
     image: '/products/nft-collection.jpg',
     accentColor: '#FFD700',
-    badgeStyle: 'bg-yellow-700 bg-opacity-80 text-yellow-50',
+    badgeStyle: 'bg-yellow-800 bg-opacity-80 text-yellow-100',
     badgeText: 'BLOCKCHAIN GOLD',
     collection: 'creator',
     
-    whatThisExperienceIs: 'Transform your story into a blockchain-verified NFT collection. Create a permanent, verifiable digital legacy with ownership rights and blockchain authenticity.',
+    genre: 'Digital Legacy',
+    deliveryTime: '5–7 Days',
+    experienceLevel: 'Premium',
+    format: 'NFT + Digital Asset',
+    
+    outcomeDescription: 'Mint your story as an NFT. Create a permanent, verifiable digital asset on the blockchain. Your story, forever preserved and owned.',
+    
+    whatThisExperienceIs: 'Mint your story as an NFT. Create a permanent, verifiable digital asset on the blockchain. Your story becomes a collectible digital legacy.',
     
     whoItIsFor: [
-      'Digital artists',
-      'Collectors',
-      'Tech-forward creators',
-      'Legacy builders',
-      'Web3 enthusiasts'
+      'Digital creators',
+      'Blockchain enthusiasts',
+      'Digital asset collectors',
+      'Future-forward thinkers',
+      'Legacy innovators'
     ],
     
-    whatWeCreate: 'A collection of NFTs representing your story, art, and legacy. Blockchain-verified, owned by you, with full authenticity and provenance.',
+    whatWeCreate: 'A professional NFT collection representing your story. Minted on the blockchain with full ownership and resale capability.',
     
     deliverables: [
-      'NFT collection creation',
-      'Blockchain minting',
-      'Smart contract deployment',
+      'NFT minting service',
+      'Blockchain verification',
       'Ownership documentation',
-      'Gallery presentation',
-      'Commercial rights'
+      'Resale capability',
+      'Digital asset storage',
+      'Collector portal access'
     ],
     
-    emotionalOutcome: 'Own your digital legacy on the blockchain. Create a permanent, verifiable collection representing your story and art.',
+    emotionalOutcome: 'Own your digital legacy. Create a permanent, verifiable asset that represents your story on the blockchain.',
     
     productionTimeline: '5–7 business days',
     
-    pricingExplanation: 'Professional NFT creation and minting typically costs $500–$2,000+. Our integrated process handles everything at an accessible price.',
+    pricingExplanation: 'Professional NFT minting typically costs $200–$1,000+. Our integrated service delivers blockchain legacy at an accessible price.',
     
     premiumFeatures: [
-      'Professional NFT creation',
-      'Blockchain minting included',
-      'Smart contract deployment',
-      'Gallery presentation',
-      'Ownership verification'
+      'Professional NFT minting',
+      'Blockchain verification',
+      'Resale capability',
+      'Collector community access',
+      'Lifetime ownership'
     ],
     
     deliveryPackage: [
-      'NFT collection (5–10 pieces)',
-      'Blockchain minting',
-      'Smart contract deployment',
+      'NFT minting on blockchain',
       'Ownership documentation',
-      'Gallery presentation',
-      'Commercial rights'
+      'Collector portal access',
+      'Resale capability',
+      'Digital asset storage',
+      'Community access'
     ],
     
     faqs: [
       {
-        question: 'What blockchain will my NFTs be on?',
-        answer: 'We support Ethereum, Polygon, and other major blockchains.'
+        question: 'What blockchain will my NFT be on?',
+        answer: 'We use Ethereum for maximum security and recognition.'
       },
       {
-        question: 'Do I own the NFTs?',
-        answer: 'Yes, you have full ownership and can trade or sell them.'
+        question: 'Can I sell my NFT?',
+        answer: 'Yes, full resale capability is included.'
       },
       {
-        question: 'How many NFTs are in a collection?',
-        answer: 'Typically 5–10 unique NFTs, customizable based on your vision.'
+        question: 'Is this a good investment?',
+        answer: 'NFTs are digital assets. Value depends on market demand and rarity.'
       }
     ]
-  }
+  },
 ]
 
 export const COLLECTIONS = {
   storytelling: {
-    name: 'Storytelling Collection',
-    description: 'Transform your story into cinematic experiences',
-    products: ['emotional-soundtrack', 'cinematic-story-film', 'cinematic-life-story', 'couples-journey-film']
+    name: 'Stories of the Heart',
+    description: 'Transform your personal journey into cinematic experiences. From emotional soundtracks to complete films, tell your story like never before.',
+    products: ['emotional-soundtrack', 'cinematic-story-film', 'cinematic-life-story', 'couples-journey-film'],
+    backgroundGradient: 'linear-gradient(180deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%)',
+    ambientEffect: 'Slow golden particles'
   },
   legacy: {
-    name: 'Legacy Collection',
-    description: 'Preserve memories for generations',
-    products: ['memorial-legacy-film', 'family-vault']
+    name: 'Stories of Legacy',
+    description: 'Preserve memories for generations. Create lasting tributes that honor lives lived and preserve family history.',
+    products: ['memorial-legacy-film', 'family-vault', 'cinematic-life-story'],
+    backgroundGradient: 'linear-gradient(180deg, rgba(217,119,6,0.1) 0%, rgba(217,119,6,0.05) 100%)',
+    ambientEffect: 'Film grain and vintage light leaks'
   },
   transformation: {
-    name: 'Transformation Collection',
-    description: 'Visualize and achieve your best self',
-    products: ['dream-ai-visualization', 'future-self-vision', 'relationship-healing']
+    name: 'Stories of Transformation',
+    description: 'Visualize your growth. Explore your inner world and manifest your future through powerful cinematic experiences.',
+    products: ['dream-ai-visualization', 'future-self-vision', 'relationship-healing', 'sophia-ai-membership'],
+    backgroundGradient: 'linear-gradient(180deg, rgba(6,182,212,0.1) 0%, rgba(6,182,212,0.05) 100%)',
+    ambientEffect: 'Aurora lights'
   },
   creator: {
-    name: 'Creator Collection',
-    description: 'Tools for content creators and artists',
-    products: ['sophia-ai-membership', 'voice-cloning-studio', 'social-ready-clips', 'nft-collection']
+    name: 'Stories of Creation',
+    description: 'Build your brand. Create, share, and monetize your creative vision with professional tools and platforms.',
+    products: ['voice-cloning-studio', 'social-ready-clips', 'nft-collection', 'sophia-ai-membership'],
+    backgroundGradient: 'linear-gradient(180deg, rgba(124,58,237,0.1) 0%, rgba(124,58,237,0.05) 100%)',
+    ambientEffect: 'Subtle royal purple glow'
   }
 }

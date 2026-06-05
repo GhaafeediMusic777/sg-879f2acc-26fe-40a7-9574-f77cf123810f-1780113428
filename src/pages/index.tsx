@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+'use client'
+
+import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -6,7 +8,6 @@ import { CinematicBackground } from '@/components/CinematicBackground'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
 import { LuxuryButton } from '@/components/LuxuryButton'
-import { LuxuryCard } from '@/components/LuxuryCard'
 import { PageTransition } from '@/components/PageTransition'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
@@ -113,28 +114,18 @@ export default function HomePage() {
             </div>
           </motion.section>
 
-          {/* All 14 Products Showcase */}
+          {/* Products Section */}
           <ScrollReveal className="relative z-10 px-4 py-20">
             <div className="max-w-6xl mx-auto">
               <motion.h2
-                className="text-5xl font-bold text-luxury-pearl text-center mb-4"
+                className="text-5xl font-bold text-luxury-pearl text-center mb-16"
                 variants={luxuryFadeInUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                All 14 Premium Products
+                Our Products
               </motion.h2>
-
-              <motion.p
-                className="text-xl text-luxury-gray-light text-center mb-16"
-                variants={staggerItem}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                Transform your emotional stories into cinematic masterpieces
-              </motion.p>
 
               <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -146,41 +137,58 @@ export default function HomePage() {
                 {allProducts.map((product) => (
                   <motion.div key={product.id} variants={staggerItem}>
                     <Link href={`/products/${product.id}`}>
-                      <LuxuryCard variant="glass">
-                        {product.image && (
-                          <div className="mb-4 -mx-4 -mt-4">
+                      <div className="group relative rounded-2xl overflow-hidden bg-luxury-dark-secondary border border-luxury-gold border-opacity-20 hover:border-opacity-50 transition-all duration-300 hover:shadow-luxury-lg cursor-pointer h-full flex flex-col">
+                        {/* Product Image */}
+                        {product.image ? (
+                          <div className="relative w-full h-48 overflow-hidden bg-luxury-dark">
                             <img
                               src={product.image}
                               alt={product.name}
-                              className="w-full h-48 object-cover rounded-t-lg"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
+                            {/* Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                        ) : (
+                          <div className="w-full h-48 bg-gradient-to-br from-luxury-gold to-luxury-dark flex items-center justify-center">
+                            <span className="text-6xl">{product.icon}</span>
                           </div>
                         )}
-                        {product.popular && (
-                          <div className="absolute top-4 right-4">
+
+                        {/* Badges */}
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
+                          {product.popular && (
                             <span className="px-3 py-1 bg-luxury-gold bg-opacity-90 text-luxury-dark text-xs font-bold rounded-full">
                               Popular
                             </span>
-                          </div>
-                        )}
-
-                        <h3 className="text-lg font-bold text-luxury-pearl mb-2">
-                          {product.name}
-                        </h3>
-
-                        <p className="text-luxury-gray-light text-sm mb-3">
-                          {product.description}
-                        </p>
-
-                        <div className="flex justify-between items-center">
-                          <span className="text-lg font-bold text-luxury-gold">
-                            ${product.price}{product.period ? `/${product.period}` : ''}
-                          </span>
-                          <span className="text-sm text-luxury-gray-light">
-                            {product.rating} / 5
-                          </span>
+                          )}
+                          {product.premium && (
+                            <span className="px-3 py-1 bg-purple-500 bg-opacity-90 text-white text-xs font-bold rounded-full">
+                              Premium
+                            </span>
+                          )}
                         </div>
-                      </LuxuryCard>
+
+                        {/* Content */}
+                        <div className="flex-1 p-4 flex flex-col">
+                          <h3 className="text-lg font-bold text-luxury-pearl mb-2 group-hover:text-luxury-gold transition-colors">
+                            {product.name}
+                          </h3>
+
+                          <p className="text-luxury-gray-light text-sm mb-4 flex-1">
+                            {product.description}
+                          </p>
+
+                          <div className="flex justify-between items-center pt-4 border-t border-luxury-gold border-opacity-20">
+                            <span className="text-lg font-bold text-luxury-gold">
+                              ${product.price}{product.period ? `/${product.period}` : ''}
+                            </span>
+                            <span className="text-sm text-luxury-gray-light">
+                              {product.rating} / 5
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </Link>
                   </motion.div>
                 ))}
@@ -225,44 +233,37 @@ export default function HomePage() {
               >
                 {[
                   {
-                    icon: '🎨',
                     title: 'Cinematic Design',
                     description: 'Luxury animations and visual effects at every touchpoint',
                   },
                   {
-                    icon: '🎵',
                     title: 'AI Music Creation',
                     description: 'Generate unlimited original music in any genre or style',
                   },
                   {
-                    icon: '🌟',
                     title: 'Artist Worlds',
                     description: 'Explore 6 unique AI artist universes with immersive experiences',
                   },
                   {
-                    icon: '🎤',
                     title: 'Voice Cloning',
                     description: 'Hear your story narrated in your own voice',
                   },
                   {
-                    icon: '🎬',
                     title: 'Video Creation',
                     description: 'Professional cinematic videos with AI-generated soundtracks',
                   },
                   {
-                    icon: '🔐',
                     title: 'Enterprise Security',
                     description: 'SSL encrypted, PCI compliant, and fully secure',
                   },
                 ].map((feature, index) => (
-                  <motion.div key={index} variants={staggerItem}>
-                    <LuxuryCard variant="default">
-                      <div className="text-5xl mb-4">{feature.icon}</div>
-                      <h3 className="text-2xl font-bold text-luxury-pearl mb-3">
-                        {feature.title}
-                      </h3>
-                      <p className="text-luxury-gray-light">{feature.description}</p>
-                    </LuxuryCard>
+                  <motion.div
+                    key={index}
+                    variants={staggerItem}
+                    className="p-8 rounded-2xl bg-luxury-dark-secondary bg-opacity-40 backdrop-blur-xl border border-luxury-gold border-opacity-20 hover:border-opacity-50 transition-all duration-300"
+                  >
+                    <h3 className="text-2xl font-bold text-luxury-pearl mb-4">{feature.title}</h3>
+                    <p className="text-luxury-gray-light">{feature.description}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -271,7 +272,7 @@ export default function HomePage() {
 
           {/* Role Selection Section */}
           <ScrollReveal className="relative z-10 px-4 py-20">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <motion.h2
                 className="text-5xl font-bold text-luxury-pearl text-center mb-16"
                 variants={luxuryFadeInUp}
@@ -291,76 +292,38 @@ export default function HomePage() {
               >
                 {[
                   {
-                    icon: '♥',
+                    role: 'consumer',
                     title: 'Consumer',
-                    description: 'Discover, stream and enjoy exclusive music experiences.',
-                    href: '/auth/signup?role=consumer',
+                    description: 'Create personal music and stories',
+                    cta: 'Get Started',
                   },
                   {
-                    icon: '👑',
-                    title: 'Music Label/Artist',
-                    description: 'Manage your music, artists and releases. Grow your audience.',
-                    href: '/auth/signup?role=label',
+                    role: 'label',
+                    title: 'Independent Label',
+                    description: 'Manage artists and distribute music',
+                    cta: 'Join Label Program',
                   },
                   {
-                    icon: '✨',
-                    title: 'AI Artist Partner',
-                    description: 'Collaborate with Ghaafeedi\'s AI ecosystem and shape the future of music.',
-                    href: '/auth/signup?role=partner',
+                    role: 'partner',
+                    title: 'Partner',
+                    description: 'Integrate with your platform',
+                    cta: 'Become a Partner',
                   },
-                ].map((role, index) => (
-                  <motion.div key={index} variants={staggerItem}>
-                    <Link href={role.href}>
-                      <LuxuryCard variant="elevated">
-                        <div className="text-6xl mb-4 text-center">{role.icon}</div>
-                        <h3 className="text-2xl font-bold text-luxury-pearl text-center mb-3">
-                          {role.title}
-                        </h3>
-                        <p className="text-luxury-gray-light text-center mb-6">
-                          {role.description}
-                        </p>
-                        <div className="flex justify-center">
-                          <LuxuryButton variant="primary" size="sm">
-                            Get Started
-                          </LuxuryButton>
-                        </div>
-                      </LuxuryCard>
+                ].map((item) => (
+                  <motion.div
+                    key={item.role}
+                    variants={staggerItem}
+                    className="p-8 rounded-2xl bg-luxury-dark-secondary bg-opacity-40 backdrop-blur-xl border border-luxury-gold border-opacity-20 hover:border-opacity-50 transition-all duration-300 text-center"
+                  >
+                    <h3 className="text-2xl font-bold text-luxury-pearl mb-4">{item.title}</h3>
+                    <p className="text-luxury-gray-light mb-8">{item.description}</p>
+                    <Link href="/auth/signup">
+                      <LuxuryButton variant="primary" size="sm">
+                        {item.cta}
+                      </LuxuryButton>
                     </Link>
                   </motion.div>
                 ))}
-              </motion.div>
-            </div>
-          </ScrollReveal>
-
-          {/* Stats Section */}
-          <ScrollReveal className="relative z-10 px-4 py-20">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center"
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">14</div>
-                  <p className="text-luxury-gray-light">Premium Products</p>
-                </motion.div>
-
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">4.8</div>
-                  <p className="text-luxury-gray-light">Average Rating</p>
-                </motion.div>
-
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">10K+</div>
-                  <p className="text-luxury-gray-light">Happy Customers</p>
-                </motion.div>
-
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">24/7</div>
-                  <p className="text-luxury-gray-light">Support Available</p>
-                </motion.div>
               </motion.div>
             </div>
           </ScrollReveal>

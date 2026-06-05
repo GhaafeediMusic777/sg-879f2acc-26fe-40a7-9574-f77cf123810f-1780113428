@@ -1,11 +1,12 @@
-import React, { useState, useMemo } from 'react'
+'use client'
+
+import { useState, useMemo } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
 import { LuxuryButton } from '@/components/LuxuryButton'
-import { LuxuryCard } from '@/components/LuxuryCard'
 import { PageTransition } from '@/components/PageTransition'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { staggerContainer, staggerItem, luxuryFadeInUp } from '@/utils/motionDesign'
@@ -13,7 +14,6 @@ import {
   getAllProducts,
   getProductsByCategory,
   getAllCategories,
-  sortByRating,
   formatPrice,
 } from '@/config/products-14-v2'
 
@@ -98,24 +98,23 @@ export default function ProductsPage() {
                   <motion.button
                     variants={staggerItem}
                     onClick={() => setSelectedCategory(null)}
-                    className={`px-4 py-2 rounded-lg transition-all ${
+                    className={`px-4 py-2 rounded-full transition-all duration-300 ${
                       selectedCategory === null
                         ? 'bg-luxury-gold text-luxury-dark'
-                        : 'bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-pearl hover:border-opacity-100'
+                        : 'bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-gold hover:border-opacity-50'
                     }`}
                   >
-                    All
+                    All Products
                   </motion.button>
-
                   {categories.map((category) => (
                     <motion.button
                       key={category}
                       variants={staggerItem}
                       onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-lg transition-all ${
+                      className={`px-4 py-2 rounded-full transition-all duration-300 ${
                         selectedCategory === category
                           ? 'bg-luxury-gold text-luxury-dark'
-                          : 'bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-pearl hover:border-opacity-100'
+                          : 'bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-gold hover:border-opacity-50'
                       }`}
                     >
                       {category}
@@ -126,24 +125,34 @@ export default function ProductsPage() {
 
               {/* Sort Filter */}
               <motion.div
-                className="flex items-center gap-4"
+                className="mb-12"
                 variants={staggerContainer}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <p className="text-luxury-gold font-semibold">Sort by:</p>
-                <motion.select
-                  variants={staggerItem}
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="px-4 py-2 bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-pearl rounded-lg focus:outline-none focus:border-opacity-100"
-                >
-                  <option value="popular">Most Popular</option>
-                  <option value="rating">Highest Rated</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                </motion.select>
+                <p className="text-luxury-gold mb-4 font-semibold">Sort By</p>
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    { value: 'popular', label: 'Popular' },
+                    { value: 'rating', label: 'Rating' },
+                    { value: 'price-low', label: 'Price: Low to High' },
+                    { value: 'price-high', label: 'Price: High to Low' },
+                  ].map((option) => (
+                    <motion.button
+                      key={option.value}
+                      variants={staggerItem}
+                      onClick={() => setSortBy(option.value as any)}
+                      className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                        sortBy === option.value
+                          ? 'bg-luxury-gold text-luxury-dark'
+                          : 'bg-luxury-dark-secondary border border-luxury-gold border-opacity-30 text-luxury-gold hover:border-opacity-50'
+                      }`}
+                    >
+                      {option.label}
+                    </motion.button>
+                  ))}
+                </div>
               </motion.div>
             </div>
           </ScrollReveal>
@@ -161,17 +170,25 @@ export default function ProductsPage() {
                 {filteredProducts.map((product) => (
                   <motion.div key={product.id} variants={staggerItem}>
                     <Link href={`/products/${product.id}`}>
-                      <LuxuryCard variant="glass" className="relative overflow-hidden">
-                        {product.image && (
-                          <div className="mb-4 -mx-4 -mt-4">
+                      <div className="group relative rounded-2xl overflow-hidden bg-luxury-dark-secondary border border-luxury-gold border-opacity-20 hover:border-opacity-50 transition-all duration-300 hover:shadow-luxury-lg cursor-pointer h-full flex flex-col">
+                        {/* Product Image */}
+                        {product.image ? (
+                          <div className="relative w-full h-56 overflow-hidden bg-luxury-dark">
                             <img
                               src={product.image}
                               alt={product.name}
-                              className="w-full h-56 object-cover rounded-t-lg"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                        ) : (
+                          <div className="w-full h-56 bg-gradient-to-br from-luxury-gold to-luxury-dark flex items-center justify-center">
+                            <span className="text-6xl">{product.icon}</span>
                           </div>
                         )}
-                        <div className="absolute top-4 right-4 flex gap-2">
+
+                        {/* Badges */}
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
                           {product.popular && (
                             <span className="px-3 py-1 bg-luxury-gold bg-opacity-90 text-luxury-dark text-xs font-bold rounded-full">
                               Popular
@@ -184,36 +201,42 @@ export default function ProductsPage() {
                           )}
                         </div>
 
-                        <h3 className="text-2xl font-bold text-luxury-pearl mb-2">
-                          {product.name}
-                        </h3>
+                        {/* Content */}
+                        <div className="flex-1 p-6 flex flex-col">
+                          <h3 className="text-2xl font-bold text-luxury-pearl mb-2 group-hover:text-luxury-gold transition-colors">
+                            {product.name}
+                          </h3>
 
-                        <p className="text-luxury-gray-light text-sm mb-4">
-                          {product.description}
-                        </p>
+                          <p className="text-luxury-gray-light text-sm mb-4 flex-1">
+                            {product.description}
+                          </p>
 
-                        <div className="flex justify-between items-center mb-6">
-                          <span className="text-xl font-bold text-luxury-gold">
-                            {formatPrice(product)}
-                          </span>
-                          <span className="text-sm text-luxury-gray-light">
-                            {product.rating} / 5
-                          </span>
+                          {/* Features */}
+                          <div className="space-y-2 mb-6">
+                            {product.features.slice(0, 3).map((feature, i) => (
+                              <div key={i} className="flex items-center gap-2 text-sm text-luxury-gray-light">
+                                <span className="text-luxury-gold font-bold">•</span>
+                                {feature}
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Price and Rating */}
+                          <div className="flex justify-between items-center pt-4 border-t border-luxury-gold border-opacity-20 mb-4">
+                            <span className="text-xl font-bold text-luxury-gold">
+                              {formatPrice(product)}
+                            </span>
+                            <span className="text-sm text-luxury-gray-light">
+                              {product.rating} / 5
+                            </span>
+                          </div>
+
+                          {/* CTA */}
+                          <LuxuryButton variant="primary" size="sm">
+                            Learn More
+                          </LuxuryButton>
                         </div>
-
-                        <div className="space-y-2 mb-6">
-                          {product.features.slice(0, 3).map((feature, i) => (
-                            <div key={i} className="flex items-center gap-2 text-sm text-luxury-gray-light">
-                              <span className="text-luxury-gold font-bold">•</span>
-                              {feature}
-                            </div>
-                          ))}
-                        </div>
-
-                        <LuxuryButton variant="primary" size="sm">
-                          Learn More
-                        </LuxuryButton>
-                      </LuxuryCard>
+                      </div>
                     </Link>
                   </motion.div>
                 ))}
@@ -227,39 +250,9 @@ export default function ProductsPage() {
                   whileInView="visible"
                   viewport={{ once: true }}
                 >
-                  <p className="text-luxury-gray-light text-lg">
-                    No products found in this category.
-                  </p>
+                  <p className="text-luxury-gray-light text-lg">No products found in this category.</p>
                 </motion.div>
               )}
-            </div>
-          </ScrollReveal>
-
-          {/* Stats Section */}
-          <ScrollReveal className="relative z-10 px-4 py-20">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">14</div>
-                  <p className="text-luxury-gray-light">Premium Products</p>
-                </motion.div>
-
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">4.8</div>
-                  <p className="text-luxury-gray-light">Average Rating</p>
-                </motion.div>
-
-                <motion.div variants={staggerItem}>
-                  <div className="text-5xl font-bold text-luxury-gold mb-2">10K+</div>
-                  <p className="text-luxury-gray-light">Happy Customers</p>
-                </motion.div>
-              </motion.div>
             </div>
           </ScrollReveal>
 

@@ -147,14 +147,22 @@ export default function HomePage() {
                   <motion.div key={product.id} variants={staggerItem}>
                     <Link href={`/products/${product.id}`}>
                       <LuxuryCard variant="glass">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="text-4xl">{product.icon}</div>
-                          {product.popular && (
-                            <span className="px-2 py-1 bg-luxury-gold bg-opacity-20 text-luxury-gold text-xs font-bold rounded">
+                        {product.image && (
+                          <div className="mb-4 -mx-4 -mt-4">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-48 object-cover rounded-t-lg"
+                            />
+                          </div>
+                        )}
+                        {product.popular && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 bg-luxury-gold bg-opacity-90 text-luxury-dark text-xs font-bold rounded-full">
                               Popular
                             </span>
-                          )}
-                        </div>
+                          </div>
+                        )}
 
                         <h3 className="text-lg font-bold text-luxury-pearl mb-2">
                           {product.name}
@@ -169,7 +177,7 @@ export default function HomePage() {
                             ${product.price}{product.period ? `/${product.period}` : ''}
                           </span>
                           <span className="text-sm text-luxury-gray-light">
-                            ⭐ {product.rating}
+                            {product.rating} / 5
                           </span>
                         </div>
                       </LuxuryCard>

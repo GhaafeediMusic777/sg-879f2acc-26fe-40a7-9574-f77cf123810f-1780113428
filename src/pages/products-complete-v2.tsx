@@ -161,16 +161,24 @@ export default function ProductsPage() {
                 {filteredProducts.map((product) => (
                   <motion.div key={product.id} variants={staggerItem}>
                     <Link href={`/products/${product.id}`}>
-                      <LuxuryCard variant="glass">
-                        <div className="flex justify-between items-start mb-4">
-                          <div className="text-5xl">{product.icon}</div>
+                      <LuxuryCard variant="glass" className="relative overflow-hidden">
+                        {product.image && (
+                          <div className="mb-4 -mx-4 -mt-4">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-56 object-cover rounded-t-lg"
+                            />
+                          </div>
+                        )}
+                        <div className="absolute top-4 right-4 flex gap-2">
                           {product.popular && (
-                            <span className="px-2 py-1 bg-luxury-gold bg-opacity-20 text-luxury-gold text-xs font-bold rounded">
+                            <span className="px-3 py-1 bg-luxury-gold bg-opacity-90 text-luxury-dark text-xs font-bold rounded-full">
                               Popular
                             </span>
                           )}
                           {product.premium && (
-                            <span className="px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 text-xs font-bold rounded">
+                            <span className="px-3 py-1 bg-purple-500 bg-opacity-90 text-white text-xs font-bold rounded-full">
                               Premium
                             </span>
                           )}
@@ -189,14 +197,14 @@ export default function ProductsPage() {
                             {formatPrice(product)}
                           </span>
                           <span className="text-sm text-luxury-gray-light">
-                            ⭐ {product.rating}
+                            {product.rating} / 5
                           </span>
                         </div>
 
                         <div className="space-y-2 mb-6">
                           {product.features.slice(0, 3).map((feature, i) => (
                             <div key={i} className="flex items-center gap-2 text-sm text-luxury-gray-light">
-                              <span className="text-luxury-gold">✓</span>
+                              <span className="text-luxury-gold font-bold">•</span>
                               {feature}
                             </div>
                           ))}

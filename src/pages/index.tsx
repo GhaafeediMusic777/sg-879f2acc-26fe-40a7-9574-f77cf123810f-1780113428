@@ -89,34 +89,74 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-luxury-dark text-luxury-pearl overflow-hidden">
-      {/* Fixed Background Gradient */}
+      {/* Layered Cinematic Background System */}
+      
+      {/* Layer 1: Deep Midnight Base */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          background: `linear-gradient(180deg, #03051a 0%, #090d2b 30%, #050511 100%)`,
+          background: `linear-gradient(180deg, #0a0e27 0%, #05070f 50%, #000000 100%)`,
           zIndex: 0,
         }}
       />
 
-      {/* Brand Watermark - Parallax Background */}
+      {/* Layer 2: Atmospheric Gold Glow - Top */}
+      <div
+        className="fixed top-0 left-0 right-0 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% -50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%)`,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Layer 3: Atmospheric Gold Glow - Bottom */}
+      <div
+        className="fixed bottom-0 left-0 right-0 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% 150%, rgba(212, 175, 55, 0.1) 0%, transparent 60%)`,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Layer 4: Side Accent Glows */}
+      <div
+        className="fixed top-1/3 -left-32 w-96 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%)`,
+          filter: 'blur(80px)',
+          zIndex: 1,
+        }}
+      />
+
+      <div
+        className="fixed top-1/2 -right-32 w-96 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%)`,
+          filter: 'blur(80px)',
+          zIndex: 1,
+        }}
+      />
+
+      {/* Layer 5: Brand Watermark - Parallax Background */}
       <motion.div
         className="fixed inset-0 pointer-events-none flex items-center justify-center"
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 2 }}
         initial={{ y: 0 }}
-        animate={{ y: -20 }}
+        animate={{ y: -30 }}
         transition={{ duration: 0.5 }}
       >
         <div
           className="text-center"
           style={{
-            fontSize: 'clamp(120px, 30vw, 400px)',
+            fontSize: 'clamp(120px, 35vw, 500px)',
             fontWeight: 700,
             letterSpacing: '0.15em',
-            color: 'rgba(212, 175, 55, 0.08)',
-            textShadow: '0 0 60px rgba(212, 175, 55, 0.1)',
-            filter: 'blur(2px)',
+            color: 'rgba(212, 175, 55, 0.06)',
+            textShadow: '0 0 100px rgba(212, 175, 55, 0.15)',
+            filter: 'blur(3px)',
             whiteSpace: 'nowrap',
             fontFamily: 'Georgia, serif',
+            textTransform: 'uppercase',
           }}
         >
           GHAAFEEDI MUSIC
@@ -141,7 +181,7 @@ export default function HomePage() {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                textShadow: '0 0 30px rgba(212, 175, 55, 0.3)',
+                textShadow: '0 0 40px rgba(212, 175, 55, 0.4)',
                 fontFamily: 'Georgia, serif',
                 letterSpacing: '0.08em',
               }}
@@ -179,13 +219,23 @@ export default function HomePage() {
         >
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              {/* Hero Image - Centered, Contained */}
+              {/* Hero Image - Centered, Contained with Atmospheric Glow */}
               <motion.div
                 className="relative rounded-3xl overflow-hidden h-80 sm:h-96 lg:h-[500px] order-2 lg:order-1"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
+                {/* Atmospheric Glow Behind Image */}
+                <div
+                  className="absolute -inset-8 rounded-3xl pointer-events-none"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 70%)`,
+                    filter: 'blur(40px)',
+                    zIndex: -1,
+                  }}
+                />
+
                 <img
                   src="/products/dream-ai-visualization.jpg"
                   alt="Dream AI Visualization"
@@ -200,11 +250,11 @@ export default function HomePage() {
                   }}
                 />
 
-                {/* Gold Glow Border */}
+                {/* Premium Gold Glow Border */}
                 <div
                   className="absolute inset-0 rounded-3xl pointer-events-none"
                   style={{
-                    boxShadow: 'inset 0 0 40px rgba(212,175,55,0.2), 0 0 40px rgba(212,175,55,0.15)',
+                    boxShadow: 'inset 0 0 60px rgba(212,175,55,0.3), 0 0 60px rgba(212,175,55,0.2)',
                   }}
                 />
               </motion.div>
@@ -269,7 +319,7 @@ export default function HomePage() {
 
             {/* Carousel Container */}
             <div className="relative">
-              {/* Main Featured Card */}
+              {/* Main Featured Card with Atmospheric Glow */}
               <motion.div
                 className="relative rounded-3xl overflow-hidden h-96 sm:h-[500px] mb-12 cursor-pointer group"
                 onMouseEnter={() => setIsAutoPlay(false)}
@@ -277,6 +327,16 @@ export default function HomePage() {
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Atmospheric Glow Behind Card */}
+                <div
+                  className="absolute -inset-6 rounded-3xl pointer-events-none"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.25) 0%, transparent 60%)`,
+                    filter: 'blur(50px)',
+                    zIndex: -1,
+                  }}
+                />
+
                 <img
                   src={FEATURED_PRODUCTS[activeIndex].image}
                   alt={FEATURED_PRODUCTS[activeIndex].name}
@@ -331,7 +391,7 @@ export default function HomePage() {
                 <div
                   className="absolute inset-0 rounded-3xl pointer-events-none group-hover:shadow-luxury-lg transition-shadow duration-300"
                   style={{
-                    boxShadow: '0 0 40px rgba(212,175,55,.25)',
+                    boxShadow: '0 0 60px rgba(212,175,55,.3)',
                   }}
                 />
               </motion.div>
@@ -419,18 +479,28 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: idx * 0.15 }}
               >
-                {/* Image */}
+                {/* Image with Atmospheric Glow */}
                 <motion.div
-                  className={`rounded-2xl overflow-hidden h-96 sm:h-[500px] ${
+                  className={`rounded-2xl overflow-hidden h-96 sm:h-[500px] relative ${
                     item.reverse ? 'lg:col-start-2' : ''
                   }`}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {/* Glow Behind Image */}
+                  <div
+                    className="absolute -inset-6 rounded-2xl pointer-events-none"
+                    style={{
+                      background: `radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 60%)`,
+                      filter: 'blur(40px)',
+                      zIndex: -1,
+                    }}
+                  />
+
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-2xl"
                   />
                 </motion.div>
 
@@ -476,7 +546,7 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        {/* CTA Section */}
+        {/* CTA Section with Atmospheric Glow */}
         <motion.section
           className="relative py-24 px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
@@ -484,44 +554,56 @@ export default function HomePage() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div
-            className="max-w-4xl mx-auto rounded-3xl p-12 sm:p-16 text-center relative overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%)`,
-              backdropFilter: 'blur(40px)',
-              border: '1px solid rgba(212,175,55,0.2)',
-            }}
-          >
-            <motion.h2
-              className="text-4xl sm:text-5xl font-bold mb-6 text-luxury-pearl"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+          <div className="max-w-4xl mx-auto relative">
+            {/* Atmospheric Glow Behind CTA */}
+            <div
+              className="absolute -inset-12 rounded-3xl pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%)`,
+                filter: 'blur(60px)',
+                zIndex: -1,
+              }}
+            />
+
+            <div
+              className="rounded-3xl p-12 sm:p-16 text-center relative overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%)`,
+                backdropFilter: 'blur(40px)',
+                border: '1px solid rgba(212,175,55,0.2)',
+              }}
             >
-              Ready to Create Your Masterpiece?
-            </motion.h2>
-            <motion.p
-              className="text-xl text-luxury-gray-light mb-8 max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-            >
-              Join thousands of creators transforming their stories into cinematic experiences
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <Link href="/auth/signup">
-                <LuxuryButton variant="primary" size="lg">
-                  Start Creating Now
-                </LuxuryButton>
-              </Link>
-            </motion.div>
+              <motion.h2
+                className="text-4xl sm:text-5xl font-bold mb-6 text-luxury-pearl"
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                Ready to Create Your Masterpiece?
+              </motion.h2>
+              <motion.p
+                className="text-xl text-luxury-gray-light mb-8 max-w-2xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
+                Join thousands of creators transforming their stories into cinematic experiences
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <Link href="/auth/signup">
+                  <LuxuryButton variant="primary" size="lg">
+                    Start Creating Now
+                  </LuxuryButton>
+                </Link>
+              </motion.div>
+            </div>
           </div>
         </motion.section>
 

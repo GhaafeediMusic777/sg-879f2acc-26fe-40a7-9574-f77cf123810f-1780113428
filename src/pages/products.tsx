@@ -2,126 +2,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
-import { PremiumProductCard } from '@/components/PremiumProductCard'
-
-const ALL_PRODUCTS = [
-  {
-    id: 'emotional-soundtrack',
-    name: 'Emotional Soundtrack',
-    description: 'Your story as original cinematic music',
-    price: '$49',
-    rating: 4.8,
-    image: '/products/emotional-soundtrack.jpg',
-    featured: true,
-  },
-  {
-    id: 'cinematic-story-film',
-    name: 'Cinematic Story Film',
-    description: 'Song + music video experience',
-    price: '$149',
-    rating: 4.9,
-    image: '/products/cinematic-story-film.jpg',
-    featured: true,
-  },
-  {
-    id: 'memorial-legacy-film',
-    name: 'Memorial Legacy Film',
-    description: 'Preserve forever',
-    price: '$299',
-    rating: 5,
-    image: '/products/memorial-legacy-film.jpg',
-    featured: true,
-  },
-  {
-    id: 'signature-masterpiece',
-    name: 'Signature Masterpiece',
-    description: 'Ultimate cinematic experience',
-    price: '$499',
-    rating: 5,
-    image: '/products/signature-masterpiece.jpg',
-    featured: true,
-  },
-  {
-    id: 'future-self-vision',
-    name: 'Future Self Vision',
-    description: 'Visualize yourself, successful, happy, peaceful',
-    price: '$125',
-    rating: 4.7,
-    image: '/products/future-self-vision.jpg',
-  },
-  {
-    id: 'dream-ai-visualization',
-    name: 'Dream AI Visualization',
-    description: 'Subconscious cinema',
-    price: '$79',
-    rating: 4.6,
-    image: '/products/dream-ai-visualization.jpg',
-  },
-  {
-    id: 'relationship-healing',
-    name: 'Relationship Healing',
-    description: 'Transform pain to purpose',
-    price: '$119',
-    rating: 4.7,
-    image: '/products/relationship-healing.jpg',
-  },
-  {
-    id: 'cinematic-life-story',
-    name: 'Cinematic Life Story',
-    description: 'Biography as cinema',
-    price: '$249',
-    rating: 4.8,
-    image: '/products/cinematic-life-story.jpg',
-  },
-  {
-    id: 'couples-journey-film',
-    name: 'Couples Journey Film',
-    description: 'Your love story',
-    price: '$199',
-    rating: 4.9,
-    image: '/products/couples-journey-film.jpg',
-  },
-  {
-    id: 'sophia-ai-membership',
-    name: 'Sophia AI Membership',
-    description: '24/7 emotional support & wellness companion',
-    price: '$19/month',
-    rating: 4.8,
-    image: '/products/sophia-ai-membership.jpg',
-  },
-  {
-    id: 'voice-cloning-studio',
-    name: 'Voice Cloning Studio',
-    description: 'Hear your story in your own voice',
-    price: '$99',
-    rating: 4.7,
-    image: '/products/voice-cloning-studio.jpg',
-  },
-  {
-    id: 'social-ready-clips',
-    name: 'Social-Ready Clips',
-    description: 'Auto-generated clips for TikTok & Instagram',
-    price: '$39',
-    rating: 4.6,
-    image: '/products/social-ready-clips.jpg',
-  },
-  {
-    id: 'family-vault',
-    name: 'Family Vault',
-    description: 'Precious memories preserved',
-    price: '$149',
-    rating: 4.8,
-    image: '/products/family-vault.jpg',
-  },
-  {
-    id: 'nft-collection',
-    name: 'NFT Collection',
-    description: 'Your story as blockchain legacy',
-    price: '$199',
-    rating: 4.7,
-    image: '/products/nft-collection.jpg',
-  },
-]
+import { CinematicProductCard } from '@/components/CinematicProductCard'
+import { PRODUCTS, COLLECTIONS } from '@/data/products'
 
 export default function ProductsPage() {
   const containerVariants = {
@@ -129,22 +11,74 @@ export default function ProductsPage() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
         delayChildren: 0.2,
       },
     },
   }
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 },
+    },
+  }
+
   return (
     <div className="min-h-screen bg-luxury-dark text-luxury-pearl overflow-hidden">
-      {/* Fixed Background Gradient */}
+      {/* Layered Cinematic Background */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          background: `linear-gradient(180deg, #03051a 0%, #090d2b 30%, #050511 100%)`,
+          background: `linear-gradient(180deg, #0a0e27 0%, #05070f 50%, #000000 100%)`,
           zIndex: 0,
         }}
       />
+
+      {/* Atmospheric Glows */}
+      <div
+        className="fixed top-0 left-0 right-0 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% -50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%)`,
+          zIndex: 1,
+        }}
+      />
+
+      <div
+        className="fixed bottom-0 left-0 right-0 h-96 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% 150%, rgba(212, 175, 55, 0.1) 0%, transparent 60%)`,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Brand Watermark */}
+      <motion.div
+        className="fixed inset-0 pointer-events-none flex items-center justify-center"
+        style={{ zIndex: 2 }}
+        initial={{ y: 0 }}
+        animate={{ y: -30 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div
+          className="text-center"
+          style={{
+            fontSize: 'clamp(120px, 35vw, 500px)',
+            fontWeight: 700,
+            letterSpacing: '0.15em',
+            color: 'rgba(212, 175, 55, 0.06)',
+            textShadow: '0 0 100px rgba(212, 175, 55, 0.15)',
+            filter: 'blur(3px)',
+            whiteSpace: 'nowrap',
+            fontFamily: 'Georgia, serif',
+            textTransform: 'uppercase',
+          }}
+        >
+          GHAAFEEDI MUSIC
+        </div>
+      </motion.div>
 
       <div className="relative z-10">
         <LuxuryHeader />
@@ -176,36 +110,123 @@ export default function ProductsPage() {
           </div>
         </motion.section>
 
-        {/* Products Grid */}
-        <motion.section
-          className="relative px-4 sm:px-6 lg:px-8 pb-20"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <div className="max-w-7xl mx-auto">
-            {/* Products Grid - Responsive columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {ALL_PRODUCTS.map((product) => (
+        {/* Collections */}
+        {Object.entries(COLLECTIONS).map(([key, collection]) => {
+          const collectionProducts = PRODUCTS.filter((p) =>
+            collection.products.includes(p.id)
+          )
+
+          return (
+            <motion.section
+              key={key}
+              className="relative px-4 sm:px-6 lg:px-8 pb-24"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="max-w-7xl mx-auto">
+                {/* Collection Header */}
                 <motion.div
-                  key={product.id}
+                  className="mb-16"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <PremiumProductCard
-                    id={product.id}
-                    name={product.name}
-                    description={product.description}
-                    price={product.price}
-                    rating={product.rating}
-                    image={product.image}
-                    featured={product.featured}
-                  />
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-luxury-pearl">
+                    {collection.name}
+                  </h2>
+                  <div className="w-16 h-1 bg-gradient-to-r from-luxury-gold to-transparent mb-4" />
+                  <p className="text-lg text-luxury-gray-light max-w-2xl">
+                    {collection.description}
+                  </p>
                 </motion.div>
-              ))}
+
+                {/* Products Grid */}
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  {collectionProducts.map((product) => (
+                    <motion.div
+                      key={product.id}
+                      variants={itemVariants}
+                    >
+                      <CinematicProductCard
+                        id={product.id}
+                        name={product.name}
+                        tagline={product.tagline}
+                        price={product.price}
+                        rating={product.rating}
+                        image={product.image}
+                        accentColor={product.accentColor}
+                        badgeStyle={product.badgeStyle}
+                        badgeText={product.badgeText}
+                        deliverables={product.deliverables}
+                        featured={false}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Collection Divider */}
+              <div className="max-w-7xl mx-auto mt-24">
+                <div className="h-1 bg-gradient-to-r from-transparent via-luxury-gold via-50% to-transparent" />
+              </div>
+            </motion.section>
+          )
+        })}
+
+        {/* CTA Section */}
+        <motion.section
+          className="relative py-24 px-4 sm:px-6 lg:px-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="max-w-4xl mx-auto relative">
+            {/* Atmospheric Glow */}
+            <div
+              className="absolute -inset-12 rounded-3xl pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%)`,
+                filter: 'blur(60px)',
+                zIndex: -1,
+              }}
+            />
+
+            <div
+              className="rounded-3xl p-12 sm:p-16 text-center relative overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%)`,
+                backdropFilter: 'blur(40px)',
+                border: '1px solid rgba(212,175,55,0.2)',
+              }}
+            >
+              <motion.h2
+                className="text-4xl sm:text-5xl font-bold mb-6 text-luxury-pearl"
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                Ready to Begin Your Journey?
+              </motion.h2>
+              <motion.p
+                className="text-xl text-luxury-gray-light mb-8 max-w-2xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
+                Choose your legacy path and start creating your cinematic masterpiece today
+              </motion.p>
             </div>
           </div>
         </motion.section>

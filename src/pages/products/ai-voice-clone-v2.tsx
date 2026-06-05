@@ -17,7 +17,6 @@ export default function AIVoiceClonePage() {
     title: 'AI Voice Clone',
     subtitle: 'Create a digital clone of your voice in seconds',
     description: 'Transform your voice into a powerful creative tool. Clone your voice in multiple languages, create voiceovers, narration, and more—all with studio-quality output.',
-    icon: '🎤',
     image: '🎙️',
   }
 
@@ -25,32 +24,26 @@ export default function AIVoiceClonePage() {
     {
       title: 'Instant Voice Cloning',
       description: 'Clone your voice in seconds with just a few audio samples',
-      icon: '⚡',
     },
     {
       title: 'Multi-Language Support',
       description: 'Speak in 50+ languages while maintaining your voice characteristics',
-      icon: '🌍',
     },
     {
       title: 'Studio Quality',
       description: 'Professional-grade audio output suitable for commercial use',
-      icon: '🎧',
     },
     {
       title: 'Unlimited Exports',
       description: 'Export as many voice clones as you need with no limits',
-      icon: '♾️',
     },
     {
       title: 'Commercial License',
       description: 'Use your voice clones for commercial projects and monetization',
-      icon: '📜',
     },
     {
       title: 'Privacy Protected',
       description: 'Your voice data is encrypted and never shared with third parties',
-      icon: '🔒',
     },
   ]
 
@@ -109,32 +102,26 @@ export default function AIVoiceClonePage() {
     {
       title: 'Content Creators',
       description: 'Create voiceovers and narration for videos without hiring voice actors',
-      icon: '🎬',
     },
     {
       title: 'Podcasters',
       description: 'Generate intro/outro voiceovers and background narration',
-      icon: '🎙️',
     },
     {
       title: 'Authors',
       description: 'Turn your audiobooks into multiple language versions instantly',
-      icon: '📚',
     },
     {
       title: 'Musicians',
       description: 'Create vocal tracks and harmonies for your music production',
-      icon: '🎵',
     },
     {
       title: 'Businesses',
       description: 'Generate professional voice for IVR systems and customer service',
-      icon: '💼',
     },
     {
       title: 'Accessibility',
       description: 'Help people with speech disabilities communicate in their own voice',
-      icon: '♿',
     },
   ]
 
@@ -161,7 +148,6 @@ export default function AIVoiceClonePage() {
           animate={{ opacity: 1, y: 0 }}
           className="relative z-10 max-w-4xl mx-auto"
         >
-          <div className="text-6xl mb-6">{product.icon}</div>
           <h1 className="text-6xl md:text-7xl font-bold text-luxury-pearl mb-4">
             {product.title}
           </h1>
@@ -202,7 +188,6 @@ export default function AIVoiceClonePage() {
           >
             {features.map((feature, index) => (
               <LuxuryCard key={index} variant="glass" padding="lg">
-                <div className="text-4xl mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-bold text-luxury-pearl mb-2">
                   {feature.title}
                 </h3>
@@ -240,7 +225,6 @@ export default function AIVoiceClonePage() {
           >
             {useCases.map((useCase, index) => (
               <LuxuryCard key={index} variant="elevated" padding="lg">
-                <div className="text-4xl mb-4">{useCase.icon}</div>
                 <h3 className="text-xl font-bold text-luxury-pearl mb-2">
                   {useCase.title}
                 </h3>

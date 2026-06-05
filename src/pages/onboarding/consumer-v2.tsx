@@ -29,31 +29,26 @@ export default function ConsumerOnboarding() {
       id: 'ai-voice-clone',
       name: 'AI Voice Clone',
       description: 'Create a digital clone of your voice',
-      icon: '🎤',
     },
     {
       id: 'ai-music-producer',
       name: 'AI Music Producer',
       description: 'Generate original music in any genre',
-      icon: '🎵',
     },
     {
       id: 'ai-music-video',
       name: 'AI Music Video',
       description: 'Create cinematic music videos',
-      icon: '🎬',
     },
     {
       id: 'ai-podcast-producer',
       name: 'AI Podcast Producer',
       description: 'Generate full podcast episodes',
-      icon: '🎙️',
     },
     {
       id: 'ai-artist-label',
       name: 'AI Artist Label',
       description: 'Launch your AI music career',
-      icon: '🌟',
     },
   ]
 
@@ -62,7 +57,6 @@ export default function ConsumerOnboarding() {
       id: 'welcome',
       title: 'Welcome to Ghaafeedi Music',
       description: 'Let\'s set up your account and get you started with creating amazing content.',
-      icon: '👋',
       content: (
         <div className="space-y-4">
           <p className="text-luxury-gray-light">
@@ -93,7 +87,6 @@ export default function ConsumerOnboarding() {
       id: 'profile',
       title: 'Complete Your Profile',
       description: 'Help us personalize your experience.',
-      icon: '👤',
       content: (
         <div className="space-y-4">
           <div>
@@ -118,7 +111,6 @@ export default function ConsumerOnboarding() {
       id: 'product',
       title: 'Choose Your First Product',
       description: 'Select a product to get started with.',
-      icon: '🎁',
       content: (
         <div className="space-y-3">
           {products.slice(0, 3).map((product) => (
@@ -126,7 +118,6 @@ export default function ConsumerOnboarding() {
               key={product.id}
               className="w-full p-4 rounded-lg border border-luxury-gold border-opacity-20 text-left hover:border-luxury-gold hover:border-opacity-60 transition-all flex items-center gap-3"
             >
-              <span className="text-2xl">{product.icon}</span>
               <div>
                 <p className="font-medium text-luxury-pearl">{product.name}</p>
                 <p className="text-sm text-luxury-gray-medium">{product.description}</p>
@@ -140,7 +131,6 @@ export default function ConsumerOnboarding() {
       id: 'credits',
       title: 'Claim Your Free Credits',
       description: 'Get $50 in free credits to start creating.',
-      icon: '🎟️',
       content: (
         <div className="space-y-4">
           <div className="p-4 bg-luxury-gold bg-opacity-10 rounded-lg border border-luxury-gold border-opacity-30">
@@ -159,7 +149,6 @@ export default function ConsumerOnboarding() {
       id: 'settings',
       title: 'Notification Preferences',
       description: 'Choose how you want to stay updated.',
-      icon: '🔔',
       content: (
         <div className="space-y-3">
           {[
@@ -183,7 +172,6 @@ export default function ConsumerOnboarding() {
       id: 'ready',
       title: "You're Ready to Go!",
       description: 'Your account is all set up. Start creating now.',
-      icon: '🚀',
       content: (
         <div className="space-y-4">
           <p className="text-luxury-gray-light">
@@ -252,7 +240,6 @@ export default function ConsumerOnboarding() {
               }}
             >
               <LuxuryCard variant="elevated" padding="lg" hover className="cursor-pointer h-full flex flex-col">
-                <div className="text-5xl mb-4">{product.icon}</div>
                 <h3 className="text-2xl font-bold text-luxury-pearl mb-2">
                   {product.name}
                 </h3>

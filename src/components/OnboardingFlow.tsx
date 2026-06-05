@@ -7,7 +7,6 @@ interface Step {
   id: string
   title: string
   description: string
-  icon: string
   content: React.ReactNode
 }
 
@@ -118,7 +117,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
           transition={{ duration: 0.3 }}
         >
           <LuxuryCard variant="glass" padding="lg">
-            <div className="text-5xl mb-4">{step.icon}</div>
             <h2 className="text-3xl font-bold text-luxury-pearl mb-2">
               {step.title}
             </h2>

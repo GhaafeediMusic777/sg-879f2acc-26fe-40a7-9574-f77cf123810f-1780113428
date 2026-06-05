@@ -18,37 +18,31 @@ const ONBOARDING_STEPS = [
     id: 1,
     title: 'Welcome',
     description: 'Let\'s get started on your journey',
-    icon: '👋',
   },
   {
     id: 2,
     title: 'Your Story',
     description: 'Tell us about your story or vision',
-    icon: '📖',
   },
   {
     id: 3,
     title: 'Preferences',
     description: 'Customize your experience',
-    icon: '⚙️',
   },
   {
     id: 4,
     title: 'Review',
     description: 'Review your selections',
-    icon: '✓',
   },
   {
     id: 5,
     title: 'Checkout',
     description: 'Complete your purchase',
-    icon: '💳',
   },
   {
     id: 6,
     title: 'Confirmation',
     description: 'Your journey begins!',
-    icon: '🎉',
   },
 ]
 
@@ -146,7 +140,7 @@ export default function OnboardingPage() {
                             : 'bg-luxury-gray-dark text-luxury-gray-light'
                         }`}
                       >
-                        {step.icon}
+                        {step.id}
                       </div>
                       <p
                         className={`text-sm mt-2 text-center ${
@@ -182,7 +176,6 @@ export default function OnboardingPage() {
                 {currentStep === 1 && (
                   <LuxuryCard variant="elevated">
                     <div className="text-center">
-                      <div className="text-6xl mb-6">{product.icon}</div>
                       <h2 className="text-4xl font-bold text-luxury-pearl mb-4">
                         Welcome to {product.name}
                       </h2>

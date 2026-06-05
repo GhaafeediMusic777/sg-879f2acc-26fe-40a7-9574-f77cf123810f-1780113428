@@ -12,7 +12,7 @@ export const LuxuryHeader: React.FC = () => {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/products-v2', label: 'Products' },
+    { href: '/products-complete-v2', label: 'Products' },
     { href: '/marketplace/ai-artists-v2', label: 'AI Artists' },
     { href: '/consumer/dashboard', label: 'Dashboard' },
   ]

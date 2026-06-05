@@ -276,7 +276,6 @@ export default function CheckoutPage() {
 
                     <div className="space-y-4 mb-6 pb-6 border-b border-luxury-gold border-opacity-30">
                       <div className="flex items-start gap-3">
-                        <span className="text-4xl">{product.icon}</span>
                         <div className="flex-1">
                           <p className="font-semibold text-luxury-pearl">{product.name}</p>
                           <p className="text-sm text-luxury-gray-light">{product.description}</p>

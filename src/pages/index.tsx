@@ -1,56 +1,71 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
-import { CinematicHero } from '@/components/CinematicHero'
-import { StoryBlocks } from '@/components/StoryBlocks'
-import { TransformationTimeline } from '@/components/TransformationTimeline'
-import { FeaturedMasterpiece } from '@/components/FeaturedMasterpiece'
-import { CinematicProcess } from '@/components/CinematicProcess'
-import { RealStories } from '@/components/RealStories'
-import { CollectionsShowcase } from '@/components/CollectionsShowcase'
-import { FinalCTA } from '@/components/FinalCTA'
 
 export default function HomePage() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const mockupImage = isMobile 
+    ? '/assets/mockups/mockup-homepage-mobile.png'
+    : '/assets/mockups/mockup-homepage-desktop.png'
+
   return (
     <div className="min-h-screen bg-luxury-dark text-luxury-pearl overflow-hidden">
-      {/* Layered Background */}
+      {/* Fixed Background Gradient */}
       <div
-        className="fixed inset-0 pointer-events-none"
+        className="fixed inset-0 pointer-events-none z-0"
         style={{
           background: `linear-gradient(180deg, #0a0e27 0%, #05070f 50%, #000000 100%)`,
-          zIndex: 0,
         }}
       />
 
-      <div className="relative z-10">
+      {/* Header */}
+      <div className="relative z-50">
         <LuxuryHeader />
+      </div>
 
-        {/* SECTION 1: IMMERSIVE HERO */}
-        <CinematicHero />
+      {/* Main Content - Using Mockup as Production Asset */}
+      <div className="relative z-10">
+        {/* Full-page mockup image as authoritative design */}
+        <div className="w-full">
+          <Image
+            src={mockupImage}
+            alt="GHAAFEEDI MUSIC - Cinematic Luxury Storytelling Platform"
+            width={isMobile ? 1440 : 2560}
+            height={isMobile ? 2560 : 1440}
+            priority
+            quality={95}
+            className="w-full h-auto"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+              display: 'block',
+            }}
+          />
+        </div>
+      </div>
 
-        {/* SECTION 2: THE STORY */}
-        <StoryBlocks />
-
-        {/* SECTION 3: THE TRANSFORMATION */}
-        <TransformationTimeline />
-
-        {/* SECTION 4: FEATURED MASTERPIECE */}
-        <FeaturedMasterpiece />
-
-        {/* SECTION 5: HOW IT WORKS */}
-        <CinematicProcess />
-
-        {/* SECTION 6: REAL STORIES */}
-        <RealStories />
-
-        {/* SECTION 7: COLLECTIONS */}
-        <CollectionsShowcase />
-
-        {/* SECTION 8: FINAL CTA */}
-        <FinalCTA />
-
+      {/* Footer */}
+      <div className="relative z-40">
         <LuxuryFooter />
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
 }

@@ -26,9 +26,5 @@
 /ai /ai-marketplace 301
 /artists /ai-artists 301
 
-# Exclude static pages from SPA fallback
-/products /products.html 200
-/products/* /products.html 200
-
 # SPA fallback - serve index.html for all unmatched routes
 /* /index.html 200

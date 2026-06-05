@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
@@ -174,10 +175,12 @@ export default function ProductsPage() {
                         {/* Product Image */}
                         {product.image ? (
                           <div className="relative w-full h-56 overflow-hidden bg-luxury-dark">
-                            <img
+                            <Image
                               src={product.image}
                               alt={product.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              priority={false}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { CinematicBackground } from '@/components/CinematicBackground'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
@@ -141,10 +142,12 @@ export default function HomePage() {
                         {/* Product Image */}
                         {product.image ? (
                           <div className="relative w-full h-48 overflow-hidden bg-luxury-dark">
-                            <img
+                            <Image
                               src={product.image}
                               alt={product.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              priority={false}
                             />
                             {/* Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -4,6 +4,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from '@/components/ui/toaster'
 import { SophiaChatWidget } from '@/components/SophiaChatWidget'
 import '@/styles/globals.css'
+import '@/styles/premium-interactions.css'
 import type { AppProps } from 'next/app'
 
 // Error Boundary Component

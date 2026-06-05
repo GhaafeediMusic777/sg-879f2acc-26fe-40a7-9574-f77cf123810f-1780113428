@@ -1,0 +1,111 @@
+/* Premium Button Interactions */
+button {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0px);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Premium Link Interactions */
+a {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a:hover {
+  color: #d4af37;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Premium Card Interactions */
+[role="article"],
+.card,
+.product-card {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[role="article"]:hover,
+.card:hover,
+.product-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+/* Premium Image Interactions */
+img {
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[role="article"]:hover img,
+.card:hover img,
+.product-card:hover img {
+  transform: scale(1.02);
+}
+
+/* Premium Input Interactions */
+input,
+textarea,
+select {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  outline: none;
+}
+
+/* Premium Divider Interactions */
+hr,
+[role="separator"] {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+}
+
+/* Premium Text Selection */
+::selection {
+  background-color: rgba(212, 175, 55, 0.3);
+  color: #f5f5f0;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 39, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
+}
+
+/* Smooth Transitions for All Interactive Elements */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

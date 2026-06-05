@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
@@ -172,23 +171,16 @@ export default function ProductsPage() {
                   <motion.div key={product.id} variants={staggerItem}>
                     <Link href={`/products/${product.id}`}>
                       <div className="group relative rounded-2xl overflow-hidden bg-luxury-dark-secondary border border-luxury-gold border-opacity-20 hover:border-opacity-50 transition-all duration-300 hover:shadow-luxury-lg cursor-pointer h-full flex flex-col">
-                        {/* Product Image */}
-                        {product.image ? (
-                          <div className="relative w-full h-56 overflow-hidden bg-luxury-dark">
-                            <Image
-                              src={product.image}
-                              alt={product.name}
-                              fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-300"
-                              priority={false}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                        ) : (
-                          <div className="w-full h-56 bg-gradient-to-br from-luxury-gold to-luxury-dark flex items-center justify-center">
-                            <span className="text-6xl">{product.icon}</span>
-                          </div>
-                        )}
+                        {/* Product Image - NO EMOJI FALLBACK */}
+                        <div className="relative w-full h-56 overflow-hidden bg-luxury-dark">
+                          <img
+                            src={product.image || '/products/placeholder.jpg'}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
 
                         {/* Badges */}
                         <div className="absolute top-4 right-4 flex gap-2 z-10">

@@ -40,39 +40,52 @@ const FEATURED_PRODUCTS = [
   },
 ]
 
+const SHOWCASE_PRODUCTS = [
+  {
+    id: 'emotional-soundtrack',
+    name: 'Emotional Soundtrack',
+    description:
+      'Transform your emotional story into an original cinematic soundtrack. Our AI analyzes your narrative and creates a unique musical composition that perfectly captures the essence of your story.',
+    image: '/products/emotional-soundtrack.jpg',
+    reverse: false,
+  },
+  {
+    id: 'cinematic-story-film',
+    name: 'Cinematic Story Film',
+    description:
+      'Get both the original soundtrack AND a professional music video. Perfect for sharing your story with the world in stunning 4K quality.',
+    image: '/products/cinematic-story-film.jpg',
+    reverse: true,
+  },
+  {
+    id: 'memorial-legacy-film',
+    name: 'Memorial Legacy Film',
+    description:
+      'Create a permanent, high-quality memorial that preserves your loved ones\' stories for generations to come.',
+    image: '/products/memorial-legacy-film.jpg',
+    reverse: false,
+  },
+  {
+    id: 'future-self-vision',
+    name: 'Future Self Vision',
+    description:
+      'Visualize your best future self through AI-generated cinematic content. Perfect for motivation and goal-setting.',
+    image: '/products/future-self-vision.jpg',
+    reverse: true,
+  },
+]
+
 export default function HomePage() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   useEffect(() => {
     if (!isAutoPlay) return
-
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % FEATURED_PRODUCTS.length)
     }, 5000)
-
     return () => clearInterval(interval)
   }, [isAutoPlay])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
-    },
-  }
 
   return (
     <div className="min-h-screen bg-luxury-dark text-luxury-pearl overflow-hidden">
@@ -85,96 +98,147 @@ export default function HomePage() {
         }}
       />
 
+      {/* Brand Watermark - Parallax Background */}
+      <motion.div
+        className="fixed inset-0 pointer-events-none flex items-center justify-center"
+        style={{ zIndex: 1 }}
+        initial={{ y: 0 }}
+        animate={{ y: -20 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div
+          className="text-center"
+          style={{
+            fontSize: 'clamp(120px, 30vw, 400px)',
+            fontWeight: 700,
+            letterSpacing: '0.15em',
+            color: 'rgba(212, 175, 55, 0.08)',
+            textShadow: '0 0 60px rgba(212, 175, 55, 0.1)',
+            filter: 'blur(2px)',
+            whiteSpace: 'nowrap',
+            fontFamily: 'Georgia, serif',
+          }}
+        >
+          GHAAFEEDI MUSIC
+        </div>
+      </motion.div>
+
       <div className="relative z-10">
         <LuxuryHeader />
 
-        {/* Hero Section - Full Screen Cinematic */}
+        {/* Brand Identity Section */}
         <motion.section
-          className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+          className="relative pt-16 pb-8 px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 1, delay: 0.2 }}
         >
-          {/* Cinematic Background Image with Parallax */}
-          <motion.div
-            className="absolute inset-0 w-full h-full"
-            animate={{ scale: 1.05 }}
-            transition={{ duration: 20, repeat: Infinity, repeatType: 'reverse' }}
-          >
-            <img
-              src="/products/dream-ai-visualization.jpg"
-              alt="Dream Visualization"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-
-          {/* Dark Overlay - 65% opacity */}
-          <div
-            className="absolute inset-0 bg-black"
-            style={{ opacity: 0.65 }}
-          />
-
-          {/* Gold Accent Lighting Effect */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: `radial-gradient(ellipse at 30% 40%, rgba(212, 175, 55, 0.15) 0%, transparent 50%)`,
-            }}
-          />
-
-          {/* Hero Content */}
-          <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.h1
-              className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-luxury-gold via-luxury-pearl to-luxury-gold bg-clip-text text-transparent"
-              initial={{ opacity: 0, y: -30 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-2 tracking-wider"
+              style={{
+                background: 'linear-gradient(180deg, #d4af37 0%, #f5e6d3 50%, #d4af37 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 30px rgba(212, 175, 55, 0.3)',
+                fontFamily: 'Georgia, serif',
+                letterSpacing: '0.08em',
+              }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Transform Your Story
+              GHAAFEEDI MUSIC
             </motion.h1>
 
             <motion.p
-              className="text-xl sm:text-2xl text-luxury-gray-light mb-8 max-w-2xl mx-auto leading-relaxed"
+              className="text-lg sm:text-xl text-luxury-gold mb-2 tracking-widest font-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Create cinematic masterpieces powered by AI. Turn your emotions, dreams, and memories into stunning visual and audio experiences.
+              LUXURY AI STORYTELLING STUDIO
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.7 }}
-            >
-              <Link href="/products/dream-ai-visualization">
-                <LuxuryButton variant="primary" size="lg">
-                  Explore Products
-                </LuxuryButton>
-              </Link>
-              <Link href="/auth/signup">
-                <LuxuryButton variant="secondary" size="lg">
-                  Get Started
-                </LuxuryButton>
-              </Link>
-            </motion.div>
+              className="w-16 h-1 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            />
           </div>
+        </motion.section>
 
-          {/* Scroll Indicator */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="w-6 h-10 border-2 border-luxury-gold rounded-full flex items-start justify-center p-2">
+        {/* Hero Section - Mobile Optimized */}
+        <motion.section
+          className="relative py-12 sm:py-20 px-4 sm:px-6 lg:px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 0.4 }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Hero Image - Centered, Contained */}
               <motion.div
-                className="w-1 h-2 bg-luxury-gold rounded-full"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+                className="relative rounded-3xl overflow-hidden h-80 sm:h-96 lg:h-[500px] order-2 lg:order-1"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <img
+                  src="/products/dream-ai-visualization.jpg"
+                  alt="Dream AI Visualization"
+                  className="w-full h-full object-cover rounded-3xl"
+                />
+
+                {/* Dark Overlay */}
+                <div
+                  className="absolute inset-0 rounded-3xl"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%)`,
+                  }}
+                />
+
+                {/* Gold Glow Border */}
+                <div
+                  className="absolute inset-0 rounded-3xl pointer-events-none"
+                  style={{
+                    boxShadow: 'inset 0 0 40px rgba(212,175,55,0.2), 0 0 40px rgba(212,175,55,0.15)',
+                  }}
+                />
+              </motion.div>
+
+              {/* Hero Content */}
+              <motion.div
+                className="order-1 lg:order-2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+              >
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-luxury-pearl leading-tight">
+                  Transform Your Story
+                </h2>
+
+                <p className="text-lg text-luxury-gray-light mb-8 leading-relaxed">
+                  Create cinematic masterpieces powered by AI. Turn your emotions, dreams, and memories into stunning visual and audio experiences that move audiences.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/products">
+                    <LuxuryButton variant="primary" size="lg">
+                      Explore All Products
+                    </LuxuryButton>
+                  </Link>
+                  <Link href="/auth/signup">
+                    <LuxuryButton variant="secondary" size="lg">
+                      Get Started
+                    </LuxuryButton>
+                  </Link>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </motion.section>
 
         {/* Featured Products Carousel Section */}
@@ -189,14 +253,15 @@ export default function HomePage() {
             {/* Section Title */}
             <motion.div
               className="text-center mb-16"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
               <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-luxury-gold via-luxury-pearl to-luxury-gold bg-clip-text text-transparent">
                 Featured Experiences
               </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-4" />
               <p className="text-xl text-luxury-gray-light max-w-2xl mx-auto">
                 Discover our most popular cinematic creations
               </p>
@@ -212,20 +277,17 @@ export default function HomePage() {
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Background Image */}
                 <img
                   src={FEATURED_PRODUCTS[activeIndex].image}
                   alt={FEATURED_PRODUCTS[activeIndex].name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
 
-                {/* Dark Overlay */}
                 <div
                   className="absolute inset-0 bg-black"
                   style={{ opacity: 0.4 }}
                 />
 
-                {/* Glassmorphism Content Overlay */}
                 <div
                   className="absolute inset-0 backdrop-blur-sm"
                   style={{
@@ -266,7 +328,6 @@ export default function HomePage() {
                   </motion.div>
                 </div>
 
-                {/* Hover Shadow */}
                 <div
                   className="absolute inset-0 rounded-3xl pointer-events-none group-hover:shadow-luxury-lg transition-shadow duration-300"
                   style={{
@@ -323,59 +384,44 @@ export default function HomePage() {
           </div>
         </motion.section>
 
-        {/* Luxury Showcase Section - Alternating Layout */}
+        {/* Luxury Editorial Showcase Section */}
         <motion.section
-          className="relative py-24 px-4 sm:px-6 lg:px-8"
+          className="relative py-32 px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-5xl sm:text-6xl font-bold mb-20 text-center bg-gradient-to-r from-luxury-gold via-luxury-pearl to-luxury-gold bg-clip-text text-transparent">
-              Explore Our Collection
-            </h2>
+            {/* Section Title */}
+            <motion.div
+              className="text-center mb-24"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-luxury-gold via-luxury-pearl to-luxury-gold bg-clip-text text-transparent">
+                Explore Our Collection
+              </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto" />
+            </motion.div>
 
-            {/* Alternating Showcase Items */}
-            {[
-              {
-                id: 'emotional-soundtrack',
-                name: 'Emotional Soundtrack',
-                description:
-                  'Transform your emotional story into an original cinematic soundtrack. Our AI analyzes your narrative and creates a unique musical composition that perfectly captures the essence of your story.',
-                image: '/products/emotional-soundtrack.jpg',
-                reverse: false,
-              },
-              {
-                id: 'cinematic-story-film',
-                name: 'Cinematic Story Film',
-                description:
-                  'Get both the original soundtrack AND a professional music video. Perfect for sharing your story with the world in stunning 4K quality.',
-                image: '/products/cinematic-story-film.jpg',
-                reverse: true,
-              },
-              {
-                id: 'memorial-legacy-film',
-                name: 'Memorial Legacy Film',
-                description:
-                  'Create a permanent, high-quality memorial that preserves your loved ones\' stories for generations to come.',
-                image: '/products/memorial-legacy-film.jpg',
-                reverse: false,
-              },
-            ].map((item, idx) => (
+            {/* Alternating Editorial Layout */}
+            {SHOWCASE_PRODUCTS.map((item, idx) => (
               <motion.div
                 key={item.id}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24 ${
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-32 ${
                   item.reverse ? 'lg:grid-flow-dense' : ''
                 }`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: idx * 0.2 }}
+                transition={{ duration: 0.8, delay: idx * 0.15 }}
               >
                 {/* Image */}
                 <motion.div
-                  className={`rounded-2xl overflow-hidden h-96 ${
+                  className={`rounded-2xl overflow-hidden h-96 sm:h-[500px] ${
                     item.reverse ? 'lg:col-start-2' : ''
                   }`}
                   whileHover={{ scale: 1.02 }}
@@ -389,23 +435,46 @@ export default function HomePage() {
                 </motion.div>
 
                 {/* Text Content */}
-                <div className={item.reverse ? 'lg:col-start-1' : ''}>
-                  <h3 className="text-4xl sm:text-5xl font-bold text-luxury-pearl mb-4">
+                <motion.div
+                  className={item.reverse ? 'lg:col-start-1' : ''}
+                  initial={{ opacity: 0, x: item.reverse ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: idx * 0.15 }}
+                >
+                  <h3 className="text-4xl sm:text-5xl font-bold text-luxury-pearl mb-6">
                     {item.name}
                   </h3>
+
+                  <div className="w-12 h-1 bg-gradient-to-r from-luxury-gold to-transparent mb-6" />
+
                   <p className="text-lg text-luxury-gray-light mb-8 leading-relaxed">
                     {item.description}
                   </p>
+
                   <Link href={`/products/${item.id}`}>
                     <LuxuryButton variant="primary" size="lg">
-                      Learn More
+                      Discover More
                     </LuxuryButton>
                   </Link>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>
         </motion.section>
+
+        {/* Gold Divider */}
+        <motion.div
+          className="relative px-4 sm:px-6 lg:px-8 py-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="h-1 bg-gradient-to-r from-transparent via-luxury-gold to-transparent" />
+          </div>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.section

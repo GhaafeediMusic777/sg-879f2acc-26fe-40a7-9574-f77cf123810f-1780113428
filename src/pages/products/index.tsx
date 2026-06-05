@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { LuxuryHeader } from '@/components/LuxuryHeader'
 import { LuxuryFooter } from '@/components/LuxuryFooter'
+import { CinematicParticles } from '@/components/CinematicParticles'
+import { AuroraGlow } from '@/components/AuroraGlow'
+import { CinematicLoader } from '@/components/CinematicLoader'
 
 export default function ProductsPage() {
   const [isMobile, setIsMobile] = useState(false)
@@ -21,6 +24,15 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-luxury-dark text-luxury-pearl overflow-hidden">
+      {/* Cinematic Loader */}
+      <CinematicLoader duration={1800} />
+
+      {/* Cinematic Particles */}
+      <CinematicParticles />
+
+      {/* Aurora Glow Effects */}
+      <AuroraGlow />
+
       {/* Fixed Background Gradient */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
